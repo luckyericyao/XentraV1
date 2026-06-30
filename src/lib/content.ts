@@ -7,11 +7,11 @@ export const navItems = [
 export const operatingSteps = [
   {
     title: "Structure",
-    body: "Structure fragmented information into usable systems.",
+    body: "Turn fragmented information into usable decision systems.",
   },
   {
     title: "Reason",
-    body: "Apply AI to compare, filter, and match.",
+    body: "Use AI to compare, filter, match, and prioritize.",
   },
   {
     title: "Verify",
@@ -27,22 +27,31 @@ export const companies = [
   {
     title: "AI Agent Coach",
     category: "AI Capability",
-    headline: "Practical AI adoption for individuals and teams.",
-    trustLine: "Reduces trust cost in AI implementation.",
+    headline:
+      "Helps individuals and teams adopt AI through practical workflows, coaching, and implementation guidance.",
+    trustLine:
+      "Reduces trust cost in AI adoption and workflow transformation.",
+    repo: "agentcoach",
     href: "https://agentcoach-three.vercel.app/",
   },
   {
     title: "Localhost",
     category: "Local Access",
-    headline: "Trusted local entry for private cultural travel.",
-    trustLine: "Reduces trust cost in local experience design.",
+    headline:
+      "Creates trusted local access for private cultural travel, starting from China.",
+    trustLine:
+      "Reduces trust cost in route design, local hosts, and authentic cultural access.",
+    repo: "localhostchinav1",
     href: "https://localhostchinav1.vercel.app/",
   },
   {
     title: "BioAxis",
     category: "Scientific Sourcing",
-    headline: "Sourcing intelligence for life science consumables.",
-    trustLine: "Reduces trust cost in scientific procurement.",
+    headline:
+      "Builds sourcing intelligence and one-stop support for life science consumables.",
+    trustLine:
+      "Reduces trust cost in product selection, equivalents, supplier quality, and delivery reliability.",
+    repo: "bioaxisv3",
     href: "https://bioaxisv3.vercel.app/",
   },
 ];

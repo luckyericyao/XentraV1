@@ -4,10 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Xentra | Reducing trust cost in complex decisions",
   description:
-    "Xentra builds AI-native platforms for trust-heavy decisions in complex markets where information is fragmented and execution matters.",
+    "Xentra is an AI-native operating group building vertical companies for trust-heavy decisions in complex markets.",
   keywords: [
     "Xentra",
-    "AI-native operating company",
+    "AI-native operating group",
+    "operating companies",
+    "vertical companies",
     "trust-heavy decisions",
     "trust cost",
     "structured data",
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Xentra | Reducing trust cost in complex decisions",
     description:
-      "AI-native platforms for markets where information is fragmented, trust is expensive, and execution matters.",
+      "An AI-native operating group building vertical companies for trust-heavy decisions.",
     siteName: "Xentra",
     type: "website",
   },
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Xentra | Reducing trust cost in complex decisions",
     description:
-      "AI-native platforms for markets where information is fragmented, trust is expensive, and execution matters.",
+      "An AI-native operating group building vertical companies for trust-heavy decisions.",
   },
   icons: {
     icon: "/favicon.svg",

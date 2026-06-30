@@ -9,9 +9,12 @@ export function Header() {
       >
         <a
           href="#top"
-          className="text-sm font-medium uppercase text-[#f4f0e8]"
+          className="flex items-baseline gap-3 text-sm font-medium uppercase text-[#f4f0e8]"
         >
-          Xentra
+          <span>Xentra</span>
+          <span className="hidden text-xs font-normal text-[#6f8faf] sm:inline">
+            Operating Group
+          </span>
         </a>
         <div className="flex items-center gap-5 sm:gap-8">
           {navItems.map((item) => (
