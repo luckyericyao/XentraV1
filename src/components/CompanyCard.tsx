@@ -4,6 +4,8 @@ type CompanyCardProps = {
   headline: string;
   trustLine: string;
   repo: string;
+  splitLine: string;
+  signal: string;
   href: string;
 };
 

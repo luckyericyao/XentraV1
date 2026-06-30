@@ -32,6 +32,8 @@ export const companies = [
     trustLine:
       "Reduces trust cost in AI adoption and workflow transformation.",
     repo: "agentcoach",
+    splitLine: "From tool uncertainty to practical AI capability.",
+    signal: "Workflows, coaching, implementation",
     href: "https://agentcoach-three.vercel.app/",
   },
   {
@@ -42,6 +44,8 @@ export const companies = [
     trustLine:
       "Reduces trust cost in route design, local hosts, and authentic cultural access.",
     repo: "localhostchinav1",
+    splitLine: "From unfamiliar places to trusted local entry.",
+    signal: "Routes, hosts, cultural access",
     href: "https://localhostchinav1.vercel.app/",
   },
   {
@@ -52,6 +56,8 @@ export const companies = [
     trustLine:
       "Reduces trust cost in product selection, equivalents, supplier quality, and delivery reliability.",
     repo: "bioaxisv3",
+    splitLine: "From fragmented supply choices to reliable procurement.",
+    signal: "Equivalents, suppliers, delivery support",
     href: "https://bioaxisv3.vercel.app/",
   },
 ];

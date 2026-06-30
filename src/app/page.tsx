@@ -5,11 +5,24 @@ import { OperatingFlow } from "@/components/OperatingFlow";
 import { companies, navItems } from "@/lib/content";
 
 export default function Home() {
+  const splitPanelClasses = [
+    "from-[#132033] via-[#18263a] to-[#0a0d12] text-[#eef5fb]",
+    "from-[#1c241f] via-[#2d3325] to-[#0b0d0a] text-[#f2efe4]",
+    "from-[#241722] via-[#2a2637] to-[#0a0c12] text-[#f4eef3]",
+  ];
+
+  const splitAccentClasses = [
+    "text-[#9db6cf] border-[#9db6cf]/35",
+    "text-[#c7c18f] border-[#c7c18f]/35",
+    "text-[#c9a7b8] border-[#c9a7b8]/35",
+  ];
+
   return (
     <>
       <Header />
       <main id="top">
-        <section className="relative isolate flex min-h-[92svh] overflow-hidden bg-[#050505] px-5 pb-8 pt-24 text-[#f4f0e8] sm:px-8 lg:pt-28">
+        <section className="relative isolate flex min-h-[92svh] overflow-hidden bg-[#080908] px-5 pb-8 pt-24 text-[#f4f0e8] sm:px-8 lg:pt-28">
+          <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
           <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
             <div className="max-w-6xl">
@@ -97,6 +110,49 @@ export default function Home() {
               {companies.map((company) => (
                 <CompanyCard key={company.title} {...company} />
               ))}
+            </div>
+            <div className="mt-20 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+              <div className="lg:sticky lg:top-28">
+                <p className="mb-5 text-xs uppercase text-[#5f7f9c]">
+                  Company Separation
+                </p>
+                <h3 className="text-balance text-4xl font-medium leading-tight sm:text-5xl">
+                  First aligned by thesis. Then separated by market.
+                </h3>
+                <p className="mt-6 max-w-md text-sm leading-7 text-[#5e5a52]">
+                  The parent company keeps the operating logic shared. Each
+                  vertical company develops its own customer surface, network,
+                  and execution system.
+                </p>
+              </div>
+              <div className="space-y-5">
+                {companies.map((company, index) => (
+                  <article
+                    key={`${company.title}-split`}
+                    className={`min-h-[320px] rounded-lg border border-white/14 bg-gradient-to-br p-7 shadow-[0_28px_80px_rgba(17,17,17,0.12)] sm:p-9 ${splitPanelClasses[index]}`}
+                  >
+                    <div className="flex flex-col justify-between gap-8 sm:flex-row">
+                      <div>
+                        <p
+                          className={`w-fit border-b pb-2 text-xs uppercase ${splitAccentClasses[index]}`}
+                        >
+                          {company.category}
+                        </p>
+                        <h4 className="mt-10 text-4xl font-medium leading-tight sm:text-5xl">
+                          {company.title}
+                        </h4>
+                      </div>
+                      <p className="text-sm text-white/50">{company.repo}</p>
+                    </div>
+                    <p className="mt-14 max-w-2xl text-xl leading-8 text-white/75">
+                      {company.splitLine}
+                    </p>
+                    <div className="mt-10 border-t border-white/14 pt-5 text-sm text-white/55">
+                      {company.signal}
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
