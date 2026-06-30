@@ -22,25 +22,24 @@ export function DecisionGraph() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(135,183,216,0.18),transparent_26%),linear-gradient(135deg,rgba(255,255,255,0.08)_0,transparent_38%)]" />
       <svg
-        className="absolute left-1/2 top-20 h-[560px] w-[1180px] -translate-x-1/2 opacity-80"
+        className="absolute left-1/2 top-24 h-[520px] w-[1120px] -translate-x-1/2 opacity-45"
         viewBox="0 0 1040 320"
         fill="none"
       >
         <defs>
           <linearGradient id="pathGradient" x1="70" x2="960" y1="130" y2="170">
-            <stop stopColor="#f6f0e6" stopOpacity="0.05" />
-            <stop offset="0.48" stopColor="#87b7d8" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#f6f0e6" stopOpacity="0.12" />
+            <stop stopColor="#f4f0e8" stopOpacity="0.02" />
+            <stop offset="0.5" stopColor="#6f8faf" stopOpacity="0.24" />
+            <stop offset="1" stopColor="#f4f0e8" stopOpacity="0.04" />
           </linearGradient>
           <pattern
             id="decisionGrid"
-            width="56"
-            height="56"
+            width="72"
+            height="72"
             patternUnits="userSpaceOnUse"
           >
-            <path d="M56 0H0V56" stroke="#f6f0e6" strokeOpacity="0.08" />
+            <path d="M72 0H0V72" stroke="#f4f0e8" strokeOpacity="0.045" />
           </pattern>
         </defs>
         <rect width="1040" height="320" fill="url(#decisionGrid)" />
@@ -52,14 +51,14 @@ export function DecisionGraph() {
         />
         <path
           d="M214 128L328 178L402 114L536 92L610 152L730 210L812 142"
-          stroke="#f6f0e6"
-          strokeOpacity="0.13"
+          stroke="#f4f0e8"
+          strokeOpacity="0.08"
           strokeWidth="1"
         />
         <path
           d="M118 86L214 128L284 72M482 184L610 152L686 98L812 142L888 78"
-          stroke="#87b7d8"
-          strokeOpacity="0.22"
+          stroke="#6f8faf"
+          strokeOpacity="0.12"
           strokeWidth="1"
         />
         {nodes.map((node) => (
@@ -69,8 +68,8 @@ export function DecisionGraph() {
             cx={node.cx}
             cy={node.cy}
             r={node.r}
-            fill={node.r > 4 ? "#87b7d8" : "#f6f0e6"}
-            opacity="0.76"
+            fill={node.r > 4 ? "#6f8faf" : "#f4f0e8"}
+            opacity="0.42"
           />
         ))}
       </svg>

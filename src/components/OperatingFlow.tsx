@@ -2,20 +2,14 @@ import { operatingSteps } from "@/lib/content";
 
 export function OperatingFlow() {
   return (
-    <ol className="mt-14 grid gap-5 lg:grid-cols-5">
-      {operatingSteps.map((step, index) => (
+    <ol className="mt-16 grid gap-0 overflow-hidden rounded-lg border border-[rgba(244,240,232,0.14)] md:grid-cols-4">
+      {operatingSteps.map((step) => (
         <li
           key={step.title}
-          className="relative border-l border-[#b8b4aa]/50 pl-6 lg:border-l-0 lg:border-t lg:pl-0 lg:pt-8"
+          className="border-b border-[rgba(244,240,232,0.14)] p-7 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"
         >
-          <span className="absolute -left-[7px] top-0 flex h-3.5 w-3.5 rounded-full border border-[#87b7d8] bg-[#f6f0e6] lg:-top-[7px] lg:left-0" />
-          <span className="text-xs font-semibold uppercase text-[#7a766d]">
-            0{index + 1}
-          </span>
-          <h3 className="mt-4 text-xl font-semibold text-[#181713]">
-            {step.title}
-          </h3>
-          <p className="mt-3 text-sm leading-6 text-[#5f5b52]">{step.body}</p>
+          <h3 className="text-2xl font-medium text-[#f4f0e8]">{step.title}</h3>
+          <p className="mt-8 text-sm leading-6 text-[#8f8a82]">{step.body}</p>
         </li>
       ))}
     </ol>
