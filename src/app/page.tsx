@@ -137,14 +137,22 @@ export default function Home() {
                       className="architecture-line h-8 w-px bg-[rgba(183,196,211,0.2)]"
                       aria-hidden="true"
                     />
-                    <div className="w-full rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-6 text-center">
+                    <a
+                      href={company.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group w-full rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[rgba(183,196,211,0.26)] hover:bg-white/[0.045]"
+                    >
                       <p className="text-xl font-semibold text-[#F3EEE5]">
                         {company.title}
                       </p>
                       <p className="mt-3 text-sm text-[#A6AFB8]">
                         {company.vertical}
                       </p>
-                    </div>
+                      <p className="mt-5 text-xs font-medium text-[#B7C4D3] transition group-hover:text-[#F3EEE5]">
+                        Visit site
+                      </p>
+                    </a>
                   </div>
                 ))}
               </div>
@@ -201,7 +209,9 @@ export default function Home() {
             {companies.map((company) => (
               <a
                 key={`${company.slug}-footer`}
-                href={`#${company.slug}`}
+                href={company.href}
+                target="_blank"
+                rel="noreferrer"
                 className="text-sm transition hover:text-[#F3EEE5]"
               >
                 {company.title}

@@ -31,6 +31,7 @@ export const companies = [
     vertical: "AI Capability",
     layer: "AI capability layer",
     headline: "For teams adopting AI into real workflows.",
+    href: "https://agentcoach-three.vercel.app/",
   },
   {
     slug: "localhost",
@@ -38,6 +39,7 @@ export const companies = [
     vertical: "Local Access",
     layer: "Local access layer",
     headline: "Private cultural travel through trusted local hosts.",
+    href: "https://localhostchinav1.vercel.app/",
   },
   {
     slug: "bioaxis",
@@ -45,5 +47,6 @@ export const companies = [
     vertical: "Scientific Sourcing",
     layer: "Scientific sourcing layer",
     headline: "One-stop sourcing intelligence for life science consumables.",
+    href: "https://bioaxisv3.vercel.app/",
   },
 ];
