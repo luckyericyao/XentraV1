@@ -1,9 +1,11 @@
-import { operatingSteps } from "@/lib/content";
+type OperatingFlowProps = {
+  steps: { title: string; body: string }[];
+};
 
-export function OperatingFlow() {
+export function OperatingFlow({ steps }: OperatingFlowProps) {
   return (
     <ol className="mt-14 grid gap-0 overflow-hidden rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.02] md:grid-cols-4">
-      {operatingSteps.map((step) => (
+      {steps.map((step) => (
         <li
           key={step.title}
           className="scroll-rise border-b border-[rgba(255,255,255,0.08)] p-7 transition duration-500 hover:bg-white/[0.03] last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0"

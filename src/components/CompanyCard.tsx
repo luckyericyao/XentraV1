@@ -5,6 +5,7 @@ type CompanyCardProps = {
   layer: string;
   headline: string;
   href: string;
+  visitLabel: string;
 };
 
 export function CompanyCard({
@@ -14,6 +15,7 @@ export function CompanyCard({
   layer,
   headline,
   href,
+  visitLabel,
 }: CompanyCardProps) {
   return (
     <a
@@ -32,7 +34,7 @@ export function CompanyCard({
         {headline}
       </p>
       <span className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#F3EEE5] transition group-hover:text-[#B7C4D3]">
-        Visit site
+        {visitLabel}
         <span aria-hidden="true" className="transition group-hover:translate-x-1">
           &rarr;
         </span>

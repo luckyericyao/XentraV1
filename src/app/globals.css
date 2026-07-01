@@ -84,6 +84,17 @@ body::before {
   line-height: 0.98;
 }
 
+.cjk {
+  font-family:
+    var(--font-instrument), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    Arial, sans-serif;
+}
+
+.cjk .hero-title {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  line-height: 1.06;
+}
+
 @media (min-width: 640px) {
   .hero-title {
     font-size: 5rem;

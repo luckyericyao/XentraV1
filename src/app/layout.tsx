@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Xentra" }],
   creator: "Xentra",
+  alternates: {
+    languages: {
+      en: "/",
+      "zh-CN": "/zh",
+    },
+  },
   openGraph: {
     title: "Xentra | Decision infrastructure for trust-heavy markets",
     description:
