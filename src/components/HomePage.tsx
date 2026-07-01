@@ -80,10 +80,17 @@ export function HomePage({ locale }: HomePageProps) {
               <div className="grid gap-3 sm:grid-cols-3">
                 {content.thesis.points.map((item) => (
                   <div
-                    key={item}
-                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5 text-sm font-medium text-[#F3EEE5]"
+                    key={item.title}
+                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5"
                   >
-                    {item}
+                    <p className="text-sm font-semibold text-[#F3EEE5]">
+                      {item.title}
+                    </p>
+                    {item.body ? (
+                      <p className="mt-4 text-sm leading-6 text-[#A6AFB8]">
+                        {item.body}
+                      </p>
+                    ) : null}
                   </div>
                 ))}
               </div>
