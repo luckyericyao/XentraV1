@@ -16,12 +16,12 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         >
           Xentra
         </a>
-        <div className="flex items-center gap-2 sm:gap-8">
+        <div className="flex items-center gap-1.5 sm:gap-8">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-xs text-[#A6AFB8] transition hover:text-[#F3EEE5] sm:text-sm"
+              className="text-[11px] text-[#A6AFB8] transition hover:text-[#F3EEE5] sm:text-sm"
             >
               {item.label}
             </a>

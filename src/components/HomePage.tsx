@@ -27,11 +27,11 @@ export function HomePage({ locale }: HomePageProps) {
           <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
           <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
-            <div className="max-w-7xl">
+            <div className="max-w-6xl">
               <p className="eyebrow reveal mb-8 text-[#8FA7C0]">
                 {content.hero.eyebrow}
               </p>
-              <h1 className="hero-title reveal reveal-delay-1 max-w-6xl text-balance">
+              <h1 className="hero-title reveal reveal-delay-1 max-w-5xl text-balance">
                 {content.hero.title}
               </h1>
               {content.hero.subtitle ? (
@@ -126,7 +126,7 @@ export function HomePage({ locale }: HomePageProps) {
           className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <div>
                 <p className="eyebrow mb-5 text-[#8FA7C0]">
                   {content.companies.eyebrow}
@@ -135,9 +135,11 @@ export function HomePage({ locale }: HomePageProps) {
                   {content.companies.title}
                 </h2>
               </div>
-              <p className="max-w-md text-base leading-7 text-[#A6AFB8]">
-                {content.companies.body}
-              </p>
+              <div className="max-w-xl space-y-4 text-base leading-7 text-[#A6AFB8]">
+                {content.companies.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </div>
             <div className="mt-16 grid gap-5 lg:grid-cols-3">
               {content.companies.items.map((company) => (
@@ -160,6 +162,13 @@ export function HomePage({ locale }: HomePageProps) {
               <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
                 {content.architecture.title}
               </h2>
+              {content.architecture.body ? (
+                <div className="mx-auto mt-8 max-w-2xl space-y-4 text-base leading-7 text-[#A6AFB8]">
+                  {content.architecture.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              ) : null}
             </div>
             <div className="mt-16">
               <div className="architecture-card mx-auto max-w-xs rounded-lg border border-[rgba(255,255,255,0.1)] bg-[#161B21] p-6 text-center shadow-[0_30px_90px_rgba(11,13,16,0.22)]">
@@ -196,7 +205,7 @@ export function HomePage({ locale }: HomePageProps) {
                         {company.title}
                       </p>
                       <p className="mt-3 text-sm text-[#A6AFB8]">
-                        {company.vertical}
+                        {company.architecture ?? company.vertical}
                       </p>
                       <p className="mt-5 text-xs font-medium text-[#B7C4D3] transition group-hover:text-[#F3EEE5]">
                         {content.companies.visitLabel}
@@ -236,15 +245,30 @@ export function HomePage({ locale }: HomePageProps) {
                 {content.contact.title}
               </h2>
               <div className="max-w-md text-sm leading-7 text-[#A6AFB8]">
+                {content.contact.body ? (
+                  <div className="mb-7 space-y-4 text-base leading-7">
+                    {content.contact.body.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                ) : null}
                 <p>
                   {content.contact.bodyPrefix}{" "}
                   <a
                     href="mailto:contact@xentra.ai"
-                    className="text-[#F3EEE5] transition hover:text-[#B7C4D3]"
+                    className="inline-flex rounded-full border border-[rgba(255,255,255,0.12)] px-5 py-2.5 text-[#F3EEE5] transition hover:border-[#B7C4D3] hover:text-[#B7C4D3]"
+                  >
+                    {content.contact.ctaLabel ?? "contact@xentra.ai"}
+                  </a>
+                </p>
+                {content.contact.ctaLabel ? (
+                  <a
+                    href="mailto:contact@xentra.ai"
+                    className="mt-4 inline-block text-sm text-[#A6AFB8] transition hover:text-[#F3EEE5]"
                   >
                     contact@xentra.ai
                   </a>
-                </p>
+                ) : null}
               </div>
             </div>
           </div>
