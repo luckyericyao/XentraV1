@@ -44,6 +44,11 @@ export function HomePage({ locale }: HomePageProps) {
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
+              {content.hero.note ? (
+                <p className="eyebrow reveal reveal-delay-2 mt-8 text-[#B7C4D3]">
+                  {content.hero.note}
+                </p>
+              ) : null}
               <div className="mt-11 flex flex-col gap-3 sm:flex-row">
                 <a
                   href={content.hero.primaryHref}
@@ -112,18 +117,40 @@ export function HomePage({ locale }: HomePageProps) {
                   ))}
                 </div>
                 {content.thesis.closing ? (
-                  <p className="mt-8 max-w-3xl border-t border-[rgba(255,255,255,0.08)] pt-7 text-base leading-8 text-[#A6AFB8]">
-                    {content.thesis.closing}
-                  </p>
+                  <div className="mt-8 max-w-3xl space-y-4 border-t border-[rgba(255,255,255,0.08)] pt-7 text-base leading-8 text-[#A6AFB8]">
+                    {content.thesis.closing.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
                 ) : null}
               </div>
             </div>
           </div>
         </section>
 
+        {content.build ? (
+          <section className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32">
+            <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="eyebrow mb-5 text-[#8FA7C0]">
+                  {content.build.eyebrow}
+                </p>
+                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                  {content.build.title}
+                </h2>
+              </div>
+              <div className="space-y-5 border-l border-[rgba(255,255,255,0.08)] pl-6 text-base leading-8 text-[#A6AFB8] sm:text-lg sm:leading-8">
+                {content.build.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         <section
           id="companies"
-          className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
+          className="border-y border-[rgba(255,255,255,0.08)] bg-[#11151A] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -141,6 +168,20 @@ export function HomePage({ locale }: HomePageProps) {
                 ))}
               </div>
             </div>
+            {content.companies.principles ? (
+              <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                {content.companies.principles.map((principle) => (
+                  <div
+                    key={principle}
+                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5"
+                  >
+                    <p className="text-sm font-medium leading-6 text-[#F3EEE5]">
+                      {principle}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
             <div className="mt-16 grid gap-5 lg:grid-cols-3">
               {content.companies.items.map((company) => (
                 <CompanyCard
@@ -150,6 +191,23 @@ export function HomePage({ locale }: HomePageProps) {
                 />
               ))}
             </div>
+          </div>
+        </section>
+
+        <section
+          id="model"
+          className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-3xl">
+              <p className="eyebrow mb-5 text-[#8FA7C0]">
+                {content.model.eyebrow}
+              </p>
+              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                {content.model.title}
+              </h2>
+            </div>
+            <OperatingFlow steps={content.model.steps} />
           </div>
         </section>
 
@@ -170,6 +228,18 @@ export function HomePage({ locale }: HomePageProps) {
                 </div>
               ) : null}
             </div>
+            {content.architecture.questions ? (
+              <div className="mx-auto mt-12 grid max-w-5xl gap-3 md:grid-cols-4">
+                {content.architecture.questions.map((question) => (
+                  <div
+                    key={question}
+                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5 text-sm leading-6 text-[#F3EEE5]"
+                  >
+                    {question}
+                  </div>
+                ))}
+              </div>
+            ) : null}
             <div className="mt-16">
               <div className="architecture-card mx-auto max-w-xs rounded-lg border border-[rgba(255,255,255,0.1)] bg-[#161B21] p-6 text-center shadow-[0_30px_90px_rgba(11,13,16,0.22)]">
                 <p className="text-2xl font-semibold text-[#F3EEE5]">Xentra</p>
@@ -218,22 +288,37 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section
-          id="model"
-          className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
-        >
-          <div className="mx-auto max-w-7xl">
-            <div className="max-w-3xl">
-              <p className="eyebrow mb-5 text-[#8FA7C0]">
-                {content.model.eyebrow}
-              </p>
-              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-                {content.model.title}
-              </h2>
+        {content.directions ? (
+          <section className="bg-[#0B0D10] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32">
+            <div className="mx-auto max-w-7xl">
+              <div className="max-w-3xl">
+                <p className="eyebrow mb-5 text-[#8FA7C0]">
+                  {content.directions.eyebrow}
+                </p>
+                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                  {content.directions.title}
+                </h2>
+                <div className="mt-8 space-y-4 text-base leading-7 text-[#A6AFB8] sm:text-lg sm:leading-8">
+                  {content.directions.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                {content.directions.signals.map((signal) => (
+                  <div
+                    key={signal}
+                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5"
+                  >
+                    <p className="text-sm font-medium leading-6 text-[#F3EEE5]">
+                      {signal}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <OperatingFlow steps={content.model.steps} />
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         <section
           id="contact"
@@ -261,7 +346,8 @@ export function HomePage({ locale }: HomePageProps) {
                     {content.contact.ctaLabel ?? "contact@xentra.ai"}
                   </a>
                 </p>
-                {content.contact.ctaLabel ? (
+                {content.contact.ctaLabel &&
+                content.contact.ctaLabel !== "contact@xentra.ai" ? (
                   <a
                     href="mailto:contact@xentra.ai"
                     className="mt-4 inline-block text-sm text-[#A6AFB8] transition hover:text-[#F3EEE5]"

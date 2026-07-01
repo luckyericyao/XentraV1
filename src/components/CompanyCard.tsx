@@ -4,8 +4,9 @@ type CompanyCardProps = {
   vertical: string;
   layer?: string;
   headline: string;
-  body?: string;
+  body?: string[];
   problem?: string;
+  useCases?: string[];
   href: string;
   visitLabel: string;
 };
@@ -18,6 +19,7 @@ export function CompanyCard({
   headline,
   body,
   problem,
+  useCases,
   href,
   visitLabel,
 }: CompanyCardProps) {
@@ -39,10 +41,27 @@ export function CompanyCard({
       <p className="mt-6 border-t border-[rgba(255,255,255,0.08)] pt-5 text-base leading-7 text-[#F3EEE5] sm:mt-8">
         {headline}
       </p>
-      {body ? (
-        <p className="mt-4 text-sm leading-6 text-[#A6AFB8] sm:mt-5 sm:leading-7">
-          {body}
-        </p>
+      {body?.length ? (
+        <div className="mt-4 space-y-3 text-sm leading-6 text-[#A6AFB8] sm:mt-5 sm:leading-7">
+          {body.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+      ) : null}
+      {useCases?.length ? (
+        <div className="mt-5 rounded-lg border border-[rgba(255,255,255,0.08)] bg-[#0B0D10]/40 p-4 sm:mt-7">
+          <p className="text-[11px] font-semibold text-[#6E7680]">适用场景</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {useCases.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-[rgba(255,255,255,0.08)] px-3 py-1 text-xs text-[#B7C4D3]"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
       ) : null}
       {problem ? (
         <div className="mt-5 rounded-lg border border-[rgba(255,255,255,0.08)] bg-[#0B0D10]/40 p-4 sm:mt-7">
