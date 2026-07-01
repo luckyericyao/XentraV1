@@ -2,8 +2,9 @@ type CompanyCardProps = {
   slug: string;
   title: string;
   vertical: string;
-  layer: string;
+  layer?: string;
   headline: string;
+  body?: string;
   href: string;
   visitLabel: string;
 };
@@ -14,6 +15,7 @@ export function CompanyCard({
   vertical,
   layer,
   headline,
+  body,
   href,
   visitLabel,
 }: CompanyCardProps) {
@@ -23,16 +25,21 @@ export function CompanyCard({
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="scroll-rise group flex min-h-72 flex-col rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-7 transition duration-500 hover:-translate-y-1 hover:border-[rgba(183,196,211,0.26)] hover:bg-white/[0.045]"
+      className="scroll-rise group flex min-h-80 flex-col rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-7 transition duration-500 hover:-translate-y-1 hover:border-[rgba(183,196,211,0.26)] hover:bg-white/[0.045]"
     >
       <p className="eyebrow text-[#8FA7C0]">{vertical}</p>
-      <div className="mt-auto pt-16">
+      <div className="mt-14">
         <h3 className="text-3xl font-semibold text-[#F3EEE5]">{title}</h3>
-        <p className="mt-4 text-sm font-medium text-[#B7C4D3]">{layer}</p>
+        {layer ? (
+          <p className="mt-4 text-sm font-medium text-[#B7C4D3]">{layer}</p>
+        ) : null}
       </div>
-      <p className="mt-7 border-t border-[rgba(255,255,255,0.08)] pt-5 text-base leading-7 text-[#A6AFB8]">
+      <p className="mt-8 border-t border-[rgba(255,255,255,0.08)] pt-5 text-base leading-7 text-[#F3EEE5]">
         {headline}
       </p>
+      {body ? (
+        <p className="mt-5 text-sm leading-7 text-[#A6AFB8]">{body}</p>
+      ) : null}
       <span className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#F3EEE5] transition group-hover:text-[#B7C4D3]">
         {visitLabel}
         <span aria-hidden="true" className="transition group-hover:translate-x-1">

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { HomePage } from "@/components/HomePage";
 
 export const metadata: Metadata = {
-  title: "Xentra | 复杂决策，需要新的信任基础设施",
+  title: "Xentra | AI 原生运营集团",
   description:
-    "Xentra 构建并运营垂直业务，为复杂决策建立可信运营系统。",
+    "Xentra 为复杂市场建立可信的决策与执行系统。",
 };
 
 export default function ChineseHome() {

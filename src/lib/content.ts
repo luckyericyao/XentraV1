@@ -4,8 +4,9 @@ export type Company = {
   slug: string;
   title: string;
   vertical: string;
-  layer: string;
+  layer?: string;
   headline: string;
+  body?: string;
   href: string;
 };
 
@@ -16,15 +17,20 @@ export type SiteContent = {
   hero: {
     eyebrow: string;
     title: string;
-    body: string;
-    companiesCta: string;
-    contactCta: string;
+    subtitle?: string;
+    body: string[];
+    primaryCta: string;
+    primaryHref: string;
+    secondaryCta: string;
+    secondaryHref: string;
     tags: string[];
   };
   thesis: {
     eyebrow: string;
     title: string;
+    body?: string[];
     points: { title: string; body?: string }[];
+    closing?: string;
   };
   companies: {
     eyebrow: string;
@@ -71,9 +77,13 @@ export const siteContent: Record<Locale, SiteContent> = {
     hero: {
       eyebrow: "Operating group",
       title: "Decision infrastructure for trust-heavy markets.",
-      body: "Xentra builds vertical companies where information is fragmented, trust is expensive, and execution quality determines outcomes.",
-      companiesCta: "View companies",
-      contactCta: "Contact",
+      body: [
+        "Xentra builds vertical companies where information is fragmented, trust is expensive, and execution quality determines outcomes.",
+      ],
+      primaryCta: "View companies",
+      primaryHref: "#companies",
+      secondaryCta: "Contact",
+      secondaryHref: "#contact",
       tags: ["AI Capability", "Local Access", "Scientific Sourcing"],
     },
     thesis: {
@@ -162,96 +172,102 @@ export const siteContent: Record<Locale, SiteContent> = {
     ],
     languageSwitch: { label: "EN", href: "/" },
     hero: {
-      eyebrow: "运营集团",
-      title: "复杂决策，需要新的信任基础设施。",
-      body: "Xentra 构建并运营垂直业务，服务于信息分散、判断成本高、执行质量决定结果的市场。",
-      companiesCta: "查看业务",
-      contactCta: "联系",
-      tags: ["AI 能力建设", "本地信任网络", "生命科学供应"],
+      eyebrow: "AI-Native Operating Group",
+      title: "AI 原生运营集团",
+      subtitle: "为复杂市场，建立可信的决策与执行系统。",
+      body: [
+        "在很多高价值场景里，真正的难点不是找不到信息，而是不知道该信谁、怎么判断、谁能交付。",
+        "Xentra 建立垂直运营公司，用 AI 处理信息与判断，用真实运营完成验证与交付。我们进入那些信息混乱、判断门槛高、执行质量直接决定结果的市场。",
+      ],
+      primaryCta: "查看业务布局",
+      primaryHref: "#companies",
+      secondaryCta: "了解集团方法",
+      secondaryHref: "#model",
+      tags: ["信息结构", "AI 判断", "人工验证", "真实运营"],
     },
     thesis: {
-      eyebrow: "理念",
-      title: "复杂市场的核心问题，不是信息不足，而是判断失真。",
+      eyebrow: "Group Thesis",
+      title: "我们关注的不是低成本流量市场，而是高判断成本市场。",
+      body: ["这些市场通常有三个共同点："],
       points: [
         {
-          title: "信息分散",
-          body: "来源复杂，标准不一，难以直接比较。",
+          title: "信息很多，但真正可用的信息很少。",
         },
         {
-          title: "判断昂贵",
-          body: "关键决策依赖经验、语境和可信关系。",
+          title: "选择很多，但用户很难判断谁可信。",
         },
         {
-          title: "执行不可替代",
-          body: "真正的结果，仍然发生在现实世界。",
+          title: "流程很长，而最终结果高度依赖执行质量。",
         },
       ],
+      closing:
+        "Xentra 的方法，是把复杂决策拆解成结构化信息、AI 判断、人工验证和真实世界执行。我们不只提供工具，而是建立能够持续运行的垂直公司。",
     },
     companies: {
-      eyebrow: "业务矩阵",
-      title: "不同市场，同一套运营逻辑。",
-      body: "业务面对市场，集团提供方法。",
+      eyebrow: "Operating Companies",
+      title: "不同市场，同一种底层问题。",
+      body: "Xentra 旗下公司进入不同市场，但解决的是同一种底层问题：复杂决策里的信任与执行。",
       visitLabel: "访问网站",
       items: [
         {
           slug: "ai-agent-coach",
           title: "AI Agent Coach",
           vertical: "AI 能力建设",
-          layer: "AI 能力建设",
-          headline: "帮助个人与团队把 AI 转化为真实工作能力，而不只是工具使用。",
+          headline: "帮助团队把 AI 从概念带入真实工作流。",
+          body: "我们关注的不是“会不会用 AI”，而是企业如何把 AI 变成稳定、可复制、可管理的生产力。",
           href: companyLinks.agentCoach,
         },
         {
           slug: "localhost",
           title: "Localhost",
           vertical: "本地信任网络",
-          layer: "本地信任网络",
-          headline: "通过可信本地主理人，重构私人文化旅行的进入方式。",
+          headline: "为高端私人旅行建立可信的本地进入方式。",
+          body: "真正稀缺的不是路线，而是知道哪里值得去、谁值得信、如何进入真实的本地语境。",
           href: companyLinks.localhost,
         },
         {
           slug: "bioaxis",
           title: "BioAxis",
           vertical: "生命科学供应",
-          layer: "生命科学供应",
-          headline: "为生命科学实验室提供更清晰、更高效的耗材采购路径。",
+          headline: "为生命科学实验室建立更清晰的采购判断系统。",
+          body: "在品牌、规格、替代品和供应渠道高度碎片化的市场里，BioAxis 帮助实验室更快找到合适、可靠、可交付的耗材选择。",
           href: companyLinks.bioaxis,
         },
       ],
     },
     architecture: {
       eyebrow: "集团架构",
-      title: "集团提供方法，业务面对市场。",
-      parentLabel: "集团",
+      title: "母公司建立方法，业务公司进入市场。",
+      parentLabel: "AI 原生运营集团",
     },
     model: {
-      eyebrow: "方法",
-      title: "可复制的运营方法。",
+      eyebrow: "Operating Method",
+      title: "一套可复制的运营方法。",
       steps: [
         {
-          title: "结构化",
-          body: "将分散信息整理为可判断的系统。",
+          title: "把混乱信息变成结构",
+          body: "把分散、不可比较、难判断的信息整理成可理解、可筛选、可行动的结构。",
         },
         {
-          title: "推理",
-          body: "用 AI 辅助比较、筛选、匹配与排序。",
+          title: "用 AI 缩短判断过程",
+          body: "让 AI 承担搜索、比较、匹配、排序和初步判断，提高决策效率。",
         },
         {
-          title: "验证",
-          body: "在关键节点引入真实语境与可信判断。",
+          title: "在关键节点加入人工验证",
+          body: "不是所有判断都应该交给模型。越高价值的决策，越需要经验、语境和真实反馈。",
         },
         {
-          title: "执行",
-          body: "通过现实运营完成最后一公里。",
+          title: "用运营完成交付闭环",
+          body: "判断之后必须有人执行。Xentra 的垂直公司负责把建议变成实际结果。",
         },
       ],
     },
     contact: {
-      title: "面向合作、业务拓展与新垂直方向。",
-      bodyPrefix: "联系：",
+      title: "新的业务方向，从同一类问题开始。",
+      bodyPrefix: "合作与新业务拓展：",
     },
     footer: {
-      line: "Xentra — 为复杂决策建立可信运营系统。",
+      line: "Xentra 不做单点工具。我们建立垂直运营公司，把复杂市场里的信息、判断、信任和执行连接起来。",
     },
   },
 };

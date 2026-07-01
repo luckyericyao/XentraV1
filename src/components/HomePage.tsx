@@ -34,32 +34,41 @@ export function HomePage({ locale }: HomePageProps) {
               <h1 className="hero-title reveal reveal-delay-1 max-w-6xl text-balance">
                 {content.hero.title}
               </h1>
-              <p className="reveal reveal-delay-2 mt-9 max-w-2xl text-base leading-7 text-[#A6AFB8] sm:text-lg sm:leading-8">
-                {content.hero.body}
-              </p>
+              {content.hero.subtitle ? (
+                <p className="reveal reveal-delay-2 mt-7 max-w-4xl text-pretty text-2xl font-medium leading-8 text-[#F3EEE5] sm:text-3xl sm:leading-10">
+                  {content.hero.subtitle}
+                </p>
+              ) : null}
+              <div className="reveal reveal-delay-2 mt-9 max-w-3xl space-y-5 text-base leading-7 text-[#A6AFB8] sm:text-lg sm:leading-8">
+                {content.hero.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
               <div className="mt-11 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href="#companies"
+                  href={content.hero.primaryHref}
                   className="inline-flex justify-center rounded-full bg-[#F3EEE5] px-6 py-3 text-sm font-medium text-[#0B0D10] transition hover:bg-[#E6DED1]"
                 >
-                  {content.hero.companiesCta}
+                  {content.hero.primaryCta}
                 </a>
                 <a
-                  href="#contact"
+                  href={content.hero.secondaryHref}
                   className="inline-flex justify-center rounded-full border border-[rgba(255,255,255,0.12)] px-6 py-3 text-sm font-medium text-[#F3EEE5] transition hover:border-[#B7C4D3] hover:text-[#B7C4D3]"
                 >
-                  {content.hero.contactCta}
+                  {content.hero.secondaryCta}
                 </a>
               </div>
             </div>
-            <div className="eyebrow mt-12 flex flex-wrap gap-x-4 gap-y-2 border-t border-[rgba(255,255,255,0.08)] pt-5 text-[#6E7680]">
-              {content.hero.tags.map((tag, index) => (
-                <span key={tag} className="contents">
-                  {index > 0 ? <span aria-hidden="true">/</span> : null}
-                  <span>{tag}</span>
-                </span>
-              ))}
-            </div>
+            {content.hero.tags.length ? (
+              <div className="eyebrow mt-12 flex flex-wrap gap-x-4 gap-y-2 border-t border-[rgba(255,255,255,0.08)] pt-5 text-[#6E7680]">
+                {content.hero.tags.map((tag, index) => (
+                  <span key={tag} className="contents">
+                    {index > 0 ? <span aria-hidden="true">/</span> : null}
+                    <span>{tag}</span>
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
         </section>
 
@@ -68,31 +77,45 @@ export function HomePage({ locale }: HomePageProps) {
           className="border-y border-[rgba(255,255,255,0.08)] bg-[#11151A] px-5 py-24 text-[#F3EEE5] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
+            <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
               <div>
                 <p className="eyebrow mb-5 text-[#8FA7C0]">
                   {content.thesis.eyebrow}
                 </p>
-                <h2 className="text-balance text-5xl font-semibold leading-tight sm:text-6xl">
+                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
                   {content.thesis.title}
                 </h2>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {content.thesis.points.map((item) => (
-                  <div
-                    key={item.title}
-                    className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5"
-                  >
-                    <p className="text-sm font-semibold text-[#F3EEE5]">
-                      {item.title}
-                    </p>
-                    {item.body ? (
-                      <p className="mt-4 text-sm leading-6 text-[#A6AFB8]">
-                        {item.body}
-                      </p>
-                    ) : null}
+                {content.thesis.body ? (
+                  <div className="mt-8 space-y-4 text-base leading-7 text-[#A6AFB8] sm:text-lg sm:leading-8">
+                    {content.thesis.body.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
                   </div>
-                ))}
+                ) : null}
+              </div>
+              <div>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {content.thesis.points.map((item) => (
+                    <div
+                      key={item.title}
+                      className="scroll-rise rounded-lg border border-[rgba(255,255,255,0.08)] bg-white/[0.03] p-5"
+                    >
+                      <p className="text-sm font-semibold leading-6 text-[#F3EEE5]">
+                        {item.title}
+                      </p>
+                      {item.body ? (
+                        <p className="mt-4 text-sm leading-6 text-[#A6AFB8]">
+                          {item.body}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+                {content.thesis.closing ? (
+                  <p className="mt-8 max-w-3xl border-t border-[rgba(255,255,255,0.08)] pt-7 text-base leading-8 text-[#A6AFB8]">
+                    {content.thesis.closing}
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -108,11 +131,11 @@ export function HomePage({ locale }: HomePageProps) {
                 <p className="eyebrow mb-5 text-[#8FA7C0]">
                   {content.companies.eyebrow}
                 </p>
-                <h2 className="text-balance text-5xl font-semibold leading-tight sm:text-6xl">
+                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
                   {content.companies.title}
                 </h2>
               </div>
-              <p className="max-w-sm text-base leading-7 text-[#A6AFB8]">
+              <p className="max-w-md text-base leading-7 text-[#A6AFB8]">
                 {content.companies.body}
               </p>
             </div>
@@ -134,7 +157,7 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="eyebrow mb-5 text-[#8FA7C0]">
                 {content.architecture.eyebrow}
               </p>
-              <h2 className="text-balance text-5xl font-semibold leading-tight sm:text-6xl">
+              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
                 {content.architecture.title}
               </h2>
             </div>
@@ -195,7 +218,7 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="eyebrow mb-5 text-[#8FA7C0]">
                 {content.model.eyebrow}
               </p>
-              <h2 className="text-balance text-5xl font-semibold leading-tight sm:text-6xl">
+              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
                 {content.model.title}
               </h2>
             </div>
@@ -209,7 +232,7 @@ export function HomePage({ locale }: HomePageProps) {
         >
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-14 lg:grid-cols-[1fr_0.65fr] lg:items-end">
-              <h2 className="font-serif text-balance text-6xl font-normal leading-[0.98] sm:text-8xl">
+              <h2 className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-7xl lg:text-8xl">
                 {content.contact.title}
               </h2>
               <div className="max-w-md text-sm leading-7 text-[#A6AFB8]">
