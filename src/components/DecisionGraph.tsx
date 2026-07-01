@@ -32,9 +32,9 @@ export function DecisionGraph() {
       >
         <defs>
           <linearGradient id="pathGradient" x1="150" x2="920" y1="160" y2="170">
-            <stop stopColor="#f4f0e8" stopOpacity="0.02" />
-            <stop offset="0.5" stopColor="#6f8faf" stopOpacity="0.24" />
-            <stop offset="1" stopColor="#f4f0e8" stopOpacity="0.04" />
+            <stop stopColor="#F3EEE5" stopOpacity="0.018" />
+            <stop offset="0.5" stopColor="#8FA7C0" stopOpacity="0.22" />
+            <stop offset="1" stopColor="#F3EEE5" stopOpacity="0.04" />
           </linearGradient>
           <pattern
             id="decisionGrid"
@@ -42,12 +42,12 @@ export function DecisionGraph() {
             height="72"
             patternUnits="userSpaceOnUse"
           >
-            <path d="M72 0H0V72" stroke="#f4f0e8" strokeOpacity="0.045" />
+            <path d="M72 0H0V72" stroke="#F3EEE5" strokeOpacity="0.035" />
           </pattern>
         </defs>
         <rect width="1040" height="320" fill="url(#decisionGrid)" />
-        <circle cx="160" cy="166" r="7" fill="#6f8faf" opacity="0.6" />
-        <circle cx="160" cy="166" r="24" stroke="#f4f0e8" strokeOpacity="0.08" />
+        <circle cx="160" cy="166" r="7" fill="#8FA7C0" opacity="0.58" />
+        <circle cx="160" cy="166" r="24" stroke="#F3EEE5" strokeOpacity="0.08" />
         {branches.map((branch) => (
           <g key={branch.label}>
             <path
@@ -61,14 +61,14 @@ export function DecisionGraph() {
               cx={branch.node.cx}
               cy={branch.node.cy}
               r="4"
-              fill="#f4f0e8"
-              opacity="0.5"
+              fill="#B7C4D3"
+              opacity="0.46"
             />
             <text
               x={branch.text.x}
               y={branch.text.y}
-              fill="#f4f0e8"
-              opacity="0.34"
+              fill="#A6AFB8"
+              opacity="0.38"
               fontSize="13"
             >
               {branch.label}

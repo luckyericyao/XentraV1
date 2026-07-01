@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-instrument);
+  --font-serif: var(--font-newsreader);
+}
+
 :root {
-  --background: #050505;
-  --foreground: #f4f0e8;
-  --black: #050505;
-  --charcoal: #111111;
-  --graphite: #1a1a1a;
-  --ivory: #f4f0e8;
-  --paper: #ede7dc;
-  --muted: #8f8a82;
-  --border: rgba(244, 240, 232, 0.14);
-  --accent: #6f8faf;
+  --background: #0b0d10;
+  --foreground: #f3eee5;
+  --surface: #11151a;
+  --surface-elevated: #161b21;
+  --text-primary: #f3eee5;
+  --text-secondary: #a6afb8;
+  --text-muted: #6e7680;
+  --ivory: #f3eee5;
+  --accent: #8fa7c0;
+  --accent-soft: #b7c4d3;
+  --border: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -23,14 +29,30 @@ html {
 
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    linear-gradient(180deg, rgba(22, 27, 33, 0.72), rgba(11, 13, 16, 0) 32rem),
+    var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-instrument), Arial, Helvetica, sans-serif;
   text-rendering: geometricPrecision;
 }
 
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.018));
+  background-size: 96px 96px, 96px 96px, 100% 100%;
+  opacity: 0.34;
+}
+
 ::selection {
-  background: rgba(111, 143, 175, 0.35);
+  background: rgba(143, 167, 192, 0.34);
 }
 
 .text-balance {
@@ -41,14 +63,46 @@ body {
   text-wrap: pretty;
 }
 
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: 3.6rem;
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+@media (min-width: 640px) {
+  .hero-title {
+    font-size: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 6rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-title {
+    font-size: 6.8rem;
+  }
+}
+
 .hero-color-field {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(132deg, rgba(27, 43, 65, 0.72) 0%, rgba(27, 43, 65, 0) 42%),
-    linear-gradient(214deg, rgba(67, 61, 42, 0.44) 2%, rgba(67, 61, 42, 0) 38%),
-    linear-gradient(312deg, rgba(54, 34, 49, 0.42) 0%, rgba(54, 34, 49, 0) 34%),
-    linear-gradient(180deg, rgba(8, 9, 8, 0.24) 0%, rgba(8, 9, 8, 0.96) 78%);
+    linear-gradient(128deg, rgba(37, 47, 59, 0.84) 0%, rgba(17, 21, 26, 0.18) 42%),
+    linear-gradient(218deg, rgba(61, 56, 48, 0.34) 4%, rgba(11, 13, 16, 0) 39%),
+    linear-gradient(306deg, rgba(42, 44, 57, 0.34) 0%, rgba(11, 13, 16, 0) 36%),
+    linear-gradient(180deg, rgba(11, 13, 16, 0.14) 0%, rgba(11, 13, 16, 0.98) 82%);
 }
 
 .hero-color-field::after {
@@ -58,12 +112,12 @@ body {
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(244, 240, 232, 0.035) 0,
-      rgba(244, 240, 232, 0.035) 1px,
+      rgba(243, 238, 229, 0.024) 0,
+      rgba(243, 238, 229, 0.024) 1px,
       transparent 1px,
       transparent 112px
     ),
-    linear-gradient(180deg, rgba(244, 240, 232, 0.05), transparent 34%);
+    linear-gradient(180deg, rgba(183, 196, 211, 0.055), transparent 34%);
   mask-image: linear-gradient(180deg, black 0%, transparent 78%);
 }
 
