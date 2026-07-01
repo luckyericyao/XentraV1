@@ -1,21 +1,15 @@
 const branches = [
   {
-    label: "AI Capability",
     path: "M160 166C286 92 418 92 560 98C682 104 762 82 890 70",
     node: { cx: 890, cy: 70 },
-    text: { x: 812, y: 48 },
   },
   {
-    label: "Local Access",
     path: "M160 166C304 166 432 166 560 166C688 166 764 166 900 166",
     node: { cx: 900, cy: 166 },
-    text: { x: 824, y: 145 },
   },
   {
-    label: "Scientific Sourcing",
     path: "M160 166C284 238 428 248 566 238C698 230 770 250 908 274",
     node: { cx: 908, cy: 274 },
-    text: { x: 772, y: 304 },
   },
 ];
 
@@ -26,7 +20,7 @@ export function DecisionGraph() {
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       <svg
-        className="absolute left-1/2 top-24 h-[520px] w-[1120px] -translate-x-1/2 opacity-40"
+        className="absolute left-1/2 top-20 h-[520px] w-[1120px] -translate-x-1/2 opacity-30"
         viewBox="0 0 1040 320"
         fill="none"
       >
@@ -49,7 +43,7 @@ export function DecisionGraph() {
         <circle cx="160" cy="166" r="7" fill="#8FA7C0" opacity="0.58" />
         <circle cx="160" cy="166" r="24" stroke="#F3EEE5" strokeOpacity="0.08" />
         {branches.map((branch) => (
-          <g key={branch.label}>
+          <g key={branch.path}>
             <path
               className="decision-path"
               d={branch.path}
@@ -64,15 +58,6 @@ export function DecisionGraph() {
               fill="#B7C4D3"
               opacity="0.46"
             />
-            <text
-              x={branch.text.x}
-              y={branch.text.y}
-              fill="#A6AFB8"
-              opacity="0.38"
-              fontSize="13"
-            >
-              {branch.label}
-            </text>
           </g>
         ))}
       </svg>

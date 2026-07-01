@@ -1,17 +1,18 @@
 export const navItems = [
   { label: "Thesis", href: "#thesis" },
   { label: "Companies", href: "#companies" },
+  { label: "Model", href: "#model" },
   { label: "Contact", href: "#contact" },
 ];
 
 export const operatingSteps = [
   {
     title: "Structure",
-    body: "Turn fragmented information into usable decision systems.",
+    body: "Turn fragmented information into usable systems.",
   },
   {
     title: "Reason",
-    body: "Use AI to compare, filter, match, and prioritize.",
+    body: "Compare, filter, match, and prioritize with AI.",
   },
   {
     title: "Verify",
@@ -25,39 +26,24 @@ export const operatingSteps = [
 
 export const companies = [
   {
+    slug: "ai-agent-coach",
     title: "AI Agent Coach",
-    category: "AI Capability",
-    headline:
-      "Helps individuals and teams adopt AI through practical workflows, coaching, and implementation guidance.",
-    trustLine:
-      "Reduces trust cost in AI adoption and workflow transformation.",
-    repo: "agentcoach",
-    splitLine: "From tool uncertainty to practical AI capability.",
-    signal: "Workflows, coaching, implementation",
-    href: "https://agentcoach-three.vercel.app/",
+    vertical: "AI Capability",
+    layer: "AI capability layer",
+    headline: "For teams adopting AI into real workflows.",
   },
   {
+    slug: "localhost",
     title: "Localhost",
-    category: "Local Access",
-    headline:
-      "Creates trusted local access for private cultural travel, starting from China.",
-    trustLine:
-      "Reduces trust cost in route design, local hosts, and authentic cultural access.",
-    repo: "localhostchinav1",
-    splitLine: "From unfamiliar places to trusted local entry.",
-    signal: "Routes, hosts, cultural access",
-    href: "https://localhostchinav1.vercel.app/",
+    vertical: "Local Access",
+    layer: "Local access layer",
+    headline: "Private cultural travel through trusted local hosts.",
   },
   {
+    slug: "bioaxis",
     title: "BioAxis",
-    category: "Scientific Sourcing",
-    headline:
-      "Builds sourcing intelligence and one-stop support for life science consumables.",
-    trustLine:
-      "Reduces trust cost in product selection, equivalents, supplier quality, and delivery reliability.",
-    repo: "bioaxisv3",
-    splitLine: "From fragmented supply choices to reliable procurement.",
-    signal: "Equivalents, suppliers, delivery support",
-    href: "https://bioaxisv3.vercel.app/",
+    vertical: "Scientific Sourcing",
+    layer: "Scientific sourcing layer",
+    headline: "One-stop sourcing intelligence for life science consumables.",
   },
 ];
