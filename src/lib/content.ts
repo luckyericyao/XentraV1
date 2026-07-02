@@ -180,8 +180,12 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     contact: {
-      title: "High-trust markets need operating systems.",
-      bodyPrefix: "Partnerships, operating opportunities, and new verticals:",
+      title: "Build with Xentra.",
+      body: [
+        "We partner with operators, domain experts, and capital partners to build vertical companies in trust-heavy markets.",
+      ],
+      bodyPrefix: "Contact:",
+      ctaLabel: "contact@xentra.ai",
     },
     footer: {
       line: "Xentra - AI-enabled operating group for trust-heavy decisions.",

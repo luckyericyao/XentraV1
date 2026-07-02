@@ -20,15 +20,15 @@ export function DecisionGraph() {
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       <svg
-        className="absolute left-1/2 top-20 h-[520px] w-[1120px] -translate-x-1/2 opacity-30"
+        className="absolute left-1/2 top-20 h-[520px] w-[1120px] -translate-x-1/2 opacity-20"
         viewBox="0 0 1040 320"
         fill="none"
       >
         <defs>
           <linearGradient id="pathGradient" x1="150" x2="920" y1="160" y2="170">
-            <stop stopColor="#F3EEE5" stopOpacity="0.018" />
-            <stop offset="0.5" stopColor="#8FA7C0" stopOpacity="0.22" />
-            <stop offset="1" stopColor="#F3EEE5" stopOpacity="0.04" />
+            <stop stopColor="#F2EFE8" stopOpacity="0.018" />
+            <stop offset="0.5" stopColor="#C6A15B" stopOpacity="0.22" />
+            <stop offset="1" stopColor="#F2EFE8" stopOpacity="0.04" />
           </linearGradient>
           <pattern
             id="decisionGrid"
@@ -36,12 +36,12 @@ export function DecisionGraph() {
             height="72"
             patternUnits="userSpaceOnUse"
           >
-            <path d="M72 0H0V72" stroke="#F3EEE5" strokeOpacity="0.035" />
+            <path d="M72 0H0V72" stroke="#F2EFE8" strokeOpacity="0.035" />
           </pattern>
         </defs>
         <rect width="1040" height="320" fill="url(#decisionGrid)" />
-        <circle cx="160" cy="166" r="7" fill="#8FA7C0" opacity="0.58" />
-        <circle cx="160" cy="166" r="24" stroke="#F3EEE5" strokeOpacity="0.08" />
+        <circle cx="160" cy="166" r="7" fill="#C6A15B" opacity="0.38" />
+        <circle cx="160" cy="166" r="24" stroke="#F2EFE8" strokeOpacity="0.08" />
         {branches.map((branch) => (
           <g key={branch.path}>
             <path
@@ -55,8 +55,8 @@ export function DecisionGraph() {
               cx={branch.node.cx}
               cy={branch.node.cy}
               r="4"
-              fill="#B7C4D3"
-              opacity="0.46"
+              fill="#C6A15B"
+              opacity="0.34"
             />
           </g>
         ))}

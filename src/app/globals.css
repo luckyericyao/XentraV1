@@ -3,20 +3,29 @@
 @theme inline {
   --font-sans: var(--font-instrument);
   --font-serif: var(--font-newsreader);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-ivory: var(--ivory);
+  --color-muted: var(--text-secondary);
+  --color-brass: var(--accent);
+  --color-slate: var(--cool-slate);
 }
 
 :root {
-  --background: #0b0d10;
-  --foreground: #f3eee5;
-  --surface: #11151a;
-  --surface-elevated: #161b21;
-  --text-primary: #f3eee5;
-  --text-secondary: #a6afb8;
-  --text-muted: #6e7680;
-  --ivory: #f3eee5;
-  --accent: #8fa7c0;
-  --accent-soft: #b7c4d3;
-  --border: rgba(255, 255, 255, 0.08);
+  --background: #070809;
+  --foreground: #f2efe8;
+  --surface: #101214;
+  --surface-elevated: #17191d;
+  --text-primary: #f2efe8;
+  --text-secondary: #a6a39a;
+  --text-muted: #9b978e;
+  --ivory: #f2efe8;
+  --accent: #c6a15b;
+  --accent-soft: #8e7445;
+  --cool-slate: #6f7782;
+  --border: #2a2d33;
+  --border-soft: rgba(198, 161, 91, 0.18);
 }
 
 * {
@@ -27,10 +36,15 @@ html {
   scroll-behavior: smooth;
 }
 
+[id] {
+  scroll-margin-top: 5rem;
+}
+
 body {
   margin: 0;
   background:
-    linear-gradient(180deg, rgba(22, 27, 33, 0.72), rgba(11, 13, 16, 0) 32rem),
+    radial-gradient(circle at 50% 0%, rgba(198, 161, 91, 0.055), transparent 34rem),
+    linear-gradient(180deg, rgba(23, 25, 29, 0.62), rgba(7, 8, 9, 0) 34rem),
     var(--background);
   color: var(--text-primary);
   font-family: var(--font-instrument), Arial, Helvetica, sans-serif;
@@ -44,11 +58,11 @@ body::before {
   pointer-events: none;
   content: "";
   background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
-    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.018));
-  background-size: 96px 96px, 96px 96px, 100% 100%;
-  opacity: 0.34;
+    linear-gradient(rgba(242, 239, 232, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 232, 0.01) 1px, transparent 1px),
+    linear-gradient(180deg, transparent, rgba(198, 161, 91, 0.018));
+  background-size: 104px 104px, 104px 104px, 100% 100%;
+  opacity: 0.42;
 }
 
 .site-header {
@@ -59,7 +73,13 @@ body::before {
 }
 
 ::selection {
-  background: rgba(143, 167, 192, 0.34);
+  background: rgba(198, 161, 91, 0.28);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(198, 161, 91, 0.72);
+  outline-offset: 4px;
 }
 
 .text-balance {
@@ -74,6 +94,7 @@ body::before {
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -130,10 +151,9 @@ body::before {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(128deg, rgba(37, 47, 59, 0.84) 0%, rgba(17, 21, 26, 0.18) 42%),
-    linear-gradient(218deg, rgba(61, 56, 48, 0.34) 4%, rgba(11, 13, 16, 0) 39%),
-    linear-gradient(306deg, rgba(42, 44, 57, 0.34) 0%, rgba(11, 13, 16, 0) 36%),
-    linear-gradient(180deg, rgba(11, 13, 16, 0.14) 0%, rgba(11, 13, 16, 0.98) 82%);
+    radial-gradient(circle at 18% 18%, rgba(198, 161, 91, 0.09), transparent 31rem),
+    radial-gradient(circle at 86% 24%, rgba(111, 119, 130, 0.08), transparent 28rem),
+    linear-gradient(180deg, rgba(7, 8, 9, 0.1) 0%, rgba(7, 8, 9, 0.98) 82%);
 }
 
 .hero-color-field::after {
@@ -143,12 +163,12 @@ body::before {
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(243, 238, 229, 0.024) 0,
-      rgba(243, 238, 229, 0.024) 1px,
+      rgba(242, 239, 232, 0.018) 0,
+      rgba(242, 239, 232, 0.018) 1px,
       transparent 1px,
       transparent 112px
     ),
-    linear-gradient(180deg, rgba(183, 196, 211, 0.055), transparent 34%);
+    linear-gradient(180deg, rgba(198, 161, 91, 0.05), transparent 34%);
   mask-image: linear-gradient(180deg, black 0%, transparent 78%);
 }
 
@@ -243,13 +263,13 @@ body::before {
 
 @keyframes nav-surface {
   from {
-    background-color: rgba(11, 13, 16, 0.34);
-    border-color: rgba(255, 255, 255, 0.04);
+    background-color: rgba(7, 8, 9, 0.24);
+    border-color: rgba(42, 45, 51, 0.5);
     backdrop-filter: blur(4px);
   }
   to {
-    background-color: rgba(11, 13, 16, 0.82);
-    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(7, 8, 9, 0.86);
+    border-color: rgba(198, 161, 91, 0.14);
     backdrop-filter: blur(18px);
   }
 }

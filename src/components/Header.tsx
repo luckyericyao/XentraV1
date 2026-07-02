@@ -5,14 +5,14 @@ type HeaderProps = {
 
 export function Header({ navItems, languageSwitch }: HeaderProps) {
   return (
-    <header className="site-header sticky top-0 z-50 border-b border-[rgba(255,255,255,0.06)] bg-[#0B0D10]/36 backdrop-blur-sm">
+    <header className="site-header sticky top-0 z-50 border-b border-[rgba(42,45,51,0.82)] bg-[#070809]/36 backdrop-blur-sm">
       <nav
         aria-label="Primary navigation"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-8"
       >
         <a
           href="#top"
-          className="text-sm font-semibold uppercase text-[#F3EEE5]"
+          className="text-sm font-semibold uppercase text-[#F2EFE8]"
         >
           Xentra
         </a>
@@ -21,14 +21,14 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
             <a
               key={item.href}
               href={item.href}
-              className="text-[11px] text-[#A6AFB8] transition hover:text-[#F3EEE5] sm:text-sm"
+              className="text-[11px] text-[#A6A39A] transition hover:text-[#F2EFE8] sm:text-sm"
             >
               {item.label}
             </a>
           ))}
           <a
             href={languageSwitch.href}
-            className="rounded-full border border-[rgba(255,255,255,0.1)] px-3 py-1.5 text-xs font-medium text-[#F3EEE5] transition hover:border-[#B7C4D3] hover:text-[#B7C4D3]"
+            className="rounded-full border border-[rgba(198,161,91,0.18)] px-3 py-1.5 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
           </a>
