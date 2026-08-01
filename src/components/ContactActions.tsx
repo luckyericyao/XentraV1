@@ -61,7 +61,7 @@ export function ContactActions({
       <button
         type="button"
         onClick={copyEmail}
-        className="inline-flex min-h-10 items-center rounded-full border border-[#2A2D33] px-4 py-2 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
+        className="inline-flex min-h-10 min-w-[6.5rem] items-center justify-center rounded-full border border-[#2A2D33] px-4 py-2 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
       >
         <span aria-live="polite">
           {copyStatus === "copied"

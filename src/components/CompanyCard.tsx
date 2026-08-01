@@ -62,7 +62,12 @@ export function CompanyCard({
         <details className="mt-5 border-y border-[#2A2D33] py-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-xs font-medium text-[#A6A39A] transition hover:text-[#F2EFE8]">
             <span>{detailsLabel}</span>
-            <span aria-hidden="true" className="text-[#C6A15B]">+</span>
+            <span
+              aria-hidden="true"
+              className="disclosure-icon text-[#C6A15B] transition duration-300"
+            >
+              +
+            </span>
           </summary>
           {body && body.length > 1 ? (
             <div className="mt-4 space-y-3 border-t border-[#2A2D33] pt-4 text-sm leading-6 text-[#A6A39A] sm:leading-7">

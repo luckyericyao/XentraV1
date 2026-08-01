@@ -84,9 +84,14 @@ body > footer {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+summary:focus-visible {
   outline: 2px solid rgba(198, 161, 91, 0.72);
   outline-offset: 4px;
+}
+
+details[open] .disclosure-icon {
+  transform: rotate(45deg);
 }
 
 .text-balance {
