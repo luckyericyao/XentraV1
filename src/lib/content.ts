@@ -48,6 +48,7 @@ export type SiteContent = {
     principles?: string[];
     visitLabel: string;
     externalLinkLabel: string;
+    detailsLabel: string;
     items: Company[];
   };
   architecture: {
@@ -135,6 +136,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       visitLabel: "Visit site",
       externalLinkLabel: "opens in a new tab",
+      detailsLabel: "Read operating brief",
       items: [
         {
           slug: "ai-agent-coach",
@@ -282,6 +284,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       visitLabel: "访问网站",
       externalLinkLabel: "在新窗口打开",
+      detailsLabel: "查看业务说明",
       items: [
         {
           slug: "ai-agent-coach",

@@ -193,6 +193,7 @@ export function HomePage({ locale }: HomePageProps) {
                   {...company}
                   visitLabel={content.companies.visitLabel}
                   externalLinkLabel={content.companies.externalLinkLabel}
+                  detailsLabel={content.companies.detailsLabel}
                 />
               ))}
             </div>
