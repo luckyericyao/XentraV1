@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Newsreader } from "next/font/google";
+import { DocumentLanguage } from "@/components/DocumentLanguage";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -79,7 +80,10 @@ export default function RootLayout({
       lang="en"
       className={`${instrumentSans.variable} ${newsreader.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <DocumentLanguage />
+        {children}
+      </body>
     </html>
   );
 }

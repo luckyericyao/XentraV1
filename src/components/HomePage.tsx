@@ -191,6 +191,7 @@ export function HomePage({ locale }: HomePageProps) {
                   key={company.title}
                   {...company}
                   visitLabel={content.companies.visitLabel}
+                  externalLinkLabel={content.companies.externalLinkLabel}
                 />
               ))}
             </div>
@@ -272,6 +273,7 @@ export function HomePage({ locale }: HomePageProps) {
                       href={company.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`${content.companies.visitLabel}: ${company.title} (${content.companies.externalLinkLabel})`}
                       className="group w-full rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D]"
                     >
                       <p className="text-xl font-semibold text-[#F2EFE8]">
@@ -345,18 +347,18 @@ export function HomePage({ locale }: HomePageProps) {
                     {content.contact.bodyPrefix}
                   </p>
                   <a
-                    href="mailto:contact@xentra.ai"
+                    href={content.contact.mailto}
                     className="inline-flex rounded-full border border-[rgba(198,161,91,0.42)] bg-[#070809] px-5 py-2.5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
                   >
-                    {content.contact.ctaLabel ?? "contact@xentra.ai"}
+                    {content.contact.ctaLabel ?? content.contact.email}
                   </a>
                   {content.contact.ctaLabel &&
-                  content.contact.ctaLabel !== "contact@xentra.ai" ? (
+                  content.contact.ctaLabel !== content.contact.email ? (
                     <a
-                      href="mailto:contact@xentra.ai"
+                      href={content.contact.mailto}
                       className="mt-4 block text-sm text-[#A6A39A] transition hover:text-[#F2EFE8]"
                     >
-                      contact@xentra.ai
+                      {content.contact.email}
                     </a>
                   ) : null}
                 </div>
@@ -378,16 +380,17 @@ export function HomePage({ locale }: HomePageProps) {
                 href={company.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${company.title} (${content.companies.externalLinkLabel})`}
                 className="text-sm transition hover:text-[#F2EFE8]"
               >
                 {company.title}
               </a>
             ))}
             <a
-              href="mailto:contact@xentra.ai"
+              href={content.contact.mailto}
               className="text-sm transition hover:text-[#F2EFE8]"
             >
-              contact@xentra.ai
+              {content.contact.email}
             </a>
           </div>
         </div>

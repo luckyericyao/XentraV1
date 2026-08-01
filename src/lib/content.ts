@@ -47,6 +47,7 @@ export type SiteContent = {
     body: string[];
     principles?: string[];
     visitLabel: string;
+    externalLinkLabel: string;
     items: Company[];
   };
   architecture: {
@@ -66,6 +67,8 @@ export type SiteContent = {
     bodyPrefix: string;
     body?: string[];
     ctaLabel?: string;
+    email: string;
+    mailto: string;
   };
   directions?: {
     eyebrow: string;
@@ -82,6 +85,12 @@ const companyLinks = {
   agentCoach: "https://agentcoach-three.vercel.app/",
   localhost: "https://localhostchinav1.vercel.app/",
   bioaxis: "https://bioaxisv3.vercel.app/",
+};
+
+const contactEmail = "contact@xentra.ai";
+const contactMailto = {
+  en: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra partnership inquiry")}`,
+  zh: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra 业务合作咨询")}`,
 };
 
 export const siteContent: Record<Locale, SiteContent> = {
@@ -122,6 +131,7 @@ export const siteContent: Record<Locale, SiteContent> = {
         "Each company owns its market. Xentra owns the operating thesis.",
       ],
       visitLabel: "Visit site",
+      externalLinkLabel: "opens in a new tab",
       items: [
         {
           slug: "ai-agent-coach",
@@ -186,6 +196,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       bodyPrefix: "Contact:",
       ctaLabel: "contact@xentra.ai",
+      email: contactEmail,
+      mailto: contactMailto.en,
     },
     footer: {
       line: "Xentra - AI-enabled operating group for trust-heavy decisions.",
@@ -263,6 +275,7 @@ export const siteContent: Record<Locale, SiteContent> = {
         "Xentra 的母公司价值，就是把这种问题识别出来，并建立可复制的运营方法。",
       ],
       visitLabel: "访问网站",
+      externalLinkLabel: "在新窗口打开",
       items: [
         {
           slug: "ai-agent-coach",
@@ -376,6 +389,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       bodyPrefix: "邮箱：",
       ctaLabel: "contact@xentra.ai",
+      email: contactEmail,
+      mailto: contactMailto.zh,
     },
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",
