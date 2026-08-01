@@ -100,7 +100,7 @@ export function CompanyCard({
       >
         {visitLabel}
         <span aria-hidden="true" className="transition group-hover:translate-x-1">
-          &rarr;
+          &#8599;
         </span>
       </a>
     </article>

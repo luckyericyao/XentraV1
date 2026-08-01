@@ -284,8 +284,9 @@ export function HomePage({ locale }: HomePageProps) {
                       <p className="mt-3 text-sm text-[#A6A39A]">
                         {company.architecture ?? company.vertical}
                       </p>
-                      <p className="mt-5 text-xs font-medium text-[#C6A15B] transition group-hover:text-[#F2EFE8]">
+                      <p className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-[#C6A15B] transition group-hover:text-[#F2EFE8]">
                         {content.companies.visitLabel}
+                        <span aria-hidden="true">&#8599;</span>
                       </p>
                     </a>
                   </div>
@@ -375,9 +376,10 @@ export function HomePage({ locale }: HomePageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${company.title} (${content.companies.externalLinkLabel})`}
-                className="text-sm transition hover:text-[#F2EFE8]"
+                className="inline-flex items-center gap-1.5 text-sm transition hover:text-[#F2EFE8]"
               >
                 {company.title}
+                <span aria-hidden="true" className="text-[#8E7445]">&#8599;</span>
               </a>
             ))}
             <a
