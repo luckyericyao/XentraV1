@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
   navItems: { label: string; href: string }[];
@@ -12,6 +12,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
   const [activeHref, setActiveHref] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuNavigationRef = useRef<HTMLDivElement>(null);
   const isChinese = languageSwitch.label === "EN";
   const navigationLabel = isChinese ? "主导航" : "Primary navigation";
   const skipLabel = isChinese ? "跳到主要内容" : "Skip to content";
@@ -42,7 +43,9 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
     const previousOverflow = document.body.style.overflow;
     const menuButton = menuButtonRef.current;
     document.body.style.overflow = "hidden";
-    document.querySelector<HTMLAnchorElement>("#mobile-navigation a")?.focus();
+    menuNavigationRef.current
+      ?.querySelector<HTMLAnchorElement>("a[href]")
+      ?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -95,6 +98,17 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
       window.removeEventListener("hashchange", updateScrollState);
     };
   }, [navItems]);
+
+  const handleLanguageSwitch = (event: MouseEvent<HTMLAnchorElement>) => {
+    const currentHash = window.location.hash || activeHref;
+
+    if (!currentHash) {
+      return;
+    }
+
+    event.preventDefault();
+    window.location.assign(`${languageSwitch.href}${currentHash}`);
+  };
 
   return (
     <>
@@ -155,6 +169,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           ))}
           <a
             href={languageSwitch.href}
+            onClick={handleLanguageSwitch}
             className="rounded-full border border-[rgba(198,161,91,0.18)] px-3 py-1.5 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
@@ -163,6 +178,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         <div className="flex items-center gap-2 md:hidden">
           <a
             href={languageSwitch.href}
+            onClick={handleLanguageSwitch}
             className="rounded-full border border-[rgba(198,161,91,0.18)] px-3 py-1.5 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
@@ -198,6 +214,34 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         </div>
         <div
           id="mobile-navigation"
+          ref={menuNavigationRef}
+          aria-hidden={!menuOpen}
+          onKeyDown={(event) => {
+            if (!menuOpen || event.key !== "Tab") {
+              return;
+            }
+
+            const links = Array.from(
+              menuNavigationRef.current?.querySelectorAll<HTMLAnchorElement>(
+                "a[href]",
+              ) ?? [],
+            );
+
+            if (!links.length) {
+              return;
+            }
+
+            const firstLink = links[0];
+            const lastLink = links[links.length - 1];
+
+            if (event.shiftKey && document.activeElement === firstLink) {
+              event.preventDefault();
+              lastLink.focus();
+            } else if (!event.shiftKey && document.activeElement === lastLink) {
+              event.preventDefault();
+              firstLink.focus();
+            }
+          }}
           className={`absolute left-4 right-4 top-[calc(100%+0.65rem)] z-50 overflow-hidden rounded-lg border border-[rgba(198,161,91,0.2)] bg-[#101214]/98 shadow-[0_26px_80px_rgba(0,0,0,0.48)] transition duration-300 md:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
