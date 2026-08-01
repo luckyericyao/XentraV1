@@ -50,7 +50,10 @@ export function HomePage({ locale }: HomePageProps) {
         lang={content.lang}
         className={locale === "zh" ? "cjk" : undefined}
       >
-        <section className="relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-28">
+        <section
+          aria-labelledby="hero-title"
+          className="relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-28"
+        >
           <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
           <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
@@ -58,7 +61,10 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="eyebrow reveal mb-8 text-[#C6A15B]">
                 {content.hero.eyebrow}
               </p>
-              <h1 className="hero-title reveal reveal-delay-1 max-w-5xl text-balance">
+              <h1
+                id="hero-title"
+                className="hero-title reveal reveal-delay-1 max-w-5xl text-balance"
+              >
                 {content.hero.title}
               </h1>
               {content.hero.subtitle ? (
@@ -106,6 +112,7 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="thesis"
+          aria-labelledby="thesis-title"
           className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
@@ -114,7 +121,10 @@ export function HomePage({ locale }: HomePageProps) {
                 <p className="eyebrow mb-5 text-[#C6A15B]">
                   {content.thesis.eyebrow}
                 </p>
-                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                <h2
+                  id="thesis-title"
+                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                >
                   {content.thesis.title}
                 </h2>
                 {content.thesis.body ? (
@@ -156,13 +166,20 @@ export function HomePage({ locale }: HomePageProps) {
         </section>
 
         {content.build ? (
-          <section className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32">
+          <section
+            id="build"
+            aria-labelledby="build-title"
+            className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          >
             <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
                 <p className="eyebrow mb-5 text-[#C6A15B]">
                   {content.build.eyebrow}
                 </p>
-                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                <h2
+                  id="build-title"
+                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                >
                   {content.build.title}
                 </h2>
               </div>
@@ -177,6 +194,7 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="companies"
+          aria-labelledby="companies-title"
           className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
@@ -185,7 +203,10 @@ export function HomePage({ locale }: HomePageProps) {
                 <p className="eyebrow mb-5 text-[#C6A15B]">
                   {content.companies.eyebrow}
                 </p>
-                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                <h2
+                  id="companies-title"
+                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                >
                   {content.companies.title}
                 </h2>
               </div>
@@ -227,6 +248,7 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="model"
+          aria-labelledby="model-title"
           className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
@@ -234,7 +256,10 @@ export function HomePage({ locale }: HomePageProps) {
               <p className="eyebrow mb-5 text-[#C6A15B]">
                 {content.model.eyebrow}
               </p>
-              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+              <h2
+                id="model-title"
+                className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+              >
                 {content.model.title}
               </h2>
             </div>
@@ -242,13 +267,20 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32">
+        <section
+          id="architecture"
+          aria-labelledby="architecture-title"
+          className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+        >
           <div className="mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <p className="eyebrow mb-5 text-[#C6A15B]">
                 {content.architecture.eyebrow}
               </p>
-              <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+              <h2
+                id="architecture-title"
+                className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+              >
                 {content.architecture.title}
               </h2>
               {content.architecture.body ? (
@@ -336,13 +368,20 @@ export function HomePage({ locale }: HomePageProps) {
         </section>
 
         {content.directions ? (
-          <section className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32">
+          <section
+            id="directions"
+            aria-labelledby="directions-title"
+            className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          >
             <div className="mx-auto max-w-7xl">
               <div className="max-w-3xl">
                 <p className="eyebrow mb-5 text-[#C6A15B]">
                   {content.directions.eyebrow}
                 </p>
-                <h2 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                <h2
+                  id="directions-title"
+                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                >
                   {content.directions.title}
                 </h2>
                 <div className="mt-8 space-y-4 text-base leading-7 text-[#A6A39A] sm:text-lg sm:leading-8">
@@ -369,12 +408,16 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="contact"
+          aria-labelledby="contact-title"
           className="border-t border-[#2A2D33] bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
             <div className="rounded-lg border border-[rgba(198,161,91,0.24)] bg-[#101214] p-8 shadow-[0_34px_120px_rgba(0,0,0,0.34)] sm:p-10 lg:p-14">
               <div className="grid gap-14 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-                <h2 className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-7xl lg:text-8xl">
+                <h2
+                  id="contact-title"
+                  className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-7xl lg:text-8xl"
+                >
                   {content.contact.title}
                 </h2>
                 <div className="max-w-lg text-sm leading-7 text-[#A6A39A]">
