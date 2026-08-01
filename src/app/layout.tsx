@@ -17,6 +17,10 @@ const newsreader = Newsreader({
 });
 
 const siteUrl = getSiteUrl();
+const languageBootstrap = `(() => {
+  const isChinese = window.location.pathname === "/zh" || window.location.pathname.startsWith("/zh/");
+  document.documentElement.lang = isChinese ? "zh-CN" : "en";
+})();`;
 
 export const viewport: Viewport = {
   colorScheme: "dark",
@@ -78,9 +82,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${instrumentSans.variable} ${newsreader.variable}`}
     >
       <body>
+        <script
+          id="document-language-bootstrap"
+          dangerouslySetInnerHTML={{ __html: languageBootstrap }}
+        />
         <DocumentLanguage />
         {children}
       </body>
