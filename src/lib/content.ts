@@ -69,6 +69,8 @@ export type SiteContent = {
     ctaLabel?: string;
     email: string;
     mailto: string;
+    copyLabel: string;
+    copiedLabel: string;
   };
   directions?: {
     eyebrow: string;
@@ -198,6 +200,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       ctaLabel: "contact@xentra.ai",
       email: contactEmail,
       mailto: contactMailto.en,
+      copyLabel: "Copy email",
+      copiedLabel: "Copied",
     },
     footer: {
       line: "Xentra - AI-enabled operating group for trust-heavy decisions.",
@@ -391,6 +395,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       ctaLabel: "contact@xentra.ai",
       email: contactEmail,
       mailto: contactMailto.zh,
+      copyLabel: "复制邮箱",
+      copiedLabel: "已复制",
     },
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",

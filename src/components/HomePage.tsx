@@ -1,4 +1,5 @@
 import { CompanyCard } from "@/components/CompanyCard";
+import { ContactActions } from "@/components/ContactActions";
 import { DecisionGraph } from "@/components/DecisionGraph";
 import { Header } from "@/components/Header";
 import { OperatingFlow } from "@/components/OperatingFlow";
@@ -346,21 +347,12 @@ export function HomePage({ locale }: HomePageProps) {
                   <p className="eyebrow mb-3 text-[#8E7445]">
                     {content.contact.bodyPrefix}
                   </p>
-                  <a
-                    href={content.contact.mailto}
-                    className="inline-flex rounded-full border border-[rgba(198,161,91,0.42)] bg-[#070809] px-5 py-2.5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
-                  >
-                    {content.contact.ctaLabel ?? content.contact.email}
-                  </a>
-                  {content.contact.ctaLabel &&
-                  content.contact.ctaLabel !== content.contact.email ? (
-                    <a
-                      href={content.contact.mailto}
-                      className="mt-4 block text-sm text-[#A6A39A] transition hover:text-[#F2EFE8]"
-                    >
-                      {content.contact.email}
-                    </a>
-                  ) : null}
+                  <ContactActions
+                    email={content.contact.ctaLabel ?? content.contact.email}
+                    mailto={content.contact.mailto}
+                    copyLabel={content.contact.copyLabel}
+                    copiedLabel={content.contact.copiedLabel}
+                  />
                 </div>
               </div>
             </div>
