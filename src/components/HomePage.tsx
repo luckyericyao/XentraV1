@@ -11,6 +11,29 @@ type HomePageProps = {
   locale: Locale;
 };
 
+const architectureAccent = {
+  "ai-agent-coach": {
+    border: "border-[rgba(111,119,130,0.34)]",
+    hoverBorder: "hover:border-[rgba(111,119,130,0.62)]",
+    text: "text-[#6F7782]",
+  },
+  localhost: {
+    border: "border-[rgba(198,161,91,0.34)]",
+    hoverBorder: "hover:border-[rgba(198,161,91,0.62)]",
+    text: "text-[#C6A15B]",
+  },
+  bioaxis: {
+    border: "border-[rgba(124,131,119,0.34)]",
+    hoverBorder: "hover:border-[rgba(124,131,119,0.62)]",
+    text: "text-[#7C8377]",
+  },
+  default: {
+    border: "border-[#2A2D33]",
+    hoverBorder: "hover:border-[rgba(198,161,91,0.28)]",
+    text: "text-[#C6A15B]",
+  },
+} as const;
+
 export function HomePage({ locale }: HomePageProps) {
   const content = siteContent[locale];
 
@@ -262,35 +285,44 @@ export function HomePage({ locale }: HomePageProps) {
                 aria-hidden="true"
               />
               <div className="grid gap-4 md:grid-cols-3">
-                {content.companies.items.map((company) => (
-                  <div
-                    key={`${company.slug}-architecture`}
-                    className="architecture-node flex flex-col items-center"
-                  >
+                {content.companies.items.map((company) => {
+                  const tone =
+                    architectureAccent[
+                      company.slug as keyof typeof architectureAccent
+                    ] ?? architectureAccent.default;
+
+                  return (
                     <div
-                      className="architecture-line h-8 w-px bg-[rgba(198,161,91,0.2)]"
-                      aria-hidden="true"
-                    />
-                    <a
-                      href={company.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${content.companies.visitLabel}: ${company.title} (${content.companies.externalLinkLabel})`}
-                      className="group w-full rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D]"
+                      key={`${company.slug}-architecture`}
+                      className="architecture-node flex flex-col items-center"
                     >
-                      <p className="text-xl font-semibold text-[#F2EFE8]">
-                        {company.title}
-                      </p>
-                      <p className="mt-3 text-sm text-[#A6A39A]">
-                        {company.architecture ?? company.vertical}
-                      </p>
-                      <p className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-[#C6A15B] transition group-hover:text-[#F2EFE8]">
-                        {content.companies.visitLabel}
-                        <span aria-hidden="true">&#8599;</span>
-                      </p>
-                    </a>
-                  </div>
-                ))}
+                      <div
+                        className="architecture-line h-8 w-px bg-[rgba(198,161,91,0.2)]"
+                        aria-hidden="true"
+                      />
+                      <a
+                        href={company.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${content.companies.visitLabel}: ${company.title} (${content.companies.externalLinkLabel})`}
+                        className={`group w-full rounded-lg border ${tone.border} bg-[#17191D]/55 p-6 text-center transition duration-300 hover:-translate-y-1 ${tone.hoverBorder} hover:bg-[#17191D]`}
+                      >
+                        <p className="text-xl font-semibold text-[#F2EFE8]">
+                          {company.title}
+                        </p>
+                        <p className="mt-3 text-sm text-[#A6A39A]">
+                          {company.architecture ?? company.vertical}
+                        </p>
+                        <p
+                          className={`mt-5 inline-flex items-center gap-1.5 text-xs font-medium ${tone.text} transition group-hover:text-[#F2EFE8]`}
+                        >
+                          {content.companies.visitLabel}
+                          <span aria-hidden="true">&#8599;</span>
+                        </p>
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
