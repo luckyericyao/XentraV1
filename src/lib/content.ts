@@ -194,9 +194,9 @@ export const siteContent: Record<Locale, SiteContent> = {
   zh: {
     lang: "zh-CN",
     navItems: [
-      { label: "集团理念", href: "#thesis" },
-      { label: "业务布局", href: "#companies" },
-      { label: "运营方法", href: "#model" },
+      { label: "理念", href: "#thesis" },
+      { label: "业务", href: "#companies" },
+      { label: "方法", href: "#model" },
       { label: "联系", href: "#contact" },
     ],
     languageSwitch: { label: "EN", href: "/" },
