@@ -84,6 +84,7 @@ export type SiteContent = {
   };
   footer: {
     line: string;
+    backToTopLabel: string;
   };
 };
 
@@ -211,7 +212,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       copyErrorLabel: "Copy failed",
     },
     footer: {
-      line: "Xentra - AI-enabled operating group for trust-heavy decisions.",
+      line: "Xentra — AI-enabled operating group for trust-heavy decisions.",
+      backToTopLabel: "Back to top",
     },
   },
   zh: {
@@ -410,6 +412,7 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",
+      backToTopLabel: "返回顶部",
     },
   },
 };

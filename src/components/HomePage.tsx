@@ -460,7 +460,7 @@ export function HomePage({ locale }: HomePageProps) {
           <p className="text-sm leading-6 text-[#A6A39A]">
             {content.footer.line}
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             {content.companies.items.map((company) => (
               <a
                 key={`${company.slug}-footer`}
@@ -479,6 +479,14 @@ export function HomePage({ locale }: HomePageProps) {
               className="text-sm transition hover:text-[#F2EFE8]"
             >
               {content.contact.email}
+            </a>
+            <a
+              href="#top"
+              aria-label={content.footer.backToTopLabel}
+              title={content.footer.backToTopLabel}
+              className="inline-flex size-9 items-center justify-center rounded-full border border-[#2A2D33] text-base text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.46)] hover:text-[#F2EFE8]"
+            >
+              <span aria-hidden="true">&#8593;</span>
             </a>
           </div>
         </div>
