@@ -7,6 +7,7 @@ type ContactActionsProps = {
   mailto: string;
   copyLabel: string;
   copiedLabel: string;
+  copyErrorLabel: string;
 };
 
 export function ContactActions({
@@ -14,11 +15,15 @@ export function ContactActions({
   mailto,
   copyLabel,
   copiedLabel,
+  copyErrorLabel,
 }: ContactActionsProps) {
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">(
+    "idle",
+  );
 
   const copyEmail = async () => {
     try {
+      setCopyStatus("idle");
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(email);
       } else {
@@ -37,10 +42,11 @@ export function ContactActions({
         }
       }
 
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      setCopyStatus("copied");
+      window.setTimeout(() => setCopyStatus("idle"), 1800);
     } catch {
-      setCopied(false);
+      setCopyStatus("error");
+      window.setTimeout(() => setCopyStatus("idle"), 2200);
     }
   };
 
@@ -57,7 +63,13 @@ export function ContactActions({
         onClick={copyEmail}
         className="inline-flex min-h-10 items-center rounded-full border border-[#2A2D33] px-4 py-2 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
       >
-        <span aria-live="polite">{copied ? copiedLabel : copyLabel}</span>
+        <span aria-live="polite">
+          {copyStatus === "copied"
+            ? copiedLabel
+            : copyStatus === "error"
+              ? copyErrorLabel
+              : copyLabel}
+        </span>
       </button>
     </div>
   );

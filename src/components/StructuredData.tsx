@@ -27,6 +27,12 @@ export function StructuredData({ locale }: StructuredDataProps) {
             ...content.companies.items.map((company) => company.vertical),
           ]),
         ),
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "partnerships",
+          email: content.contact.email,
+          availableLanguage: ["en", "zh-CN"],
+        },
         subOrganization: content.companies.items.map((company) => ({
           "@type": "Organization",
           name: company.title,

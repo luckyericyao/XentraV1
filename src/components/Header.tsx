@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
   navItems: { label: string; href: string }[];
@@ -11,6 +11,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const isChinese = languageSwitch.label === "EN";
   const navigationLabel = isChinese ? "主导航" : "Primary navigation";
   const skipLabel = isChinese ? "跳到主要内容" : "Skip to content";
@@ -32,6 +33,22 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const menuButton = menuButtonRef.current;
+    document.body.style.overflow = "hidden";
+    document.querySelector<HTMLAnchorElement>("#mobile-navigation a")?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      menuButton?.focus();
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const sections = navItems
@@ -152,6 +169,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           </a>
           <button
             type="button"
+            ref={menuButtonRef}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             aria-label={menuLabel}
@@ -180,7 +198,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         </div>
         <div
           id="mobile-navigation"
-          className={`absolute left-4 right-4 top-[calc(100%+0.65rem)] overflow-hidden rounded-lg border border-[rgba(198,161,91,0.2)] bg-[#101214]/98 shadow-[0_26px_80px_rgba(0,0,0,0.48)] transition duration-300 md:hidden ${
+          className={`absolute left-4 right-4 top-[calc(100%+0.65rem)] z-50 overflow-hidden rounded-lg border border-[rgba(198,161,91,0.2)] bg-[#101214]/98 shadow-[0_26px_80px_rgba(0,0,0,0.48)] transition duration-300 md:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-2 opacity-0"
@@ -220,6 +238,14 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         </div>
       </nav>
       </header>
+      {menuOpen ? (
+        <button
+          type="button"
+          aria-label={isChinese ? "关闭导航背景" : "Close navigation backdrop"}
+          onClick={() => setMenuOpen(false)}
+          className="fixed inset-x-0 bottom-0 top-16 z-40 bg-[#070809]/64 backdrop-blur-[2px] md:hidden"
+        />
+      ) : null}
     </>
   );
 }

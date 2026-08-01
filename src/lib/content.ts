@@ -71,6 +71,7 @@ export type SiteContent = {
     mailto: string;
     copyLabel: string;
     copiedLabel: string;
+    copyErrorLabel: string;
   };
   directions?: {
     eyebrow: string;
@@ -202,6 +203,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       mailto: contactMailto.en,
       copyLabel: "Copy email",
       copiedLabel: "Copied",
+      copyErrorLabel: "Copy failed",
     },
     footer: {
       line: "Xentra - AI-enabled operating group for trust-heavy decisions.",
@@ -397,6 +399,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       mailto: contactMailto.zh,
       copyLabel: "复制邮箱",
       copiedLabel: "已复制",
+      copyErrorLabel: "复制失败",
     },
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",

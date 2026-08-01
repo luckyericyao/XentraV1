@@ -352,6 +352,7 @@ export function HomePage({ locale }: HomePageProps) {
                     mailto={content.contact.mailto}
                     copyLabel={content.contact.copyLabel}
                     copiedLabel={content.contact.copiedLabel}
+                    copyErrorLabel={content.contact.copyErrorLabel}
                   />
                 </div>
               </div>
