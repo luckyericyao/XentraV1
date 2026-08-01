@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Xentra | 把复杂市场，做成可信系统",
   description:
     "Xentra 是一家 AI 原生运营集团，进入信息混乱、判断困难、结果依赖执行的市场，建立垂直运营公司。",
+  other: {
+    "content-language": "zh-CN",
+  },
   keywords: [
     "Xentra",
     "AI 原生运营集团",

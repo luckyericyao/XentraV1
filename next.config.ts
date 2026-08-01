@@ -11,12 +11,21 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
 ];
 
+const chineseHeaders = [
+  ...securityHeaders,
+  { key: "Content-Language", value: "zh-CN" },
+];
+
 const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
   reactStrictMode: true,
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    return [
+      { source: "/zh", headers: chineseHeaders },
+      { source: "/zh/:path*", headers: chineseHeaders },
+      { source: "/(.*)", headers: securityHeaders },
+    ];
   },
 };
 
