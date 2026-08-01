@@ -239,7 +239,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       note: "信息很多。判断很贵。信任很稀缺。",
     },
     thesis: {
-      eyebrow: "Group Thesis",
+      eyebrow: "集团理念",
       title: "信息从来不缺，缺的是可信判断。",
       body: [
         "很多行业的问题，并不是没有供应方、没有内容、没有服务，也不是用户不知道自己想要什么。",
@@ -263,7 +263,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     build: {
-      eyebrow: "What We Build",
+      eyebrow: "建设方向",
       title: "我们建立垂直运营公司。",
       body: [
         "Xentra 不追逐短期流量，也不包装概念型产品。",
@@ -272,7 +272,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     companies: {
-      eyebrow: "Operating Companies",
+      eyebrow: "业务布局",
       title: "不同市场，同一种底层问题。",
       body: [
         "Xentra 旗下业务看上去分布在不同领域：企业 AI、私人旅行、生命科学采购。",
@@ -339,7 +339,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     architecture: {
-      eyebrow: "Group Architecture",
+      eyebrow: "集团架构",
       title: "Xentra 是母公司，不是品牌集合。",
       body: [
         "母公司负责方法、系统、技术和资本配置。垂直业务负责进入市场、理解用户、验证需求和完成交付。",
@@ -354,7 +354,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       closing: "只有同时满足这三个条件的方向，才适合成为 Xentra 的长期业务。",
     },
     model: {
-      eyebrow: "Operating Method",
+      eyebrow: "运营方法",
       title: "从具体市场出发，而不是从概念出发。",
       steps: [
         {
@@ -380,7 +380,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     directions: {
-      eyebrow: "New Verticals",
+      eyebrow: "新业务方向",
       title: "我们持续寻找新的复杂市场。",
       body: [
         "合适的市场通常有几个特征：",
