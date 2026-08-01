@@ -10,6 +10,22 @@ type ContactActionsProps = {
   copyErrorLabel: string;
 };
 
+function copyTextFallback(value: string) {
+  const input = document.createElement("textarea");
+  input.value = value;
+  input.setAttribute("readonly", "");
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  document.body.appendChild(input);
+  input.select();
+  const copied = document.execCommand("copy");
+  input.remove();
+
+  if (!copied) {
+    throw new Error("Clipboard unavailable");
+  }
+}
+
 export function ContactActions({
   email,
   mailto,
@@ -25,21 +41,13 @@ export function ContactActions({
     try {
       setCopyStatus("idle");
       if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        const input = document.createElement("textarea");
-        input.value = email;
-        input.setAttribute("readonly", "");
-        input.style.position = "fixed";
-        input.style.opacity = "0";
-        document.body.appendChild(input);
-        input.select();
-        const copiedWithFallback = document.execCommand("copy");
-        input.remove();
-
-        if (!copiedWithFallback) {
-          throw new Error("Clipboard unavailable");
+        try {
+          await navigator.clipboard.writeText(email);
+        } catch {
+          copyTextFallback(email);
         }
+      } else {
+        copyTextFallback(email);
       }
 
       setCopyStatus("copied");
