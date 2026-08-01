@@ -210,9 +210,10 @@ export function HomePage({ locale }: HomePageProps) {
               </div>
             ) : null}
             <div className="mt-16 grid gap-5 lg:grid-cols-3">
-              {content.companies.items.map((company) => (
+              {content.companies.items.map((company, index) => (
                 <CompanyCard
                   key={company.title}
+                  index={index}
                   {...company}
                   visitLabel={content.companies.visitLabel}
                   externalLinkLabel={content.companies.externalLinkLabel}

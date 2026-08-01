@@ -1,4 +1,5 @@
 type CompanyCardProps = {
+  index: number;
   slug: string;
   title: string;
   vertical: string;
@@ -21,6 +22,7 @@ const companyAccent = {
 } as const;
 
 export function CompanyCard({
+  index,
   slug,
   title,
   vertical,
@@ -41,11 +43,22 @@ export function CompanyCard({
   return (
     <article
       id={slug}
+      aria-labelledby={`${slug}-title`}
       className="scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(198,161,91,0.055)] sm:min-h-[24rem]"
     >
-      <p className={`eyebrow ${labelTone}`}>{vertical}</p>
+      <div className="flex items-center justify-between gap-4">
+        <p className={`eyebrow ${labelTone}`}>{vertical}</p>
+        <span
+          aria-hidden="true"
+          className="text-xs tabular-nums text-[#6F7782]"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
       <div className="mt-10 sm:mt-14">
-        <h3 className="text-3xl font-semibold text-[#F2EFE8]">{title}</h3>
+        <h3 id={`${slug}-title`} className="text-3xl font-semibold text-[#F2EFE8]">
+          {title}
+        </h3>
         {layer ? (
           <p className="mt-4 text-sm font-medium text-[#8E7445]">{layer}</p>
         ) : null}
