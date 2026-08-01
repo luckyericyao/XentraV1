@@ -23,7 +23,7 @@ const socialImageCopy: Record<
   zh: {
     eyebrow: "AI 原生运营集团",
     title: ["把复杂市场，", "做成可信系统。"],
-    tags: "企业 AI    /    私人旅行    /    生命科学供应",
+    tags: "企业 AI 落地    /    可信本地旅行    /    生命科学供应",
   },
 };
 
