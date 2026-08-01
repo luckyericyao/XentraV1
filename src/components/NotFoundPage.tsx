@@ -16,6 +16,7 @@ const notFoundCopy = {
     primaryHref: "/",
     secondaryLabel: "中文",
     secondaryHref: "/zh",
+    footerLabel: "Xentra / AI-enabled operating group",
   },
   zh: {
     lang: "zh-CN",
@@ -26,6 +27,7 @@ const notFoundCopy = {
     primaryHref: "/zh",
     secondaryLabel: "EN",
     secondaryHref: "/",
+    footerLabel: "Xentra / AI 原生运营集团",
   },
 } as const;
 
@@ -35,6 +37,8 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
   return (
     <main
       lang={copy.lang}
+      aria-labelledby="not-found-title"
+      aria-describedby="not-found-body"
       className={`relative isolate flex min-h-svh overflow-hidden bg-[#070809] px-5 py-8 text-[#F2EFE8] sm:px-8 sm:py-10 ${
         locale === "zh" ? "cjk" : ""
       }`}
@@ -59,10 +63,16 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
         <div className="flex flex-1 items-center py-20">
           <div className="max-w-4xl">
             <p className="eyebrow mb-7 text-[#C6A15B]">{copy.eyebrow}</p>
-            <h1 className="font-serif text-balance text-5xl font-normal leading-[1.02] sm:text-7xl lg:text-8xl">
+            <h1
+              id="not-found-title"
+              className="font-serif text-balance text-5xl font-normal leading-[1.02] sm:text-7xl lg:text-8xl"
+            >
               {copy.title}
             </h1>
-            <p className="mt-8 max-w-2xl text-base leading-8 text-[#A6A39A] sm:text-lg">
+            <p
+              id="not-found-body"
+              className="mt-8 max-w-2xl text-base leading-8 text-[#A6A39A] sm:text-lg"
+            >
               {copy.body}
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
@@ -82,7 +92,7 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
           </div>
         </div>
         <p className="eyebrow border-t border-[#2A2D33] pt-6 text-[#8E7445]">
-          Xentra / AI-enabled operating group
+          {copy.footerLabel}
         </p>
       </div>
     </main>
