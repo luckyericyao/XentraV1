@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Newsreader } from "next/font/google";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -14,7 +15,15 @@ const newsreader = Newsreader({
   display: "swap",
 });
 
+const siteUrl = getSiteUrl();
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#070809",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Xentra | Decision infrastructure for trust-heavy markets",
   description:
     "Xentra is an AI-enabled operating group building vertical companies for trust-heavy markets.",
@@ -31,10 +40,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Xentra" }],
   creator: "Xentra",
+  manifest: "/manifest.webmanifest",
   alternates: {
+    canonical: "/",
     languages: {
       en: "/",
       "zh-CN": "/zh",
+      "x-default": "/",
     },
   },
   openGraph: {
@@ -43,6 +55,8 @@ export const metadata: Metadata = {
       "An AI-enabled operating group building vertical companies for trust-heavy markets.",
     siteName: "Xentra",
     type: "website",
+    url: "/",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",

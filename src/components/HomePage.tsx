@@ -2,6 +2,7 @@ import { CompanyCard } from "@/components/CompanyCard";
 import { DecisionGraph } from "@/components/DecisionGraph";
 import { Header } from "@/components/Header";
 import { OperatingFlow } from "@/components/OperatingFlow";
+import { StructuredData } from "@/components/StructuredData";
 import { siteContent } from "@/lib/content";
 import type { Locale } from "@/lib/content";
 
@@ -14,12 +15,14 @@ export function HomePage({ locale }: HomePageProps) {
 
   return (
     <>
+      <StructuredData locale={locale} />
       <Header
         navItems={content.navItems}
         languageSwitch={content.languageSwitch}
       />
       <main
         id="top"
+        tabIndex={-1}
         lang={content.lang}
         className={locale === "zh" ? "cjk" : undefined}
       >
@@ -268,7 +271,7 @@ export function HomePage({ locale }: HomePageProps) {
                     <a
                       href={company.href}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="group w-full rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D]"
                     >
                       <p className="text-xl font-semibold text-[#F2EFE8]">
@@ -374,7 +377,7 @@ export function HomePage({ locale }: HomePageProps) {
                 key={`${company.slug}-footer`}
                 href={company.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-sm transition hover:text-[#F2EFE8]"
               >
                 {company.title}

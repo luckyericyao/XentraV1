@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Xentra">
-  <rect width="64" height="64" rx="14" fill="#11100d"/>
-  <path d="M17 18h30L36 32l11 14H17l11-14L17 18Z" fill="none" stroke="#f5efe3" stroke-width="4" stroke-linejoin="round"/>
-  <circle cx="32" cy="32" r="3.5" fill="#8fb8d8"/>
+  <rect width="64" height="64" rx="14" fill="#070809"/>
+  <path d="M17 18h30L36 32l11 14H17l11-14L17 18Z" fill="none" stroke="#F2EFE8" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="3.5" fill="#C6A15B"/>
 </svg>
