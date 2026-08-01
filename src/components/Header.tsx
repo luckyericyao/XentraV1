@@ -64,7 +64,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
 
     const updateScrollState = () => {
       const marker = window.scrollY + Math.min(window.innerHeight * 0.34, 260);
-      let nextActiveHref = sections[0]?.href ?? "";
+      let nextActiveHref = "";
 
       for (const section of sections) {
         const sectionTop =
