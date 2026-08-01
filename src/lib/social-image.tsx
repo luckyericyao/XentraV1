@@ -5,7 +5,31 @@ export const socialImageSize = {
   height: 630,
 };
 
-export function createSocialImage() {
+type SocialImageLocale = "en" | "zh";
+
+const socialImageCopy: Record<
+  SocialImageLocale,
+  {
+    eyebrow: string;
+    title: string[];
+    tags: string;
+  }
+> = {
+  en: {
+    eyebrow: "Operating Group",
+    title: ["Decision infrastructure", "for trust-heavy markets."],
+    tags: "AI Capability    /    Local Access    /    Scientific Sourcing",
+  },
+  zh: {
+    eyebrow: "AI 原生运营集团",
+    title: ["把复杂市场，", "做成可信系统。"],
+    tags: "企业 AI    /    私人旅行    /    生命科学供应",
+  },
+};
+
+export function createSocialImage(locale: SocialImageLocale = "en") {
+  const copy = socialImageCopy[locale];
+
   return new ImageResponse(
     (
       <div
@@ -60,10 +84,10 @@ export function createSocialImage() {
               fontSize: 14,
               letterSpacing: "0.12em",
               padding: "12px 18px",
-              textTransform: "uppercase",
-            }}
-          >
-            Operating Group
+            textTransform: locale === "en" ? "uppercase" : "none",
+          }}
+        >
+            {copy.eyebrow}
           </div>
         </div>
         <div
@@ -85,10 +109,11 @@ export function createSocialImage() {
               lineHeight: 1.02,
             }}
           >
-            <div style={{ display: "flex" }}>Decision infrastructure</div>
-            <div style={{ display: "flex" }}>
-              for trust-heavy markets.
-            </div>
+            {copy.title.map((line) => (
+              <div key={line} style={{ display: "flex" }}>
+                {line}
+              </div>
+            ))}
           </div>
           <div
             style={{
@@ -100,8 +125,7 @@ export function createSocialImage() {
               textTransform: "uppercase",
             }}
           >
-            AI Capability&nbsp;&nbsp;/&nbsp;&nbsp; Local
-            Access&nbsp;&nbsp;/&nbsp;&nbsp; Scientific Sourcing
+            {copy.tags}
           </div>
         </div>
         <div
