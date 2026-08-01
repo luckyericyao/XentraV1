@@ -217,6 +217,7 @@ export function HomePage({ locale }: HomePageProps) {
                   visitLabel={content.companies.visitLabel}
                   externalLinkLabel={content.companies.externalLinkLabel}
                   detailsLabel={content.companies.detailsLabel}
+                  useCasesLabel={content.companies.useCasesLabel}
                 />
               ))}
             </div>
@@ -258,7 +259,7 @@ export function HomePage({ locale }: HomePageProps) {
               ) : null}
             </div>
             {content.architecture.questions ? (
-              <div className="mx-auto mt-12 grid max-w-5xl gap-3 md:grid-cols-4">
+              <div className="mx-auto mt-12 grid max-w-5xl gap-3 md:grid-cols-3">
                 {content.architecture.questions.map((question) => (
                   <div
                     key={question}
@@ -268,6 +269,11 @@ export function HomePage({ locale }: HomePageProps) {
                   </div>
                 ))}
               </div>
+            ) : null}
+            {content.architecture.closing ? (
+              <p className="mx-auto mt-8 max-w-3xl border-t border-[#2A2D33] pt-6 text-center text-sm leading-7 text-[#A6A39A]">
+                {content.architecture.closing}
+              </p>
             ) : null}
             <div className="mt-16">
               <div className="architecture-card mx-auto max-w-xs rounded-lg border border-[rgba(198,161,91,0.22)] bg-[#17191D] p-6 text-center shadow-[0_30px_90px_rgba(0,0,0,0.28)]">

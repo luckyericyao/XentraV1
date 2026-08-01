@@ -49,6 +49,7 @@ export type SiteContent = {
     visitLabel: string;
     externalLinkLabel: string;
     detailsLabel: string;
+    useCasesLabel: string;
     items: Company[];
   };
   architecture: {
@@ -57,6 +58,7 @@ export type SiteContent = {
     body?: string[];
     parentLabel: string;
     questions?: string[];
+    closing?: string;
   };
   model: {
     eyebrow: string;
@@ -137,6 +139,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       visitLabel: "Visit site",
       externalLinkLabel: "opens in a new tab",
       detailsLabel: "Read operating brief",
+      useCasesLabel: "Use cases",
       items: [
         {
           slug: "ai-agent-coach",
@@ -285,6 +288,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       visitLabel: "访问网站",
       externalLinkLabel: "在新窗口打开",
       detailsLabel: "查看业务说明",
+      useCasesLabel: "适用场景",
       items: [
         {
           slug: "ai-agent-coach",
@@ -346,8 +350,8 @@ export const siteContent: Record<Locale, SiteContent> = {
         "这个市场的信任成本在哪里？",
         "AI 可以在哪些环节提高判断效率？",
         "真实运营如何把结果交付出来？",
-        "只有同时满足这三个条件的方向，才适合成为 Xentra 的长期业务。",
       ],
+      closing: "只有同时满足这三个条件的方向，才适合成为 Xentra 的长期业务。",
     },
     model: {
       eyebrow: "Operating Method",

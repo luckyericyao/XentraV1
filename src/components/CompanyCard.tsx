@@ -11,6 +11,7 @@ type CompanyCardProps = {
   visitLabel: string;
   externalLinkLabel: string;
   detailsLabel: string;
+  useCasesLabel: string;
 };
 
 const companyAccent = {
@@ -32,6 +33,7 @@ export function CompanyCard({
   visitLabel,
   externalLinkLabel,
   detailsLabel,
+  useCasesLabel,
 }: CompanyCardProps) {
   const labelTone =
     companyAccent[slug as keyof typeof companyAccent] ?? "text-[#C6A15B]";
@@ -71,7 +73,9 @@ export function CompanyCard({
           ) : null}
           {useCases?.length ? (
             <div className="mt-4 border-t border-[#2A2D33] pt-4">
-              <p className="text-[11px] font-semibold text-[#9B978E]">适用场景</p>
+              <p className="text-[11px] font-semibold text-[#9B978E]">
+                {useCasesLabel}
+              </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {useCases.map((item) => (
                   <span
