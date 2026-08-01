@@ -302,7 +302,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             "客户沟通",
             "内部运营自动化",
           ],
-          architecture: "AI adoption and workflow execution",
+          architecture: "AI 工作流与能力落地",
           href: companyLinks.agentCoach,
         },
         {
@@ -315,7 +315,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             "Localhost 为高净值和深度旅行用户建立一种更可靠的本地进入方式：理解文化语境，识别真实体验，连接可信资源，并完成路线、接待和执行安排。",
             "我们关注的不是“去哪玩”，而是如何进入一个地方真正值得被看见的部分。",
           ],
-          architecture: "trusted local access and cultural context",
+          architecture: "可信本地连接与文化语境",
           href: companyLinks.localhost,
         },
         {
@@ -329,7 +329,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             "BioAxis 为生命科学实验室建立一站式采购判断与供应系统，帮助用户更高效地完成产品查找、替代匹配、询价和交付确认。",
             "我们解决的不是“有没有货”，而是如何在复杂供应市场里做出更可靠的采购决策。",
           ],
-          architecture: "scientific sourcing and procurement intelligence",
+          architecture: "生命科学供应与采购判断",
           href: companyLinks.bioaxis,
         },
       ],
@@ -341,7 +341,7 @@ export const siteContent: Record<Locale, SiteContent> = {
         "母公司负责方法、系统、技术和资本配置。垂直业务负责进入市场、理解用户、验证需求和完成交付。",
         "每一家业务公司都必须回答三个问题：",
       ],
-      parentLabel: "AI-native operating group",
+      parentLabel: "AI 原生运营集团",
       questions: [
         "这个市场的信任成本在哪里？",
         "AI 可以在哪些环节提高判断效率？",
