@@ -129,6 +129,12 @@ details[open] .disclosure-icon {
   line-height: 1.06;
 }
 
+.cjk-hero {
+  justify-content: flex-start;
+  padding-top: 4.5rem;
+  padding-bottom: 3rem;
+}
+
 @media (min-width: 640px) {
   .hero-title {
     font-size: 5rem;
@@ -136,6 +142,11 @@ details[open] .disclosure-icon {
 
   .cjk .hero-title {
     font-size: 4.6rem;
+  }
+
+  .cjk-hero {
+    padding-top: 5rem;
+    padding-bottom: 3.5rem;
   }
 }
 
@@ -145,7 +156,12 @@ details[open] .disclosure-icon {
   }
 
   .cjk .hero-title {
-    font-size: 6.2rem;
+    font-size: clamp(4.6rem, 7vw, 6.2rem);
+  }
+
+  .cjk-hero {
+    padding-top: 4.25rem;
+    padding-bottom: 3.25rem;
   }
 }
 

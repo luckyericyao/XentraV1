@@ -52,13 +52,15 @@ export function HomePage({ locale }: HomePageProps) {
       >
         <section
           aria-labelledby="hero-title"
-          className="relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-28"
+          className={`relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-28 ${locale === "zh" ? "cjk-hero" : ""}`}
         >
           <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
           <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
             <div className="max-w-6xl">
-              <p className="eyebrow reveal mb-8 text-[#C6A15B]">
+              <p
+                className={`eyebrow reveal text-[#C6A15B] ${locale === "zh" ? "mb-5 lg:mb-6" : "mb-8"}`}
+              >
                 {content.hero.eyebrow}
               </p>
               <h1
@@ -68,21 +70,29 @@ export function HomePage({ locale }: HomePageProps) {
                 {content.hero.title}
               </h1>
               {content.hero.subtitle ? (
-                <p className="reveal reveal-delay-2 mt-7 max-w-4xl text-pretty text-2xl font-medium leading-8 text-[#F2EFE8] sm:text-3xl sm:leading-10">
+                <p
+                  className={`reveal reveal-delay-2 max-w-4xl text-pretty text-2xl font-medium text-[#F2EFE8] sm:text-3xl sm:leading-10 ${locale === "zh" ? "mt-5 leading-8" : "mt-7 leading-8"}`}
+                >
                   {content.hero.subtitle}
                 </p>
               ) : null}
-              <div className="reveal reveal-delay-2 mt-9 max-w-3xl space-y-5 text-base leading-7 text-[#A6A39A] sm:text-lg sm:leading-8">
+              <div
+                className={`reveal reveal-delay-2 max-w-3xl text-[#A6A39A] ${locale === "zh" ? "mt-6 space-y-3 text-[15px] leading-6 sm:text-base sm:leading-7" : "mt-9 space-y-5 text-base leading-7 sm:text-lg sm:leading-8"}`}
+              >
                 {content.hero.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
               {content.hero.note ? (
-                <p className="eyebrow reveal reveal-delay-2 mt-8 text-[#C6A15B]">
+                <p
+                  className={`eyebrow reveal reveal-delay-2 text-[#C6A15B] ${locale === "zh" ? "mt-5" : "mt-8"}`}
+                >
                   {content.hero.note}
                 </p>
               ) : null}
-              <div className="mt-11 flex flex-col gap-3 sm:flex-row">
+              <div
+                className={`flex flex-col gap-3 sm:flex-row ${locale === "zh" ? "mt-7 lg:mt-8" : "mt-11"}`}
+              >
                 <a
                   href={content.hero.primaryHref}
                   className="inline-flex justify-center rounded-full border border-[rgba(198,161,91,0.46)] bg-[#101214] px-6 py-3 text-sm font-medium text-[#F2EFE8] shadow-[0_18px_55px_rgba(0,0,0,0.28)] transition hover:border-[#C6A15B] hover:bg-[#17191D]"
