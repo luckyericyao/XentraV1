@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Newsreader } from "next/font/google";
 import { DocumentLanguage } from "@/components/DocumentLanguage";
 import { getSiteUrl } from "@/lib/site-url";
-import "./globals.css";
+import "../globals.css";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -62,12 +62,21 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Xentra - Decision infrastructure for trust-heavy markets",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Xentra | Decision infrastructure for trust-heavy markets",
     description:
       "An AI-enabled operating group building vertical companies for trust-heavy markets.",
+    images: ["/twitter-image"],
   },
   icons: {
     icon: "/favicon.svg",
