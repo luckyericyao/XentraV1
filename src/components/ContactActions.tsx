@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ContactActionsProps = {
   email: string;
@@ -36,6 +36,26 @@ export function ContactActions({
   const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">(
     "idle",
   );
+  const resetTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current !== null) {
+        window.clearTimeout(resetTimerRef.current);
+      }
+    };
+  }, []);
+
+  const scheduleReset = (delay: number) => {
+    if (resetTimerRef.current !== null) {
+      window.clearTimeout(resetTimerRef.current);
+    }
+
+    resetTimerRef.current = window.setTimeout(() => {
+      resetTimerRef.current = null;
+      setCopyStatus("idle");
+    }, delay);
+  };
 
   const copyEmail = async () => {
     try {
@@ -51,12 +71,19 @@ export function ContactActions({
       }
 
       setCopyStatus("copied");
-      window.setTimeout(() => setCopyStatus("idle"), 1800);
+      scheduleReset(1800);
     } catch {
       setCopyStatus("error");
-      window.setTimeout(() => setCopyStatus("idle"), 2200);
+      scheduleReset(2200);
     }
   };
+
+  const statusLabel =
+    copyStatus === "copied"
+      ? copiedLabel
+      : copyStatus === "error"
+        ? copyErrorLabel
+        : copyLabel;
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -69,14 +96,11 @@ export function ContactActions({
       <button
         type="button"
         onClick={copyEmail}
+        aria-label={statusLabel}
         className="inline-flex min-h-10 min-w-[6.5rem] items-center justify-center rounded-full border border-[#2A2D33] px-4 py-2 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
       >
-        <span aria-live="polite">
-          {copyStatus === "copied"
-            ? copiedLabel
-            : copyStatus === "error"
-              ? copyErrorLabel
-              : copyLabel}
+        <span role="status" aria-live="polite" aria-atomic="true">
+          {statusLabel}
         </span>
       </button>
     </div>
