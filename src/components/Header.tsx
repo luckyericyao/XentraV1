@@ -216,6 +216,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           id="mobile-navigation"
           ref={menuNavigationRef}
           aria-hidden={!menuOpen}
+          inert={!menuOpen}
           onKeyDown={(event) => {
             if (!menuOpen || event.key !== "Tab") {
               return;
