@@ -9,6 +9,8 @@ type CompanyCardProps = {
   problem?: string;
   useCases?: string[];
   href: string;
+  chapterHref: string;
+  chapterLabel: string;
   visitLabel: string;
   externalLinkLabel: string;
   detailsLabel: string;
@@ -16,9 +18,9 @@ type CompanyCardProps = {
 };
 
 const companyAccent = {
-  "ai-agent-coach": "text-[#6F7782]",
+  "ai-agent-coach": "text-[#8D97A5]",
   localhost: "text-[#C6A15B]",
-  bioaxis: "text-[#7C8377]",
+  bioaxis: "text-[#939D90]",
 } as const;
 
 export function CompanyCard({
@@ -32,6 +34,8 @@ export function CompanyCard({
   problem,
   useCases,
   href,
+  chapterHref,
+  chapterLabel,
   visitLabel,
   externalLinkLabel,
   detailsLabel,
@@ -50,7 +54,7 @@ export function CompanyCard({
         <p className={`eyebrow ${labelTone}`}>{vertical}</p>
         <span
           aria-hidden="true"
-          className="text-xs tabular-nums text-[#6F7782]"
+          className="text-xs tabular-nums text-[#8D97A5]"
         >
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -60,7 +64,7 @@ export function CompanyCard({
           {title}
         </h3>
         {layer ? (
-          <p className="mt-4 text-sm font-medium text-[#8E7445]">{layer}</p>
+          <p className="mt-4 text-sm font-medium text-[#B49459]">{layer}</p>
         ) : null}
       </div>
       <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8">
@@ -113,18 +117,27 @@ export function CompanyCard({
           ) : null}
         </details>
       ) : null}
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${visitLabel}: ${title} (${externalLinkLabel})`}
-        className="mt-auto inline-flex w-fit items-center gap-2 pt-6 text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B] sm:pt-8"
-      >
-        {visitLabel}
-        <span aria-hidden="true" className="transition group-hover:translate-x-1">
-          &#8599;
-        </span>
-      </a>
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-x-5 gap-y-2 pt-6 sm:pt-8">
+        <a
+          href={chapterHref}
+          className="inline-flex min-h-11 items-center text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B]"
+        >
+          {chapterLabel}
+          <span aria-hidden="true" className="ml-2">&#8595;</span>
+        </a>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${visitLabel}: ${title} (${externalLinkLabel})`}
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#A6A39A] transition hover:text-[#C6A15B]"
+        >
+          {visitLabel}
+          <span aria-hidden="true" className="transition group-hover:translate-x-1">
+            &#8599;
+          </span>
+        </a>
+      </div>
     </article>
   );
 }

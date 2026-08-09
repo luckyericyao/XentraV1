@@ -200,10 +200,42 @@ details[open] .disclosure-icon {
   mask-image: linear-gradient(180deg, black 0%, transparent 78%);
 }
 
-.scroll-rise,
-.architecture-card,
-.architecture-node,
-.architecture-line {
+.portfolio-chapter-field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(242, 239, 232, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 232, 0.01) 1px, transparent 1px);
+  background-size: 112px 112px;
+}
+
+.portfolio-chapter[data-portfolio-tone="steel"] .portfolio-chapter-field {
+  background:
+    radial-gradient(circle at 78% 20%, rgba(143, 167, 192, 0.13), transparent 34rem),
+    linear-gradient(135deg, #090b0e 0%, #0c1015 58%, #08090b 100%);
+}
+
+.portfolio-chapter[data-portfolio-tone="brass"] .portfolio-chapter-field {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(198, 161, 91, 0.14), transparent 36rem),
+    linear-gradient(135deg, #0b0a08 0%, #12100c 58%, #08090a 100%);
+}
+
+.portfolio-chapter[data-portfolio-tone="sage"] .portfolio-chapter-field {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(137, 153, 140, 0.14), transparent 36rem),
+    linear-gradient(135deg, #090b0a 0%, #0d1210 58%, #08090a 100%);
+}
+
+@media (min-width: 1024px) {
+  .portfolio-evidence {
+    transform: perspective(1800px) rotateY(-1.35deg);
+    transform-origin: center right;
+  }
+}
+
+.scroll-rise {
   will-change: opacity, transform;
 }
 
@@ -278,17 +310,6 @@ details[open] .disclosure-icon {
   }
 }
 
-@keyframes line-fade {
-  from {
-    opacity: 0;
-    transform: scaleY(0.2);
-  }
-  to {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
 @keyframes nav-surface {
   from {
     background-color: rgba(7, 8, 9, 0.24);
@@ -303,19 +324,10 @@ details[open] .disclosure-icon {
 }
 
 @supports (animation-timeline: view()) {
-  .scroll-rise,
-  .architecture-card,
-  .architecture-node {
+  .scroll-rise {
     animation: rise-in 1200ms cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-range: entry 8% cover 34%;
     animation-timeline: view();
-  }
-
-  .architecture-line {
-    animation: line-fade 1400ms ease both;
-    animation-range: entry 10% cover 38%;
-    animation-timeline: view();
-    transform-origin: top center;
   }
 }
 

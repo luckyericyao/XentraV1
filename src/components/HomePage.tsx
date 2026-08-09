@@ -3,6 +3,7 @@ import { ContactActions } from "@/components/ContactActions";
 import { DecisionGraph } from "@/components/DecisionGraph";
 import { Header } from "@/components/Header";
 import { OperatingFlow } from "@/components/OperatingFlow";
+import { PortfolioChapters } from "@/components/PortfolioChapters";
 import { StructuredData } from "@/components/StructuredData";
 import { siteContent } from "@/lib/content";
 import type { Locale } from "@/lib/content";
@@ -10,29 +11,6 @@ import type { Locale } from "@/lib/content";
 type HomePageProps = {
   locale: Locale;
 };
-
-const architectureAccent = {
-  "ai-agent-coach": {
-    border: "border-[rgba(111,119,130,0.34)]",
-    hoverBorder: "hover:border-[rgba(111,119,130,0.62)]",
-    text: "text-[#6F7782]",
-  },
-  localhost: {
-    border: "border-[rgba(198,161,91,0.34)]",
-    hoverBorder: "hover:border-[rgba(198,161,91,0.62)]",
-    text: "text-[#C6A15B]",
-  },
-  bioaxis: {
-    border: "border-[rgba(124,131,119,0.34)]",
-    hoverBorder: "hover:border-[rgba(124,131,119,0.62)]",
-    text: "text-[#7C8377]",
-  },
-  default: {
-    border: "border-[#2A2D33]",
-    hoverBorder: "hover:border-[rgba(198,161,91,0.28)]",
-    text: "text-[#C6A15B]",
-  },
-} as const;
 
 export function HomePage({ locale }: HomePageProps) {
   const content = siteContent[locale];
@@ -246,6 +224,8 @@ export function HomePage({ locale }: HomePageProps) {
                   key={company.title}
                   index={index}
                   {...company}
+                  chapterHref={`#${company.slug}-chapter`}
+                  chapterLabel={content.companies.chapterLabel}
                   visitLabel={content.companies.visitLabel}
                   externalLinkLabel={content.companies.externalLinkLabel}
                   detailsLabel={content.companies.detailsLabel}
@@ -255,6 +235,13 @@ export function HomePage({ locale }: HomePageProps) {
             </div>
           </div>
         </section>
+
+        <PortfolioChapters
+          companies={content.companies.items}
+          copy={content.portfolio}
+          visitLabel={content.companies.visitLabel}
+          externalLinkLabel={content.companies.externalLinkLabel}
+        />
 
         <section
           id="model"
@@ -274,106 +261,6 @@ export function HomePage({ locale }: HomePageProps) {
               </h2>
             </div>
             <OperatingFlow steps={content.model.steps} />
-          </div>
-        </section>
-
-        <section
-          id="architecture"
-          aria-labelledby="architecture-title"
-          className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
-        >
-          <div className="mx-auto max-w-7xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="eyebrow mb-5 text-[#C6A15B]">
-                {content.architecture.eyebrow}
-              </p>
-              <h2
-                id="architecture-title"
-                className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
-              >
-                {content.architecture.title}
-              </h2>
-              {content.architecture.body ? (
-                <div className="mx-auto mt-8 max-w-2xl space-y-4 text-base leading-7 text-[#A6A39A]">
-                  {content.architecture.body.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            {content.architecture.questions ? (
-              <div className="mx-auto mt-12 grid max-w-5xl gap-3 md:grid-cols-3">
-                {content.architecture.questions.map((question) => (
-                  <div
-                    key={question}
-                    className="scroll-rise rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-5 text-sm leading-6 text-[#F2EFE8]"
-                  >
-                    {question}
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            {content.architecture.closing ? (
-              <p className="mx-auto mt-8 max-w-3xl border-t border-[#2A2D33] pt-6 text-center text-sm leading-7 text-[#A6A39A]">
-                {content.architecture.closing}
-              </p>
-            ) : null}
-            <div className="mt-16">
-              <div className="architecture-card mx-auto max-w-xs rounded-lg border border-[rgba(198,161,91,0.22)] bg-[#17191D] p-6 text-center shadow-[0_30px_90px_rgba(0,0,0,0.28)]">
-                <p className="text-2xl font-semibold text-[#F2EFE8]">Xentra</p>
-                <p className="mt-3 text-sm text-[#A6A39A]">
-                  {content.architecture.parentLabel}
-                </p>
-              </div>
-              <div
-                className="architecture-line mx-auto h-12 w-px bg-[rgba(198,161,91,0.26)]"
-                aria-hidden="true"
-              />
-              <div
-                className="architecture-line mx-auto hidden h-px max-w-4xl bg-[rgba(198,161,91,0.2)] md:block"
-                aria-hidden="true"
-              />
-              <div className="grid gap-4 md:grid-cols-3">
-                {content.companies.items.map((company) => {
-                  const tone =
-                    architectureAccent[
-                      company.slug as keyof typeof architectureAccent
-                    ] ?? architectureAccent.default;
-
-                  return (
-                    <div
-                      key={`${company.slug}-architecture`}
-                      className="architecture-node flex flex-col items-center"
-                    >
-                      <div
-                        className="architecture-line h-8 w-px bg-[rgba(198,161,91,0.2)]"
-                        aria-hidden="true"
-                      />
-                      <a
-                        href={company.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${content.companies.visitLabel}: ${company.title} (${content.companies.externalLinkLabel})`}
-                        className={`group w-full rounded-lg border ${tone.border} bg-[#17191D]/55 p-6 text-center transition duration-300 hover:-translate-y-1 ${tone.hoverBorder} hover:bg-[#17191D]`}
-                      >
-                        <p className="text-xl font-semibold text-[#F2EFE8]">
-                          {company.title}
-                        </p>
-                        <p className="mt-3 text-sm text-[#A6A39A]">
-                          {company.architecture ?? company.vertical}
-                        </p>
-                        <p
-                          className={`mt-5 inline-flex items-center gap-1.5 text-xs font-medium ${tone.text} transition group-hover:text-[#F2EFE8]`}
-                        >
-                          {content.companies.visitLabel}
-                          <span aria-hidden="true">&#8599;</span>
-                        </p>
-                      </a>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </section>
 
@@ -438,7 +325,7 @@ export function HomePage({ locale }: HomePageProps) {
                       ))}
                     </div>
                   ) : null}
-                  <p className="eyebrow mb-3 text-[#8E7445]">
+                  <p className="eyebrow mb-3 text-[#B49459]">
                     {content.contact.bodyPrefix}
                   </p>
                   <ContactActions
@@ -471,7 +358,7 @@ export function HomePage({ locale }: HomePageProps) {
                 className="inline-flex items-center gap-1.5 text-sm transition hover:text-[#F2EFE8]"
               >
                 {company.title}
-                <span aria-hidden="true" className="text-[#8E7445]">&#8599;</span>
+                <span aria-hidden="true" className="text-[#B49459]">&#8599;</span>
               </a>
             ))}
             <a
@@ -484,7 +371,7 @@ export function HomePage({ locale }: HomePageProps) {
               href="#top"
               aria-label={content.footer.backToTopLabel}
               title={content.footer.backToTopLabel}
-              className="inline-flex size-9 items-center justify-center rounded-full border border-[#2A2D33] text-base text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.46)] hover:text-[#F2EFE8]"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-[#2A2D33] text-base text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.46)] hover:text-[#F2EFE8]"
             >
               <span aria-hidden="true">&#8593;</span>
             </a>

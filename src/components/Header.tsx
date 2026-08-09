@@ -170,7 +170,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           <a
             href={languageSwitch.href}
             onClick={handleLanguageSwitch}
-            className="rounded-full border border-[rgba(198,161,91,0.18)] px-3 py-1.5 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            className="inline-flex min-h-9 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
           </a>
@@ -179,7 +179,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           <a
             href={languageSwitch.href}
             onClick={handleLanguageSwitch}
-            className="rounded-full border border-[rgba(198,161,91,0.18)] px-3 py-1.5 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            className="inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
           </a>
@@ -191,7 +191,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
             aria-label={menuLabel}
             title={menuLabel}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex size-9 items-center justify-center rounded-full border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
+            className="flex size-11 items-center justify-center rounded-full border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
           >
             <span className="relative block h-3.5 w-4" aria-hidden="true">
               <span
@@ -272,7 +272,7 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
                   <span>{item.label}</span>
                 </span>
                 <span
-                  className="text-[10px] tabular-nums text-[#8E7445]"
+                  className="text-[10px] tabular-nums text-[#B49459]"
                   aria-hidden="true"
                 >
                   {String(index + 1).padStart(2, "0")}
