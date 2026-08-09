@@ -6,7 +6,7 @@ const canonicalUrl = (
   process.env.SMOKE_CANONICAL_URL || "https://xentra-v1.vercel.app"
 ).replace(/\/+$/, "");
 const checkExternal = process.env.SMOKE_EXTERNAL === "1";
-const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 15_000);
+const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 30_000);
 const runId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let assertionCount = 0;
 
@@ -30,17 +30,25 @@ function requestUrl(pathname) {
 }
 
 async function get(pathname, options = {}) {
-  const response = await fetch(requestUrl(pathname), {
-    cache: "no-store",
-    headers: { "Cache-Control": "no-cache" },
-    redirect: "follow",
-    signal: AbortSignal.timeout(timeoutMs),
-  });
-  const body = options.binary
-    ? new Uint8Array(await response.arrayBuffer())
-    : await response.text();
+  const url = requestUrl(pathname);
 
-  return { body, headers: response.headers, response, url: response.url };
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+      redirect: "follow",
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    const body = options.binary
+      ? new Uint8Array(await response.arrayBuffer())
+      : await response.text();
+
+    return { body, headers: response.headers, response, url: response.url };
+  } catch (error) {
+    throw new Error(
+      `${pathname}: request failed (${error instanceof Error ? error.message : String(error)})`,
+    );
+  }
 }
 
 function contentType(result) {
@@ -192,13 +200,19 @@ async function verifyExternalCompanies() {
   }
 
   for (const companyUrl of companyUrls) {
-    const response = await fetch(companyUrl, {
-      cache: "no-store",
-      headers: { "Cache-Control": "no-cache" },
-      redirect: "follow",
-      signal: AbortSignal.timeout(timeoutMs),
-    });
-    assert(response.ok, `Company URL failed: ${companyUrl} (${response.status})`);
+    try {
+      const response = await fetch(companyUrl, {
+        cache: "no-store",
+        headers: { "Cache-Control": "no-cache" },
+        redirect: "follow",
+        signal: AbortSignal.timeout(timeoutMs),
+      });
+      assert(response.ok, `Company URL failed: ${companyUrl} (${response.status})`);
+    } catch (error) {
+      throw new Error(
+        `Company URL failed: ${companyUrl} (${error instanceof Error ? error.message : String(error)})`,
+      );
+    }
   }
 }
 
