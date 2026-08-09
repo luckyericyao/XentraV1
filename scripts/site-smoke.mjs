@@ -16,15 +16,46 @@ const companyUrls = [
   "https://bioaxisv3.vercel.app/",
 ];
 
-const companyEvidenceUrls = [
-  "https://agentcoach-three.vercel.app/",
-  "https://localhostchinav1.vercel.app/journeys",
-  "https://localhostchinav1.vercel.app/inquiry?type=traveler",
-  "https://localhostchinav1.vercel.app/trust",
-  "https://bioaxisv3.vercel.app/ready-supply",
-  "https://bioaxisv3.vercel.app/equivalent-finder",
-  "https://bioaxisv3.vercel.app/request-quote",
+const companyEvidenceChecks = [
+  {
+    url: "https://agentcoach-three.vercel.app/#industries",
+    marker: 'id="industries"',
+  },
+  {
+    url: "https://agentcoach-three.vercel.app/#waitlist",
+    marker: 'id="waitlist"',
+  },
+  {
+    url: "https://agentcoach-three.vercel.app/#coaches",
+    marker: 'id="coaches"',
+  },
+  {
+    url: "https://localhostchinav1.vercel.app/journeys",
+    marker: "A cultural atlas for the China you want to enter.",
+  },
+  {
+    url: "https://localhostchinav1.vercel.app/inquiry?type=traveler",
+    marker: "Tell us how you want to enter China.",
+  },
+  {
+    url: "https://localhostchinav1.vercel.app/trust",
+    marker: "A local-host network only works if it protects both sides.",
+  },
+  {
+    url: "https://bioaxisv3.vercel.app/ready-supply",
+    marker: "Warehouse-backed consumables for faster lab procurement.",
+  },
+  {
+    url: "https://bioaxisv3.vercel.app/equivalent-finder",
+    marker: "Find compatible alternatives for your current consumables",
+  },
+  {
+    url: "https://bioaxisv3.vercel.app/request-quote",
+    marker: "Start a sourcing request",
+  },
 ];
+
+const companyEvidenceUrls = companyEvidenceChecks.map(({ url }) => url);
 
 function assert(condition, message) {
   assertionCount += 1;
@@ -371,18 +402,25 @@ async function verifyExternalCompanies() {
     return;
   }
 
-  for (const companyUrl of companyEvidenceUrls) {
+  for (const { url, marker } of companyEvidenceChecks) {
     try {
-      const response = await fetch(companyUrl, {
+      const response = await fetch(url, {
         cache: "no-store",
         headers: { "Cache-Control": "no-cache" },
         redirect: "follow",
         signal: AbortSignal.timeout(timeoutMs),
       });
-      assert(response.ok, `Company URL failed: ${companyUrl} (${response.status})`);
+      const body = await response.text();
+      assert(response.ok, `Evidence URL failed: ${url} (${response.status})`);
+      assertIncludes(
+        response.headers.get("content-type") || "",
+        "text/html",
+        `Evidence URL content type: ${url}`,
+      );
+      assertIncludes(body, marker, `Evidence URL marker: ${url}`);
     } catch (error) {
       throw new Error(
-        `Company URL failed: ${companyUrl} (${error instanceof Error ? error.message : String(error)})`,
+        `Evidence URL failed: ${url} (${error instanceof Error ? error.message : String(error)})`,
       );
     }
   }
