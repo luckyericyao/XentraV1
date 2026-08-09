@@ -16,46 +16,48 @@ const companyUrls = [
   "https://bioaxisv3.vercel.app/",
 ];
 
-const companyEvidenceChecks = [
+const companyEvidenceUrls = [
+  "https://agentcoach-three.vercel.app/#industries",
+  "https://agentcoach-three.vercel.app/#waitlist",
+  "https://agentcoach-three.vercel.app/#coaches",
+  "https://localhostchinav1.vercel.app/journeys",
+  "https://localhostchinav1.vercel.app/inquiry?type=traveler",
+  "https://localhostchinav1.vercel.app/trust",
+  "https://bioaxisv3.vercel.app/ready-supply",
+  "https://bioaxisv3.vercel.app/equivalent-finder",
+  "https://bioaxisv3.vercel.app/request-quote",
+];
+
+const companyEvidencePages = [
   {
-    url: "https://agentcoach-three.vercel.app/#industries",
-    marker: 'id="industries"',
-  },
-  {
-    url: "https://agentcoach-three.vercel.app/#waitlist",
-    marker: 'id="waitlist"',
-  },
-  {
-    url: "https://agentcoach-three.vercel.app/#coaches",
-    marker: 'id="coaches"',
+    url: "https://agentcoach-three.vercel.app/",
+    markers: ['id="industries"', 'id="waitlist"', 'id="coaches"'],
   },
   {
     url: "https://localhostchinav1.vercel.app/journeys",
-    marker: "A cultural atlas for the China you want to enter.",
+    markers: ["A cultural atlas for the China you want to enter."],
   },
   {
     url: "https://localhostchinav1.vercel.app/inquiry?type=traveler",
-    marker: "Tell us how you want to enter China.",
+    markers: ["Tell us how you want to enter China."],
   },
   {
     url: "https://localhostchinav1.vercel.app/trust",
-    marker: "A local-host network only works if it protects both sides.",
+    markers: ["A local-host network only works if it protects both sides."],
   },
   {
     url: "https://bioaxisv3.vercel.app/ready-supply",
-    marker: "Warehouse-backed consumables for faster lab procurement.",
+    markers: ["Warehouse-backed consumables for faster lab procurement."],
   },
   {
     url: "https://bioaxisv3.vercel.app/equivalent-finder",
-    marker: "Find compatible alternatives for your current consumables",
+    markers: ["Find compatible alternatives for your current consumables"],
   },
   {
     url: "https://bioaxisv3.vercel.app/request-quote",
-    marker: "Start a sourcing request",
+    markers: ["Start a sourcing request"],
   },
 ];
-
-const companyEvidenceUrls = companyEvidenceChecks.map(({ url }) => url);
 
 function assert(condition, message) {
   assertionCount += 1;
@@ -402,7 +404,7 @@ async function verifyExternalCompanies() {
     return;
   }
 
-  for (const { url, marker } of companyEvidenceChecks) {
+  for (const { url, markers } of companyEvidencePages) {
     try {
       const response = await fetch(url, {
         cache: "no-store",
@@ -417,7 +419,9 @@ async function verifyExternalCompanies() {
         "text/html",
         `Evidence URL content type: ${url}`,
       );
-      assertIncludes(body, marker, `Evidence URL marker: ${url}`);
+      for (const marker of markers) {
+        assertIncludes(body, marker, `Evidence URL marker: ${url}`);
+      }
     } catch (error) {
       throw new Error(
         `Evidence URL failed: ${url} (${error instanceof Error ? error.message : String(error)})`,
