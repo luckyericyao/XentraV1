@@ -227,12 +227,17 @@ export function PortfolioChapters({
                     <span className="text-xs font-medium text-[#A6A39A]">
                       {copy.evidenceLabel}
                     </span>
-                    <span className="flex items-center gap-2 text-[11px] font-medium text-[#A6A39A]">
-                      <span
-                        className={`size-1.5 rounded-full ${tone.dot}`}
-                        aria-hidden="true"
-                      />
-                      {company.title}
+                    <span className="flex flex-col items-end gap-1 text-[10px] font-medium leading-none text-[#A6A39A] sm:text-[11px]">
+                      <span className="flex items-center gap-2">
+                        <span
+                          className={`size-1.5 rounded-full ${tone.dot}`}
+                          aria-hidden="true"
+                        />
+                        {company.title}
+                      </span>
+                      <span className="text-[9px] font-normal text-[#8D97A5] sm:text-[10px]">
+                        {copy.evidenceVerifiedLabel}
+                      </span>
                     </span>
                   </figcaption>
                   <a

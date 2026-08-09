@@ -70,6 +70,7 @@ export type SiteContent = {
     companyRoleLabel: string;
     companyRole: string;
     evidenceLabel: string;
+    evidenceVerifiedLabel: string;
     proofLabel: string;
     audienceLabel: string;
     decisionLabel: string;
@@ -315,6 +316,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "Operating company",
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
+      evidenceVerifiedLabel: "Checked 09 Aug 2026",
       proofLabel: "Available on the public site",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
@@ -533,6 +535,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "业务公司",
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
+      evidenceVerifiedLabel: "核验于 2026.08.09",
       proofLabel: "公开网站当前提供",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",

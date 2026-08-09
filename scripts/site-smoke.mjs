@@ -193,8 +193,11 @@ function verifyPage(result, locale) {
         "Route previews",
         "Published trust model",
         "Equivalent finder",
-        "RFQ workflow",
-      ];
+      "RFQ workflow",
+    ];
+  const evidenceVerifiedLabel = isChinese
+    ? "核验于 2026.08.09"
+    : "Checked 09 Aug 2026";
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   const contactSubjects = isChinese
@@ -227,6 +230,11 @@ function verifyPage(result, locale) {
   for (const evidence of publicEvidence) {
     assertIncludes(result.body, evidence, `${label} public evidence`);
   }
+  assertIncludes(
+    result.body,
+    evidenceVerifiedLabel,
+    `${label} evidence verification date`,
+  );
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(result.body, `href="${privacyPath}"`, `${label} privacy link`);
   assertIncludes(
