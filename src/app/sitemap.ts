@@ -8,6 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "zh-CN": `${siteUrl}/zh`,
     "x-default": `${siteUrl}/`,
   };
+  const privacyLanguages = {
+    en: `${siteUrl}/privacy`,
+    "zh-CN": `${siteUrl}/zh/privacy`,
+    "x-default": `${siteUrl}/privacy`,
+  };
 
   return [
     {
@@ -23,6 +28,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages },
+    },
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: { languages: privacyLanguages },
+    },
+    {
+      url: `${siteUrl}/zh/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: { languages: privacyLanguages },
     },
   ];
 }

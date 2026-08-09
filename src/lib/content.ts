@@ -109,6 +109,8 @@ export type SiteContent = {
   footer: {
     line: string;
     backToTopLabel: string;
+    privacyLabel: string;
+    privacyHref: string;
   };
 };
 
@@ -356,6 +358,8 @@ export const siteContent: Record<Locale, SiteContent> = {
     footer: {
       line: "Xentra — AI-native operating group for trust-heavy markets.",
       backToTopLabel: "Back to top",
+      privacyLabel: "Privacy",
+      privacyHref: "/privacy",
     },
   },
   zh: {
@@ -563,6 +567,8 @@ export const siteContent: Record<Locale, SiteContent> = {
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",
       backToTopLabel: "返回顶部",
+      privacyLabel: "隐私说明",
+      privacyHref: "/zh/privacy",
     },
   },
 };

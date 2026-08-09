@@ -155,6 +155,7 @@ function verifyPage(result, locale) {
         "RFQ workflow",
       ];
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
+  const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   const contactSubjects = isChinese
     ? ["Xentra 垂直业务合作", "Xentra 行业专家合作", "Xentra 资本合作"]
     : [
@@ -174,6 +175,7 @@ function verifyPage(result, locale) {
     assertIncludes(result.body, evidence, `${label} public evidence`);
   }
   assertIncludes(result.body, contactLabel, `${label} contact`);
+  assertIncludes(result.body, `href="${privacyPath}"`, `${label} privacy link`);
   assertIncludes(
     result.body,
     isChinese ? "AI 原生运营集团" : "AI-native operating group",
@@ -232,6 +234,48 @@ function verifyPage(result, locale) {
   }
 }
 
+function verifyPrivacyPage(result, locale) {
+  const isChinese = locale === "zh";
+  const label = isChinese ? "Chinese privacy page" : "English privacy page";
+  const expectedLang = isChinese ? "zh-CN" : "en";
+  const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
+  const canonicalHref = `${canonicalUrl}${privacyPath}`;
+  const title = isChinese ? "隐私说明。" : "Privacy, in plain terms.";
+  const evidence = isChinese
+    ? "本页没有嵌入式分析工具、广告像素或账号系统。"
+    : "The page does not use embedded analytics, advertising pixels, or an account system.";
+
+  assertStatus(result, 200, label);
+  assertIncludes(contentType(result), "text/html", `${label} content type`);
+  assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
+  assertIncludes(result.body, title, `${label} title`);
+  assertIncludes(result.body, evidence, `${label} data note`);
+  assertIncludes(
+    result.body,
+    `<link rel="canonical" href="${canonicalHref}"`,
+    `${label} canonical`,
+  );
+  assertIncludes(
+    result.body,
+    `hrefLang="zh-CN" href="${canonicalUrl}/zh/privacy"`,
+    `${label} Chinese alternate`,
+  );
+  assertIncludes(
+    result.body,
+    `hrefLang="en" href="${canonicalUrl}/privacy"`,
+    `${label} English alternate`,
+  );
+  assertIncludes(result.body, "mailto:contact@xentra.ai", `${label} contact`);
+  assert(!result.body.includes("<form"), `${label}: unexpected form`);
+  assertSecurityHeaders(result, label);
+  if (isChinese) {
+    assert(
+      result.headers.get("content-language") === "zh-CN",
+      `${label}: missing Content-Language`,
+    );
+  }
+}
+
 async function verifyExternalCompanies() {
   if (!checkExternal) {
     return;
@@ -260,6 +304,8 @@ async function run() {
     chinese,
     englishMissing,
     chineseMissing,
+    englishPrivacy,
+    chinesePrivacy,
     englishManifest,
     chineseManifest,
     englishSocial,
@@ -272,6 +318,8 @@ async function run() {
     get("/zh"),
     get("/smoke-missing-route"),
     get("/zh/smoke-missing-route"),
+    get("/privacy"),
+    get("/zh/privacy"),
     get("/manifest.webmanifest"),
     get("/zh/manifest.webmanifest"),
     get("/opengraph-image", { binary: true }),
@@ -285,6 +333,8 @@ async function run() {
 
   verifyPage(english, "en");
   verifyPage(chinese, "zh");
+  verifyPrivacyPage(englishPrivacy, "en");
+  verifyPrivacyPage(chinesePrivacy, "zh");
 
   assertStatus(englishMissing, 404, "English 404");
   assertIncludes(englishMissing.body, "Page not found", "English 404 copy");
@@ -345,6 +395,16 @@ async function run() {
   assertIncludes(contentType(sitemap), "application/xml", "Sitemap content type");
   assertIncludes(sitemap.body, `<loc>${canonicalUrl}/</loc>`, "English sitemap URL");
   assertIncludes(sitemap.body, `<loc>${canonicalUrl}/zh</loc>`, "Chinese sitemap URL");
+  assertIncludes(
+    sitemap.body,
+    `<loc>${canonicalUrl}/privacy</loc>`,
+    "English privacy sitemap URL",
+  );
+  assertIncludes(
+    sitemap.body,
+    `<loc>${canonicalUrl}/zh/privacy</loc>`,
+    "Chinese privacy sitemap URL",
+  );
 
   await verifyExternalCompanies();
   console.log(

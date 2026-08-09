@@ -442,6 +442,12 @@ export function HomePage({ locale }: HomePageProps) {
               {content.contact.email}
             </a>
             <a
+              href={content.footer.privacyHref}
+              className="text-sm transition hover:text-[#F2EFE8]"
+            >
+              {content.footer.privacyLabel}
+            </a>
+            <a
               href="#top"
               aria-label={content.footer.backToTopLabel}
               title={content.footer.backToTopLabel}

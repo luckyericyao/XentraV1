@@ -3,11 +3,12 @@
 import { type MouseEvent, useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
+  homeHref?: string;
   navItems: { label: string; href: string }[];
   languageSwitch: { label: string; href: string; lang: string };
 };
 
-export function Header({ navItems, languageSwitch }: HeaderProps) {
+export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("");
   const [scrolled, setScrolled] = useState(false);
@@ -142,9 +143,26 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-8"
       >
         <a
-          href="#top"
+          href={homeHref}
           className="text-sm font-semibold uppercase tracking-[0.14em] text-[#F2EFE8]"
-          onClick={() => setMenuOpen(false)}
+          onClick={(event) => {
+            setMenuOpen(false);
+
+            if (homeHref !== "#top") {
+              return;
+            }
+
+            const main = document.getElementById("top");
+
+            if (!main) {
+              return;
+            }
+
+            event.preventDefault();
+            main.focus();
+            main.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.history.replaceState(null, "", "#top");
+          }}
         >
           Xentra
         </a>
