@@ -22,7 +22,7 @@ export type Company = {
 export type SiteContent = {
   lang: string;
   navItems: { label: string; href: string }[];
-  languageSwitch: { label: string; href: string };
+  languageSwitch: { label: string; href: string; lang: string };
   hero: {
     eyebrow: string;
     title: string;
@@ -144,7 +144,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       { label: "Model", href: "#model" },
       { label: "Contact", href: "#contact" },
     ],
-    languageSwitch: { label: "中文", href: "/zh" },
+    languageSwitch: { label: "中文", href: "/zh", lang: "zh-CN" },
     hero: {
       eyebrow: "Operating group",
       title: "Decision infrastructure for trust-heavy markets.",
@@ -318,7 +318,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       copyErrorLabel: "Copy failed",
     },
     footer: {
-      line: "Xentra — AI-enabled operating group for trust-heavy decisions.",
+      line: "Xentra — AI-native operating group for trust-heavy markets.",
       backToTopLabel: "Back to top",
     },
   },
@@ -330,7 +330,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       { label: "方法", href: "#model" },
       { label: "联系", href: "#contact" },
     ],
-    languageSwitch: { label: "EN", href: "/" },
+    languageSwitch: { label: "EN", href: "/", lang: "en" },
     hero: {
       eyebrow: "AI 原生运营集团",
       title: "把复杂市场，做成可信系统。",

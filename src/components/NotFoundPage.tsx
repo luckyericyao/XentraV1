@@ -16,7 +16,8 @@ const notFoundCopy = {
     primaryHref: "/",
     secondaryLabel: "中文",
     secondaryHref: "/zh",
-    footerLabel: "Xentra / AI-enabled operating group",
+    secondaryLang: "zh-CN",
+    footerLabel: "Xentra / AI-native operating group",
   },
   zh: {
     lang: "zh-CN",
@@ -27,6 +28,7 @@ const notFoundCopy = {
     primaryHref: "/zh",
     secondaryLabel: "EN",
     secondaryHref: "/",
+    secondaryLang: "en",
     footerLabel: "Xentra / AI 原生运营集团",
   },
 } as const;
@@ -55,7 +57,9 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
           </Link>
           <Link
             href={copy.secondaryHref}
-            className="rounded-full border border-[rgba(198,161,91,0.22)] px-3 py-1.5 text-xs font-medium text-[#A6A39A] transition hover:border-[#C6A15B] hover:text-[#F2EFE8]"
+            hrefLang={copy.secondaryLang}
+            lang={copy.secondaryLang}
+            className="inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.22)] px-3 text-xs font-medium text-[#A6A39A] transition hover:border-[#C6A15B] hover:text-[#F2EFE8]"
           >
             {copy.secondaryLabel}
           </Link>
@@ -84,6 +88,8 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
               </Link>
               <Link
                 href={copy.secondaryHref}
+                hrefLang={copy.secondaryLang}
+                lang={copy.secondaryLang}
                 className="inline-flex rounded-full border border-[#2A2D33] px-6 py-3 text-sm font-medium text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
               >
                 {copy.secondaryLabel}

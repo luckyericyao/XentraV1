@@ -4,7 +4,7 @@ import { type MouseEvent, useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
   navItems: { label: string; href: string }[];
-  languageSwitch: { label: string; href: string };
+  languageSwitch: { label: string; href: string; lang: string };
 };
 
 export function Header({ navItems, languageSwitch }: HeaderProps) {
@@ -169,6 +169,8 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
           ))}
           <a
             href={languageSwitch.href}
+            hrefLang={languageSwitch.lang}
+            lang={languageSwitch.lang}
             onClick={handleLanguageSwitch}
             className="inline-flex min-h-9 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
@@ -178,6 +180,8 @@ export function Header({ navItems, languageSwitch }: HeaderProps) {
         <div className="flex items-center gap-2 md:hidden">
           <a
             href={languageSwitch.href}
+            hrefLang={languageSwitch.lang}
+            lang={languageSwitch.lang}
             onClick={handleLanguageSwitch}
             className="inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >

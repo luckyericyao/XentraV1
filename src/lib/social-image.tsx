@@ -16,7 +16,7 @@ const socialImageCopy: Record<
   }
 > = {
   en: {
-    eyebrow: "Operating Group",
+    eyebrow: "AI-Native Operating Group",
     title: ["Decision infrastructure", "for trust-heavy markets."],
     tags: "AI Capability    /    Local Access    /    Scientific Sourcing",
   },
@@ -84,9 +84,9 @@ export function createSocialImage(locale: SocialImageLocale = "en") {
               fontSize: 14,
               letterSpacing: "0.12em",
               padding: "12px 18px",
-            textTransform: locale === "en" ? "uppercase" : "none",
-          }}
-        >
+              textTransform: locale === "en" ? "uppercase" : "none",
+            }}
+          >
             {copy.eyebrow}
           </div>
         </div>

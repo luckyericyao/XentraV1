@@ -147,6 +147,15 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(
     result.body,
+    isChinese ? "AI 原生运营集团" : "AI-native operating group",
+    `${label} group positioning`,
+  );
+  assert(
+    !result.body.includes("AI-enabled operating group"),
+    `${label}: legacy AI-enabled positioning is still present`,
+  );
+  assertIncludes(
+    result.body,
     `<link rel="canonical" href="${canonicalHref}"`,
     `${label} canonical`,
   );
@@ -250,6 +259,15 @@ async function run() {
 
   assertStatus(englishMissing, 404, "English 404");
   assertIncludes(englishMissing.body, "Page not found", "English 404 copy");
+  assertIncludes(
+    englishMissing.body,
+    "AI-native operating group",
+    "English 404 positioning",
+  );
+  assert(
+    !englishMissing.body.includes("AI-enabled operating group"),
+    "English 404: legacy positioning is still present",
+  );
   assertSecurityHeaders(englishMissing, "English 404");
   assertStatus(chineseMissing, 404, "Chinese 404");
   assertIncludes(chineseMissing.body, "页面不存在", "Chinese 404 copy");
@@ -259,9 +277,9 @@ async function run() {
   );
   assertSecurityHeaders(chineseMissing, "Chinese 404");
 
-  for (const [result, label, startUrl] of [
-    [englishManifest, "English manifest", "/"],
-    [chineseManifest, "Chinese manifest", "/zh"],
+  for (const [result, label, startUrl, positioning] of [
+    [englishManifest, "English manifest", "/", "AI-native operating group"],
+    [chineseManifest, "Chinese manifest", "/zh", "AI 原生运营集团"],
   ]) {
     assertStatus(result, 200, label);
     assertIncludes(
@@ -272,6 +290,7 @@ async function run() {
     const manifest = JSON.parse(result.body);
     assert(manifest.name === "Xentra", `${label}: invalid name`);
     assert(manifest.start_url === startUrl, `${label}: invalid start_url`);
+    assertIncludes(manifest.description, positioning, `${label} positioning`);
   }
 
   for (const [result, label] of [

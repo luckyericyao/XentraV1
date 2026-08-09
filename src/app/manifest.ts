@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Xentra",
     short_name: "Xentra",
     description:
-      "An AI-enabled operating group building vertical companies for trust-heavy markets.",
+      "An AI-native operating group building vertical companies for trust-heavy markets.",
     start_url: "/",
     display: "standalone",
     background_color: "#070809",
