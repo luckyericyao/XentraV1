@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 type ContactActionsProps = {
   email: string;
+  emailLabel?: string;
   mailto: string;
   copyLabel: string;
   copiedLabel: string;
@@ -28,6 +29,7 @@ function copyTextFallback(value: string) {
 
 export function ContactActions({
   email,
+  emailLabel,
   mailto,
   copyLabel,
   copiedLabel,
@@ -89,15 +91,15 @@ export function ContactActions({
     <div className="flex flex-wrap items-center gap-3">
       <a
         href={mailto}
-        className="inline-flex rounded-full border border-[rgba(198,161,91,0.42)] bg-[#070809] px-5 py-2.5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+        className="inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.42)] bg-[#070809] px-5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
       >
-        {email}
+        {emailLabel ?? email}
       </a>
       <button
         type="button"
         onClick={copyEmail}
         aria-label={statusLabel}
-        className="inline-flex min-h-10 min-w-[6.5rem] items-center justify-center rounded-full border border-[#2A2D33] px-4 py-2 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
+        className="inline-flex min-h-11 min-w-[6.5rem] items-center justify-center rounded-full border border-[#2A2D33] px-4 text-sm text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
       >
         <span role="status" aria-live="polite" aria-atomic="true">
           {statusLabel}

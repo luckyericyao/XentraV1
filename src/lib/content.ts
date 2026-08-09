@@ -76,9 +76,18 @@ export type SiteContent = {
     steps: { title: string; body: string }[];
   };
   contact: {
+    eyebrow: string;
     title: string;
     bodyPrefix: string;
     body?: string[];
+    pathwaysLabel: string;
+    pathways: {
+      audience: string;
+      title: string;
+      body: string;
+      mailto: string;
+    }[];
+    companiesLabel: string;
     ctaLabel?: string;
     email: string;
     mailto: string;
@@ -105,9 +114,25 @@ const companyLinks = {
 };
 
 const contactEmail = "contact@xentra.ai";
+const createContactMailto = (subject: string, body?: string) =>
+  `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}${
+    body ? `&body=${encodeURIComponent(body)}` : ""
+  }`;
+
+const contactPrompt = {
+  en: [
+    "Market or domain:",
+    "What you currently operate or know:",
+    "What you would like to discuss:",
+  ].join("\n\n"),
+  zh: ["市场或行业：", "你正在运营或掌握的资源：", "希望讨论的方向："].join(
+    "\n\n",
+  ),
+};
+
 const contactMailto = {
-  en: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra partnership inquiry")}`,
-  zh: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra 业务合作咨询")}`,
+  en: createContactMailto("Xentra partnership inquiry", contactPrompt.en),
+  zh: createContactMailto("Xentra 业务合作咨询", contactPrompt.zh),
 };
 
 export const siteContent: Record<Locale, SiteContent> = {
@@ -248,10 +273,42 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     contact: {
+      eyebrow: "Partnerships",
       title: "Build with Xentra.",
       body: [
-        "We partner with operators, domain experts, and capital partners to build vertical companies in trust-heavy markets.",
+        "We work with operators, specialists, and capital partners who can stay with a market for the long term.",
       ],
+      pathwaysLabel: "Choose a conversation",
+      pathways: [
+        {
+          audience: "Operators",
+          title: "Build an operating company.",
+          body: "For people with market access, domain context, and the ability to own delivery.",
+          mailto: createContactMailto(
+            "Xentra operating company discussion",
+            contactPrompt.en,
+          ),
+        },
+        {
+          audience: "Experts",
+          title: "Bring domain judgment.",
+          body: "For specialists who know where trust, context, and execution break down.",
+          mailto: createContactMailto(
+            "Xentra domain partnership",
+            contactPrompt.en,
+          ),
+        },
+        {
+          audience: "Capital",
+          title: "Back durable verticals.",
+          body: "For capital partners exploring long-term company formation in complex markets.",
+          mailto: createContactMailto(
+            "Xentra capital partnership",
+            contactPrompt.en,
+          ),
+        },
+      ],
+      companiesLabel: "Company inquiries",
       bodyPrefix: "Contact:",
       ctaLabel: "contact@xentra.ai",
       email: contactEmail,
@@ -413,10 +470,33 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     contact: {
-      title: "与 Xentra 讨论新的垂直业务机会。",
+      eyebrow: "与 Xentra 合作",
+      title: "共同建立长期业务。",
       body: [
-        "我们与运营者、行业专家和资本伙伴共同讨论新的垂直业务。",
+        "我们寻找真正理解市场，能够长期投入运营、专业判断或资本支持的合作方。",
       ],
+      pathwaysLabel: "选择合作方向",
+      pathways: [
+        {
+          audience: "运营者",
+          title: "共同建立业务。",
+          body: "适合熟悉具体市场，并能长期负责运营与交付的团队。",
+          mailto: createContactMailto("Xentra 垂直业务合作", contactPrompt.zh),
+        },
+        {
+          audience: "行业专家",
+          title: "提供专业判断。",
+          body: "适合了解行业规则、信任关系与交付难点的专业人士。",
+          mailto: createContactMailto("Xentra 行业专家合作", contactPrompt.zh),
+        },
+        {
+          audience: "资本伙伴",
+          title: "讨论长期建设。",
+          body: "适合关注垂直业务建设与长期价值的资本伙伴。",
+          mailto: createContactMailto("Xentra 资本合作", contactPrompt.zh),
+        },
+      ],
+      companiesLabel: "具体业务咨询",
       bodyPrefix: "邮箱：",
       ctaLabel: "contact@xentra.ai",
       email: contactEmail,

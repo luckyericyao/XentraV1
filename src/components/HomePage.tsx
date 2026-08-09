@@ -310,31 +310,105 @@ export function HomePage({ locale }: HomePageProps) {
         >
           <div className="mx-auto max-w-7xl">
             <div className="rounded-lg border border-[rgba(198,161,91,0.24)] bg-[#101214] p-8 shadow-[0_34px_120px_rgba(0,0,0,0.34)] sm:p-10 lg:p-14">
-              <div className="grid gap-14 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-                <h2
-                  id="contact-title"
-                  className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-7xl lg:text-8xl"
-                >
-                  {content.contact.title}
-                </h2>
-                <div className="max-w-lg text-sm leading-7 text-[#A6A39A]">
+              <div className="grid gap-14 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+                <div className="lg:sticky lg:top-28 lg:self-start">
+                  <p className="eyebrow mb-5 text-[#B49459]">
+                    {content.contact.eyebrow}
+                  </p>
+                  <h2
+                    id="contact-title"
+                    className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-6xl lg:text-7xl"
+                  >
+                    {content.contact.title}
+                  </h2>
                   {content.contact.body ? (
-                    <div className="mb-8 space-y-4 text-base leading-7">
+                    <div className="mt-7 max-w-lg space-y-4 text-base leading-7 text-[#A6A39A]">
                       {content.contact.body.map((paragraph) => (
                         <p key={paragraph}>{paragraph}</p>
                       ))}
                     </div>
                   ) : null}
-                  <p className="eyebrow mb-3 text-[#B49459]">
-                    {content.contact.bodyPrefix}
+                </div>
+
+                <div>
+                  <p
+                    id="contact-pathways-title"
+                    className="eyebrow text-[#B49459]"
+                  >
+                    {content.contact.pathwaysLabel}
                   </p>
-                  <ContactActions
-                    email={content.contact.ctaLabel ?? content.contact.email}
-                    mailto={content.contact.mailto}
-                    copyLabel={content.contact.copyLabel}
-                    copiedLabel={content.contact.copiedLabel}
-                    copyErrorLabel={content.contact.copyErrorLabel}
-                  />
+                  <div
+                    role="group"
+                    aria-labelledby="contact-pathways-title"
+                    className="mt-5 border-y border-[#2A2D33]"
+                  >
+                    {content.contact.pathways.map((pathway, index) => (
+                      <a
+                        key={pathway.title}
+                        href={pathway.mailto}
+                        className="group grid min-h-28 grid-cols-[1fr_auto] items-center gap-x-5 gap-y-3 border-b border-[#2A2D33] py-5 last:border-b-0 sm:grid-cols-[8.5rem_1fr_auto] sm:py-6"
+                      >
+                        <span className="eyebrow col-span-2 text-[#8D97A5] transition group-hover:text-[#C6A15B] sm:col-span-1">
+                          {String(index + 1).padStart(2, "0")} / {pathway.audience}
+                        </span>
+                        <span className="min-w-0">
+                          <h3 className="text-lg font-semibold text-[#F2EFE8] sm:text-xl">
+                            {pathway.title}
+                          </h3>
+                          <span className="mt-2 block text-sm leading-6 text-[#A6A39A]">
+                            {pathway.body}
+                          </span>
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          className="text-lg text-[#B49459] transition duration-300 group-hover:translate-x-1 group-hover:text-[#C6A15B]"
+                        >
+                          &#8599;
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+
+                  <div className="mt-9 grid gap-8 border-t border-[#2A2D33] pt-8 sm:grid-cols-2">
+                    <div>
+                      <p className="eyebrow mb-4 text-[#B49459]">
+                        {content.contact.bodyPrefix}
+                      </p>
+                      <ContactActions
+                        email={content.contact.email}
+                        emailLabel={content.contact.ctaLabel}
+                        mailto={content.contact.mailto}
+                        copyLabel={content.contact.copyLabel}
+                        copiedLabel={content.contact.copiedLabel}
+                        copyErrorLabel={content.contact.copyErrorLabel}
+                      />
+                    </div>
+                    <div>
+                      <p className="eyebrow mb-3 text-[#B49459]">
+                        {content.contact.companiesLabel}
+                      </p>
+                      <div className="grid">
+                        {content.companies.items.map((company) => (
+                          <a
+                            key={`${company.slug}-contact`}
+                            href={company.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${company.title} (${content.companies.externalLinkLabel})`}
+                            className="group inline-flex min-h-11 items-center justify-between border-b border-[#2A2D33] text-sm text-[#A6A39A] transition last:border-b-0 hover:text-[#F2EFE8]"
+                          >
+                            {company.title}
+                            <span
+                              aria-hidden="true"
+                              className="text-[#B49459] transition group-hover:translate-x-1"
+                            >
+                              &#8599;
+                            </span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

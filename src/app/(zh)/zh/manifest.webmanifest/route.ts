@@ -20,5 +20,9 @@ const chineseManifest = {
 };
 
 export function GET() {
-  return NextResponse.json(chineseManifest);
+  return NextResponse.json(chineseManifest, {
+    headers: {
+      "Content-Type": "application/manifest+json; charset=utf-8",
+    },
+  });
 }

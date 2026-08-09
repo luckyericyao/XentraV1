@@ -31,6 +31,7 @@ export function StructuredData({ locale }: StructuredDataProps) {
           "@type": "ContactPoint",
           contactType: "partnerships",
           email: content.contact.email,
+          url: `${pageUrl}#contact`,
           availableLanguage: ["en", "zh-CN"],
         },
         subOrganization: content.companies.items.map((company) => ({
