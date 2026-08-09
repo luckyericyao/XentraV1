@@ -129,8 +129,31 @@ function verifyPage(result, locale) {
   const canonicalPath = isChinese ? "/zh" : "/";
   const canonicalHref = isChinese ? `${canonicalUrl}/zh` : canonicalUrl;
   const portfolioTitle = isChinese
-    ? "同一套方法，进入三个具体市场。"
-    : "Three markets. One operating system.";
+    ? "集团复用能力，业务承担结果。"
+    : "Shared capabilities. Accountable operators.";
+  const groupCapabilities = isChinese
+    ? ["选择市场", "建立判断产品", "设定验证标准", "搭建公司系统"]
+    : [
+        "Market selection",
+        "Decision products",
+        "Verification design",
+        "Company systems",
+      ];
+  const publicEvidence = isChinese
+    ? [
+        "行业教练目录",
+        "公开路线样本",
+        "信任机制说明",
+        "替代品匹配入口",
+        "询价工作流",
+      ]
+    : [
+        "Industry coach directory",
+        "Route previews",
+        "Published trust model",
+        "Equivalent finder",
+        "RFQ workflow",
+      ];
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
   const contactSubjects = isChinese
     ? ["Xentra 垂直业务合作", "Xentra 行业专家合作", "Xentra 资本合作"]
@@ -144,6 +167,12 @@ function verifyPage(result, locale) {
   assertIncludes(contentType(result), "text/html", `${label} content type`);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
+  for (const capability of groupCapabilities) {
+    assertIncludes(result.body, capability, `${label} group capability`);
+  }
+  for (const evidence of publicEvidence) {
+    assertIncludes(result.body, evidence, `${label} public evidence`);
+  }
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(
     result.body,

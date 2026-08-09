@@ -18,3 +18,9 @@ SMOKE_BASE_URL=http://127.0.0.1:3101 pnpm smoke
 ```
 
 Set `SMOKE_EXTERNAL=1` to include the three live operating-company URLs.
+
+## Content integrity
+
+Portfolio evidence may describe only capabilities currently visible on the
+linked public company sites. Do not add customer names, commercial metrics,
+contracts, funding, or operating claims without a source that can be verified.

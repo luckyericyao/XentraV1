@@ -16,6 +16,7 @@ export type Company = {
     audience: string;
     decision: string;
     delivery: string;
+    proof: string[];
   };
 };
 
@@ -64,8 +65,12 @@ export type SiteContent = {
     title: string;
     body: string;
     systemLabel: string;
-    systemItems: string[];
+    systemBody: string;
+    systemItems: { title: string; body: string }[];
+    companyRoleLabel: string;
+    companyRole: string;
     evidenceLabel: string;
+    proofLabel: string;
     audienceLabel: string;
     decisionLabel: string;
     deliveryLabel: string;
@@ -194,6 +199,11 @@ export const siteContent: Record<Locale, SiteContent> = {
               "Which coach and workflow fit the field and decision at hand.",
             delivery:
               "Industry-specific AI coaches, structured guidance, and professional review.",
+            proof: [
+              "Industry coach directory",
+              "Access request",
+              "Coach application",
+            ],
           },
         },
         {
@@ -212,6 +222,11 @@ export const siteContent: Record<Locale, SiteContent> = {
               "Which places, hosts, and local context are worth trusting.",
             delivery:
               "Private route design, host matching, cultural context, and practical support.",
+            proof: [
+              "Route previews",
+              "Private route intake",
+              "Published trust model",
+            ],
           },
         },
         {
@@ -230,22 +245,43 @@ export const siteContent: Record<Locale, SiteContent> = {
               "Which product, equivalent, document path, and supplier route fit the request.",
             delivery:
               "Equivalent review, sample paths, supplier documents, and RFQ-ready briefs.",
+            proof: [
+              "Ready-supply paths",
+              "Equivalent finder",
+              "RFQ workflow",
+            ],
           },
         },
       ],
     },
     portfolio: {
-      eyebrow: "Operating Companies",
-      title: "Three markets. One operating system.",
-      body: "The companies begin together, then separate into the market, decision, and delivery surface each one owns.",
-      systemLabel: "Shared by Xentra",
+      eyebrow: "Group Architecture",
+      title: "Shared capabilities. Accountable operators.",
+      body: "Xentra centralizes the work that compounds across markets. Each company stays close to its customer and owns delivery.",
+      systemLabel: "Parent operating group",
+      systemBody: "The repeatable system behind each company.",
       systemItems: [
-        "Structure the market",
-        "Apply AI judgment",
-        "Verify where trust matters",
-        "Deliver through operations",
+        {
+          title: "Market selection",
+          body: "Find recurring decisions where information is fragmented and execution matters.",
+        },
+        {
+          title: "Decision products",
+          body: "Turn repeated judgment into structured, AI-assisted workflows.",
+        },
+        {
+          title: "Verification design",
+          body: "Define where evidence, experts, and human review must enter.",
+        },
+        {
+          title: "Company systems",
+          body: "Build the product, brand, and operating rhythm around the market.",
+        },
       ],
-      evidenceLabel: "Live company surface",
+      companyRoleLabel: "Operating company",
+      companyRole: "Owns market, customer, and delivery",
+      evidenceLabel: "Public product evidence",
+      proofLabel: "Available on the public site",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
       deliveryLabel: "Delivers",
@@ -393,6 +429,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "面对复杂行业决策的专业人士与团队。",
             decision: "当前问题适合哪类教练、哪种工作方式。",
             delivery: "行业化 AI 教练、结构化指导与专业复核。",
+            proof: ["行业教练目录", "用户准入申请", "教练加入入口"],
           },
         },
         {
@@ -410,6 +447,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "希望以私人方式进入中国的国际旅行者。",
             decision: "哪些地方、主理人和文化语境值得信任。",
             delivery: "私人路线、主理人匹配、文化解释与现实支持。",
+            proof: ["公开路线样本", "私人路线需求表", "信任机制说明"],
           },
         },
         {
@@ -427,22 +465,39 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "采购生命科学耗材的实验室与专业买方。",
             decision: "哪种产品、替代品、文件和供应路径符合需求。",
             delivery: "替代评估、样品路径、供应文件与询价简报。",
+            proof: ["现货供应路径", "替代品匹配入口", "询价工作流"],
           },
         },
       ],
     },
     portfolio: {
-      eyebrow: "业务展开",
-      title: "同一套方法，进入三个具体市场。",
-      body: "先看集团如何识别问题，再看每家公司如何面对用户、完成判断和交付。",
-      systemLabel: "Xentra 共同能力",
+      eyebrow: "集团架构",
+      title: "集团复用能力，业务承担结果。",
+      body: "Xentra 集中建设可跨市场复用的能力；每家公司贴近客户，独立负责市场与交付。",
+      systemLabel: "AI 原生运营集团",
+      systemBody: "建设每家公司背后可复用的系统。",
       systemItems: [
-        "整理市场信息",
-        "用 AI 提高判断效率",
-        "在关键节点验证",
-        "由业务完成交付",
+        {
+          title: "选择市场",
+          body: "寻找信息分散、判断困难且执行决定结果的长期问题。",
+        },
+        {
+          title: "建立判断产品",
+          body: "把反复发生的判断整理成 AI 辅助流程。",
+        },
+        {
+          title: "设定验证标准",
+          body: "明确哪些环节必须引入证据、专家与人工确认。",
+        },
+        {
+          title: "搭建公司系统",
+          body: "围绕具体市场建立产品、品牌与运营节奏。",
+        },
       ],
-      evidenceLabel: "业务网站实景",
+      companyRoleLabel: "业务公司",
+      companyRole: "负责市场、客户与交付",
+      evidenceLabel: "公开业务证据",
+      proofLabel: "公开网站当前提供",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",
       deliveryLabel: "实际交付",
