@@ -263,14 +263,28 @@ export function PortfolioChapters({
                     >
                       {company.evidence.proof.map((item) => (
                         <li
-                          key={item}
-                          className="flex min-h-16 items-center gap-3 border-b border-[rgba(242,239,232,0.1)] px-4 py-3 text-xs leading-5 text-[#A6A39A] last:border-b-0 sm:border-b-0 sm:border-r sm:px-5 sm:last:border-r-0"
+                          key={item.label}
+                          className="border-b border-[rgba(242,239,232,0.1)] last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
                         >
-                          <span
-                            aria-hidden="true"
-                            className={`size-1.5 shrink-0 rounded-full ${tone.dot}`}
-                          />
-                          <span>{item}</span>
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${item.label} (${externalLinkLabel})`}
+                            className="group/proof flex min-h-16 w-full items-center gap-3 px-4 py-3 text-xs leading-5 text-[#A6A39A] transition hover:text-[#F2EFE8] sm:px-5"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className={`size-1.5 shrink-0 rounded-full ${tone.dot}`}
+                            />
+                            <span className="min-w-0 flex-1">{item.label}</span>
+                            <span
+                              aria-hidden="true"
+                              className="text-[#8D97A5] transition group-hover/proof:text-[#C6A15B]"
+                            >
+                              &#8599;
+                            </span>
+                          </a>
                         </li>
                       ))}
                     </ul>

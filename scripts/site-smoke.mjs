@@ -16,6 +16,16 @@ const companyUrls = [
   "https://bioaxisv3.vercel.app/",
 ];
 
+const companyEvidenceUrls = [
+  "https://agentcoach-three.vercel.app/",
+  "https://localhostchinav1.vercel.app/journeys",
+  "https://localhostchinav1.vercel.app/inquiry?type=traveler",
+  "https://localhostchinav1.vercel.app/trust",
+  "https://bioaxisv3.vercel.app/ready-supply",
+  "https://bioaxisv3.vercel.app/equivalent-finder",
+  "https://bioaxisv3.vercel.app/request-quote",
+];
+
 function assert(condition, message) {
   assertionCount += 1;
   if (!condition) {
@@ -196,8 +206,8 @@ function verifyPage(result, locale) {
       "RFQ workflow",
     ];
   const evidenceVerifiedLabel = isChinese
-    ? "核验于 2026.08.09"
-    : "Checked 09 Aug 2026";
+    ? "核验于 2026.08.10"
+    : "Checked 10 Aug 2026";
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   const contactSubjects = isChinese
@@ -266,6 +276,10 @@ function verifyPage(result, locale) {
     assertIncludes(result.body, companyUrl, `${label} company link`);
   }
 
+  for (const evidenceUrl of companyEvidenceUrls) {
+    assertIncludes(result.body, evidenceUrl, `${label} evidence link`);
+  }
+
   const subjects = mailtoSubjects(result.body);
   for (const subject of contactSubjects) {
     assert(subjects.includes(subject), `${label}: missing mailto subject ${subject}`);
@@ -317,8 +331,8 @@ function verifyPrivacyPage(result, locale) {
     ? "本页没有嵌入式分析工具、广告像素或账号系统。"
     : "The page does not use embedded analytics, advertising pixels, or an account system.";
   const reviewedLabel = isChinese
-    ? "最近核验：2026.08.09"
-    : "Last reviewed 09 Aug 2026";
+    ? "最近核验：2026.08.10"
+    : "Last reviewed 10 Aug 2026";
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
@@ -357,7 +371,7 @@ async function verifyExternalCompanies() {
     return;
   }
 
-  for (const companyUrl of companyUrls) {
+  for (const companyUrl of companyEvidenceUrls) {
     try {
       const response = await fetch(companyUrl, {
         cache: "no-store",

@@ -1,5 +1,10 @@
 export type Locale = "en" | "zh";
 
+export type EvidenceProof = {
+  label: string;
+  href: string;
+};
+
 export type Company = {
   slug: string;
   title: string;
@@ -16,7 +21,7 @@ export type Company = {
     audience: string;
     decision: string;
     delivery: string;
-    proof: string[];
+    proof: EvidenceProof[];
   };
 };
 
@@ -120,6 +125,24 @@ const companyLinks = {
   localhost: "https://localhostchinav1.vercel.app/",
   bioaxis: "https://bioaxisv3.vercel.app/",
 };
+
+const evidenceLinks = {
+  agentCoach: {
+    industries: `${companyLinks.agentCoach}#industries`,
+    access: `${companyLinks.agentCoach}#waitlist`,
+    coaches: `${companyLinks.agentCoach}#coaches`,
+  },
+  localhost: {
+    routes: `${companyLinks.localhost}journeys`,
+    inquiry: `${companyLinks.localhost}inquiry?type=traveler`,
+    trust: `${companyLinks.localhost}trust`,
+  },
+  bioaxis: {
+    readySupply: `${companyLinks.bioaxis}ready-supply`,
+    equivalents: `${companyLinks.bioaxis}equivalent-finder`,
+    quote: `${companyLinks.bioaxis}request-quote`,
+  },
+} as const;
 
 const contactEmail = "contact@xentra.ai";
 const createContactMailto = (subject: string, body?: string) =>
@@ -235,9 +258,15 @@ export const siteContent: Record<Locale, SiteContent> = {
             delivery:
               "Industry-specific AI coaches, structured guidance, and professional review.",
             proof: [
-              "Industry coach directory",
-              "Access request",
-              "Coach application",
+              {
+                label: "Industry coach directory",
+                href: evidenceLinks.agentCoach.industries,
+              },
+              { label: "Access request", href: evidenceLinks.agentCoach.access },
+              {
+                label: "Coach application",
+                href: evidenceLinks.agentCoach.coaches,
+              },
             ],
           },
         },
@@ -258,9 +287,15 @@ export const siteContent: Record<Locale, SiteContent> = {
             delivery:
               "Private route design, host matching, cultural context, and practical support.",
             proof: [
-              "Route previews",
-              "Private route intake",
-              "Published trust model",
+              { label: "Route previews", href: evidenceLinks.localhost.routes },
+              {
+                label: "Private route intake",
+                href: evidenceLinks.localhost.inquiry,
+              },
+              {
+                label: "Published trust model",
+                href: evidenceLinks.localhost.trust,
+              },
             ],
           },
         },
@@ -281,9 +316,15 @@ export const siteContent: Record<Locale, SiteContent> = {
             delivery:
               "Equivalent review, sample paths, supplier documents, and RFQ-ready briefs.",
             proof: [
-              "Ready-supply paths",
-              "Equivalent finder",
-              "RFQ workflow",
+              {
+                label: "Ready-supply paths",
+                href: evidenceLinks.bioaxis.readySupply,
+              },
+              {
+                label: "Equivalent finder",
+                href: evidenceLinks.bioaxis.equivalents,
+              },
+              { label: "RFQ workflow", href: evidenceLinks.bioaxis.quote },
             ],
           },
         },
@@ -316,7 +357,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "Operating company",
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
-      evidenceVerifiedLabel: "Checked 09 Aug 2026",
+      evidenceVerifiedLabel: "Checked 10 Aug 2026",
       proofLabel: "Available on the public site",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
@@ -467,7 +508,11 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "面对复杂行业决策的专业人士与团队。",
             decision: "当前问题适合哪类教练、哪种工作方式。",
             delivery: "行业化 AI 教练、结构化指导与专业复核。",
-            proof: ["行业教练目录", "用户准入申请", "教练加入入口"],
+            proof: [
+              { label: "行业教练目录", href: evidenceLinks.agentCoach.industries },
+              { label: "用户准入申请", href: evidenceLinks.agentCoach.access },
+              { label: "教练加入入口", href: evidenceLinks.agentCoach.coaches },
+            ],
           },
         },
         {
@@ -485,7 +530,11 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "希望以私人方式进入中国的国际旅行者。",
             decision: "哪些地方、主理人和文化语境值得信任。",
             delivery: "私人路线、主理人匹配、文化解释与现实支持。",
-            proof: ["公开路线样本", "私人路线需求表", "信任机制说明"],
+            proof: [
+              { label: "公开路线样本", href: evidenceLinks.localhost.routes },
+              { label: "私人路线需求表", href: evidenceLinks.localhost.inquiry },
+              { label: "信任机制说明", href: evidenceLinks.localhost.trust },
+            ],
           },
         },
         {
@@ -503,7 +552,11 @@ export const siteContent: Record<Locale, SiteContent> = {
             audience: "采购生命科学耗材的实验室与专业买方。",
             decision: "哪种产品、替代品、文件和供应路径符合需求。",
             delivery: "替代评估、样品路径、供应文件与询价简报。",
-            proof: ["现货供应路径", "替代品匹配入口", "询价工作流"],
+            proof: [
+              { label: "现货供应路径", href: evidenceLinks.bioaxis.readySupply },
+              { label: "替代品匹配入口", href: evidenceLinks.bioaxis.equivalents },
+              { label: "询价工作流", href: evidenceLinks.bioaxis.quote },
+            ],
           },
         },
       ],
@@ -535,7 +588,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "业务公司",
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
-      evidenceVerifiedLabel: "核验于 2026.08.09",
+      evidenceVerifiedLabel: "核验于 2026.08.10",
       proofLabel: "公开网站当前提供",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",
