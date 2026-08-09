@@ -126,20 +126,52 @@ const createContactMailto = (subject: string, body?: string) =>
     body ? `&body=${encodeURIComponent(body)}` : ""
   }`;
 
-const contactPrompt = {
-  en: [
-    "Market or domain:",
-    "What you currently operate or know:",
-    "What you would like to discuss:",
-  ].join("\n\n"),
-  zh: ["市场或行业：", "你正在运营或掌握的资源：", "希望讨论的方向："].join(
-    "\n\n",
-  ),
+const contactPrompts = {
+  en: {
+    general: [
+      "Market or domain:",
+      "What you currently operate or know:",
+      "What you would like to discuss:",
+    ].join("\n\n"),
+    operators: [
+      "Market or domain:",
+      "What you currently operate:",
+      "What you would like to build with Xentra:",
+    ].join("\n\n"),
+    experts: [
+      "Market or domain:",
+      "Where judgment or execution breaks down:",
+      "What expertise or context you bring:",
+    ].join("\n\n"),
+    capital: [
+      "Markets or themes you back:",
+      "Your investment horizon:",
+      "What you would like to explore with Xentra:",
+    ].join("\n\n"),
+  },
+  zh: {
+    general: ["市场或行业：", "你正在运营或掌握的资源：", "希望讨论的方向："].join(
+      "\n\n",
+    ),
+    operators: ["市场或行业：", "你正在运营的业务：", "希望与 Xentra 共同建立什么："].join(
+      "\n\n",
+    ),
+    experts: [
+      "市场或行业：",
+      "哪里最需要专业判断或现实验证：",
+      "你能带来的经验或语境：",
+    ].join("\n\n"),
+    capital: [
+      "你关注的市场或方向：",
+      "你的投资周期：",
+      "希望与 Xentra 探讨什么：",
+    ].join("\n\n"),
+  },
 };
 
 const contactMailto = {
-  en: createContactMailto("Xentra partnership inquiry", contactPrompt.en),
-  zh: createContactMailto("Xentra 业务合作咨询", contactPrompt.zh),
+  en: createContactMailto("Xentra partnership inquiry", contactPrompts.en.general),
+  zh: createContactMailto("Xentra 业务合作咨询", contactPrompts.zh.general),
 };
 
 export const siteContent: Record<Locale, SiteContent> = {
@@ -324,7 +356,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           body: "For people with market access, domain context, and the ability to own delivery.",
           mailto: createContactMailto(
             "Xentra operating company discussion",
-            contactPrompt.en,
+            contactPrompts.en.operators,
           ),
         },
         {
@@ -333,7 +365,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           body: "For specialists who know where trust, context, and execution break down.",
           mailto: createContactMailto(
             "Xentra domain partnership",
-            contactPrompt.en,
+            contactPrompts.en.experts,
           ),
         },
         {
@@ -342,7 +374,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           body: "For capital partners exploring long-term company formation in complex markets.",
           mailto: createContactMailto(
             "Xentra capital partnership",
-            contactPrompt.en,
+            contactPrompts.en.capital,
           ),
         },
       ],
@@ -540,19 +572,28 @@ export const siteContent: Record<Locale, SiteContent> = {
           audience: "运营者",
           title: "共同建立业务。",
           body: "适合熟悉具体市场，并能长期负责运营与交付的团队。",
-          mailto: createContactMailto("Xentra 垂直业务合作", contactPrompt.zh),
+          mailto: createContactMailto(
+            "Xentra 垂直业务合作",
+            contactPrompts.zh.operators,
+          ),
         },
         {
           audience: "行业专家",
           title: "提供专业判断。",
           body: "适合了解行业规则、信任关系与交付难点的专业人士。",
-          mailto: createContactMailto("Xentra 行业专家合作", contactPrompt.zh),
+          mailto: createContactMailto(
+            "Xentra 行业专家合作",
+            contactPrompts.zh.experts,
+          ),
         },
         {
           audience: "资本伙伴",
           title: "讨论长期建设。",
           body: "适合关注垂直业务建设与长期价值的资本伙伴。",
-          mailto: createContactMailto("Xentra 资本合作", contactPrompt.zh),
+          mailto: createContactMailto(
+            "Xentra 资本合作",
+            contactPrompts.zh.capital,
+          ),
         },
       ],
       companiesLabel: "具体业务咨询",

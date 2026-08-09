@@ -122,6 +122,13 @@ function mailtoSubjects(html) {
   });
 }
 
+function mailtoBodies(html) {
+  return [...html.matchAll(/href="(mailto:[^"]+)"/g)].map((match) => {
+    const href = match[1].replaceAll("&amp;", "&");
+    return new URL(href).searchParams.get("body") || "";
+  });
+}
+
 function verifyPage(result, locale) {
   const isChinese = locale === "zh";
   const label = isChinese ? "Chinese homepage" : "English homepage";
@@ -162,6 +169,17 @@ function verifyPage(result, locale) {
         "Xentra operating company discussion",
         "Xentra domain partnership",
         "Xentra capital partnership",
+      ];
+  const contactBodyMarkers = isChinese
+    ? [
+        "你正在运营的业务：",
+        "哪里最需要专业判断或现实验证：",
+        "你关注的市场或方向：",
+      ]
+    : [
+        "What you currently operate:",
+        "Where judgment or execution breaks down:",
+        "Markets or themes you back:",
       ];
 
   assertStatus(result, 200, label);
@@ -208,6 +226,10 @@ function verifyPage(result, locale) {
   const subjects = mailtoSubjects(result.body);
   for (const subject of contactSubjects) {
     assert(subjects.includes(subject), `${label}: missing mailto subject ${subject}`);
+  }
+  const bodies = mailtoBodies(result.body);
+  for (const marker of contactBodyMarkers) {
+    assert(bodies.some((body) => body.includes(marker)), `${label}: missing mailto prompt ${marker}`);
   }
 
   const structuredData = extractStructuredData(result.body, label);
