@@ -16,6 +16,7 @@ type PrivacyPageCopy = {
   eyebrow: string;
   title: string;
   intro: string;
+  reviewedLabel: string;
   sections: PrivacySection[];
   contactLabel: string;
   contactBody: string;
@@ -36,6 +37,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     title: "Privacy, in plain terms.",
     intro:
       "How the Xentra group homepage handles information. This page describes the current public site, not the separate practices of its operating companies.",
+    reviewedLabel: "Last reviewed 09 Aug 2026",
     sections: [
       {
         title: "On this site",
@@ -82,6 +84,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     title: "隐私说明。",
     intro:
       "这里说明 Xentra 集团主页如何处理信息，不代表旗下业务公司的独立数据实践。",
+    reviewedLabel: "最近核验：2026.08.09",
     sections: [
       {
         title: "本页会处理什么",
@@ -158,9 +161,14 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
                 {copy.title}
               </h1>
             </div>
-            <p className="max-w-xl text-base leading-8 text-[#A6A39A] sm:text-lg">
-              {copy.intro}
-            </p>
+            <div className="max-w-xl">
+              <p className="text-base leading-8 text-[#A6A39A] sm:text-lg">
+                {copy.intro}
+              </p>
+              <p className="eyebrow mt-6 text-[#8D97A5]">
+                {copy.reviewedLabel}
+              </p>
+            </div>
           </div>
         </section>
 

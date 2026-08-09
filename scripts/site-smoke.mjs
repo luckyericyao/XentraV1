@@ -316,12 +316,16 @@ function verifyPrivacyPage(result, locale) {
   const evidence = isChinese
     ? "本页没有嵌入式分析工具、广告像素或账号系统。"
     : "The page does not use embedded analytics, advertising pixels, or an account system.";
+  const reviewedLabel = isChinese
+    ? "最近核验：2026.08.09"
+    : "Last reviewed 09 Aug 2026";
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
   assertIncludes(result.body, title, `${label} title`);
   assertIncludes(result.body, evidence, `${label} data note`);
+  assertIncludes(result.body, reviewedLabel, `${label} review date`);
   assertIncludes(
     result.body,
     `<link rel="canonical" href="${canonicalHref}"`,
