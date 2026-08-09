@@ -230,6 +230,14 @@ export const siteContent: Record<Locale, SiteContent> = {
         { title: "Execution quality" },
       ],
     },
+    build: {
+      eyebrow: "What We Build",
+      title: "Operating companies, not standalone tools.",
+      body: [
+        "Xentra enters a specific market, finds the recurring decisions that slow it down, and builds the company around the work required to deliver a better outcome.",
+        "The parent group provides shared systems. Each operator stays accountable to the customer, the context, and the final handoff.",
+      ],
+    },
     companies: {
       eyebrow: "Portfolio Companies",
       title: "Vertical companies, shared infrastructure.",
@@ -386,6 +394,20 @@ export const siteContent: Record<Locale, SiteContent> = {
         },
       ],
     },
+    directions: {
+      eyebrow: "New Directions",
+      title: "The next company starts with a hard-to-serve market.",
+      body: [
+        "We look for markets where information is abundant but difficult to compare, trust depends on context, and the final result still requires real-world execution.",
+      ],
+      signals: [
+        "The right choice is difficult to see.",
+        "A wrong decision is expensive.",
+        "Trust depends on context, not reach.",
+        "Customers pay for certainty.",
+        "Delivery cannot be abstracted away.",
+      ],
+    },
     contact: {
       eyebrow: "Partnerships",
       title: "Build with Xentra.",
@@ -482,6 +504,14 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       closing: [
         "Xentra 把信息处理、AI 判断、人工验证和现实交付组织在一起。",
+      ],
+    },
+    build: {
+      eyebrow: "我们建立什么",
+      title: "我们建立垂直运营公司。",
+      body: [
+        "每家公司进入一个具体市场，处理一个反复发生、却始终难以判断和交付的问题。",
+        "Xentra 负责共用的方法、系统与技术；业务公司负责客户、语境和结果。",
       ],
     },
     companies: {
@@ -617,6 +647,20 @@ export const siteContent: Record<Locale, SiteContent> = {
           title: "交付",
           body: "由垂直业务把建议变成真实结果。",
         },
+      ],
+    },
+    directions: {
+      eyebrow: "新业务方向",
+      title: "从难服务的市场开始。",
+      body: [
+        "我们寻找的不是更大的流量入口，而是那些信息很多、选择难比、信任稀缺，且最终结果依赖现实交付的市场。",
+      ],
+      signals: [
+        "信息足够多，仍然难判断",
+        "选择足够多，仍然不敢决定",
+        "用户愿意为确定性付费",
+        "关键语境无法被纯软件替代",
+        "结果必须有人负责交付",
       ],
     },
     contact: {

@@ -215,6 +215,12 @@ function verifyPage(result, locale) {
   const portfolioTitle = isChinese
     ? "集团复用能力，业务承担结果。"
     : "Shared capabilities. Accountable operators.";
+  const buildTitle = isChinese
+    ? "我们建立垂直运营公司。"
+    : "Operating companies, not standalone tools.";
+  const directionsTitle = isChinese
+    ? "从难服务的市场开始。"
+    : "The next company starts with a hard-to-serve market.";
   const groupCapabilities = isChinese
     ? ["选择市场", "建立判断产品", "设定验证标准", "搭建公司系统"]
     : [
@@ -270,6 +276,8 @@ function verifyPage(result, locale) {
   assertAccessibleSurface(result.body, label);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
+  assertIncludes(result.body, buildTitle, `${label} build thesis`);
+  assertIncludes(result.body, directionsTitle, `${label} new directions`);
   for (const capability of groupCapabilities) {
     assertIncludes(result.body, capability, `${label} group capability`);
   }
