@@ -36,9 +36,13 @@ export function StructuredData({ locale }: StructuredDataProps) {
         },
         subOrganization: content.companies.items.map((company) => ({
           "@type": "Organization",
+          "@id": company.href,
           name: company.title,
           url: company.href,
           description: company.headline,
+          parentOrganization: {
+            "@id": `${siteUrl}/#organization`,
+          },
         })),
       },
       {

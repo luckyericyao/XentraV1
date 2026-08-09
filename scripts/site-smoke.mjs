@@ -284,6 +284,13 @@ function verifyPage(result, locale) {
     organization?.subOrganization?.length === 3,
     `${label}: expected three sub-organizations`,
   );
+  for (const subOrganization of organization?.subOrganization || []) {
+    assert(
+      subOrganization.parentOrganization?.["@id"] ===
+        `${canonicalUrl}/#organization`,
+      `${label}: invalid parent organization link`,
+    );
+  }
   assert(
     organization?.contactPoint?.url === `${canonicalUrl}${canonicalPath}#contact`,
     `${label}: invalid contact point URL`,
