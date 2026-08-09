@@ -102,6 +102,40 @@ function assertSecurityHeaders(result, label) {
   );
 }
 
+function assertAccessibleSurface(html, label) {
+  assertIncludes(html, 'href="#top"', `${label} skip link`);
+  assertIncludes(html, 'tabindex="-1"', `${label} main focus target`);
+  assertIncludes(
+    html,
+    'aria-controls="mobile-navigation"',
+    `${label} mobile navigation control`,
+  );
+  assertIncludes(html, 'aria-expanded="false"', `${label} mobile menu state`);
+  assert(
+    !/<img\b[^>]*\balt=""/.test(html),
+    `${label}: empty image alt text`,
+  );
+
+  const externalLinks = [
+    ...html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g),
+  ].map((match) => match[0]);
+  for (const link of externalLinks) {
+    assert(
+      link.includes('rel="noopener noreferrer"'),
+      `${label}: external link missing safe rel`,
+    );
+  }
+
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(
+    (match) => match[1],
+  );
+  const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
+  assert(
+    duplicateIds.length === 0,
+    `${label}: duplicate ids ${duplicateIds.join(", ")}`,
+  );
+}
+
 function extractStructuredData(html, label) {
   const match = html.match(
     /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
@@ -184,6 +218,7 @@ function verifyPage(result, locale) {
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
+  assertAccessibleSurface(result.body, label);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   for (const capability of groupCapabilities) {
