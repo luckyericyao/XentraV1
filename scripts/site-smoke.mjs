@@ -242,6 +242,9 @@ function verifyPage(result, locale) {
     ? "核验于 2026.08.10"
     : "Checked 10 Aug 2026";
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
+  const contactNote = isChinese
+    ? "点击任一方向，会打开一封预填邮件。"
+    : "Each path opens a prefilled email brief.";
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   const contactSubjects = isChinese
     ? ["Xentra 垂直业务合作", "Xentra 行业专家合作", "Xentra 资本合作"]
@@ -279,6 +282,7 @@ function verifyPage(result, locale) {
     `${label} evidence verification date`,
   );
   assertIncludes(result.body, contactLabel, `${label} contact`);
+  assertIncludes(result.body, contactNote, `${label} contact note`);
   assertIncludes(result.body, `href="${privacyPath}"`, `${label} privacy link`);
   assertIncludes(
     result.body,

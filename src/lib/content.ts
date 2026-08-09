@@ -92,6 +92,7 @@ export type SiteContent = {
     bodyPrefix: string;
     body?: string[];
     pathwaysLabel: string;
+    intakeNote: string;
     pathways: {
       audience: string;
       title: string;
@@ -392,6 +393,8 @@ export const siteContent: Record<Locale, SiteContent> = {
         "We work with operators, specialists, and capital partners who can stay with a market for the long term.",
       ],
       pathwaysLabel: "Choose a conversation",
+      intakeNote:
+        "Each path opens a prefilled email brief. A market, a point of view, and a question are enough to start.",
       pathways: [
         {
           audience: "Operators",
@@ -623,6 +626,8 @@ export const siteContent: Record<Locale, SiteContent> = {
         "我们寻找真正理解市场，能够长期投入运营、专业判断或资本支持的合作方。",
       ],
       pathwaysLabel: "选择合作方向",
+      intakeNote:
+        "点击任一方向，会打开一封预填邮件。不必先准备完整方案，写清市场、背景和想讨论的问题即可。",
       pathways: [
         {
           audience: "运营者",

@@ -337,9 +337,16 @@ export function HomePage({ locale }: HomePageProps) {
                   >
                     {content.contact.pathwaysLabel}
                   </p>
+                  <p
+                    id="contact-pathways-note"
+                    className="mt-3 max-w-xl text-sm leading-6 text-[#8D97A5]"
+                  >
+                    {content.contact.intakeNote}
+                  </p>
                   <div
                     role="group"
                     aria-labelledby="contact-pathways-title"
+                    aria-describedby="contact-pathways-note"
                     className="mt-5 border-y border-[#2A2D33]"
                   >
                     {content.contact.pathways.map((pathway, index) => (
