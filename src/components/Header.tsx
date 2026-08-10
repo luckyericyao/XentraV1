@@ -127,7 +127,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
           main.scrollIntoView({ behavior: "smooth", block: "start" });
           window.history.replaceState(null, "", "#top");
         }}
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
       >
         {skipLabel}
       </a>
@@ -190,7 +190,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
             onClick={handleLanguageSwitch}
-            className="inline-flex min-h-9 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            className="inline-flex min-h-9 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
           </a>
@@ -201,7 +201,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
             onClick={handleLanguageSwitch}
-            className="inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            className="inline-flex min-h-11 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
           </a>
@@ -213,7 +213,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             aria-label={menuLabel}
             title={menuLabel}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex size-11 items-center justify-center rounded-full border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
+            className="flex size-11 items-center justify-center rounded-md border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
           >
             <span className="relative block h-3.5 w-4" aria-hidden="true">
               <span

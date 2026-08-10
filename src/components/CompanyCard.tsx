@@ -48,7 +48,7 @@ export function CompanyCard({
     <article
       id={slug}
       aria-labelledby={`${slug}-title`}
-      className="scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(198,161,91,0.055)] sm:min-h-[24rem]"
+      className="scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(198,161,91,0.055)] sm:min-h-[24rem]"
     >
       <div className="flex items-center justify-between gap-4">
         <p className={`eyebrow ${labelTone}`}>{vertical}</p>

@@ -30,7 +30,7 @@ export function HomePage({ locale }: HomePageProps) {
       >
         <section
           aria-labelledby="hero-title"
-          className={`relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-28 ${locale === "zh" ? "cjk-hero" : ""}`}
+          className={`relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-20 ${locale === "zh" ? "cjk-hero" : ""}`}
         >
           <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
@@ -79,28 +79,42 @@ export function HomePage({ locale }: HomePageProps) {
               >
                 <a
                   href={content.hero.primaryHref}
-                  className="inline-flex justify-center rounded-full border border-[rgba(198,161,91,0.46)] bg-[#101214] px-6 py-3 text-sm font-medium text-[#F2EFE8] shadow-[0_18px_55px_rgba(0,0,0,0.28)] transition hover:border-[#C6A15B] hover:bg-[#17191D]"
+                  className="inline-flex justify-center rounded-md border border-[rgba(198,161,91,0.46)] bg-[#101214] px-6 py-3 text-sm font-medium text-[#F2EFE8] shadow-[0_18px_55px_rgba(0,0,0,0.28)] transition hover:border-[#C6A15B] hover:bg-[#17191D]"
                 >
                   {content.hero.primaryCta}
                 </a>
                 <a
                   href={content.hero.secondaryHref}
-                  className="inline-flex justify-center rounded-full border border-[#2A2D33] px-6 py-3 text-sm font-medium text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
+                  className="inline-flex justify-center rounded-md border border-[#2A2D33] px-6 py-3 text-sm font-medium text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.36)] hover:text-[#F2EFE8]"
                 >
                   {content.hero.secondaryCta}
                 </a>
               </div>
             </div>
-            {content.hero.tags.length ? (
-              <div className="eyebrow mt-12 flex flex-wrap gap-x-4 gap-y-2 border-t border-[#2A2D33] pt-5 text-[#9B978E]">
-                {content.hero.tags.map((tag, index) => (
-                  <span key={tag} className="contents">
-                    {index > 0 ? <span aria-hidden="true">/</span> : null}
-                    <span>{tag}</span>
-                  </span>
+            <div className="hero-register mt-8 border-t border-[#2A2D33] pt-5">
+              <div className="grid grid-cols-3 gap-4">
+                {content.hero.ledger.map((item) => (
+                  <div key={item.label} className="min-w-0">
+                    <p className="font-serif text-2xl font-normal leading-none text-[#F2EFE8] sm:text-3xl">
+                      {item.value}
+                    </p>
+                    <p className="mt-2 max-w-[12rem] text-[10px] font-semibold uppercase leading-4 tracking-[0.12em] text-[#8D97A5] sm:text-[11px]">
+                      {item.label}
+                    </p>
+                  </div>
                 ))}
               </div>
-            ) : null}
+              {content.hero.tags.length ? (
+                <div className="eyebrow mt-6 flex flex-wrap gap-x-4 gap-y-2 text-[#9B978E]">
+                  {content.hero.tags.map((tag, index) => (
+                    <span key={tag} className="contents">
+                      {index > 0 ? <span aria-hidden="true">/</span> : null}
+                      <span>{tag}</span>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
         </section>
 
@@ -130,23 +144,28 @@ export function HomePage({ locale }: HomePageProps) {
                 ) : null}
               </div>
               <div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {content.thesis.points.map((item) => (
-                    <div
+                <ol className="border-y border-[#2A2D33]">
+                  {content.thesis.points.map((item, index) => (
+                    <li
                       key={item.title}
-                      className="scroll-rise rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-5"
+                      className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#2A2D33] py-5 last:border-b-0 sm:grid-cols-[3.5rem_1fr] sm:py-6"
                     >
-                      <p className="text-sm font-semibold leading-6 text-[#F2EFE8]">
-                        {item.title}
-                      </p>
-                      {item.body ? (
-                        <p className="mt-4 text-sm leading-6 text-[#A6A39A]">
-                          {item.body}
+                      <span className="eyebrow pt-1 text-[#B49459]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="text-base font-semibold leading-6 text-[#F2EFE8]">
+                          {item.title}
                         </p>
-                      ) : null}
-                    </div>
+                        {item.body ? (
+                          <p className="mt-3 text-sm leading-6 text-[#A6A39A]">
+                            {item.body}
+                          </p>
+                        ) : null}
+                      </div>
+                    </li>
                   ))}
-                </div>
+                </ol>
                 {content.thesis.closing ? (
                   <div className="mt-8 max-w-3xl space-y-4 border-t border-[#2A2D33] pt-7 text-base leading-8 text-[#A6A39A]">
                     {content.thesis.closing.map((paragraph) => (
@@ -293,18 +312,21 @@ export function HomePage({ locale }: HomePageProps) {
                   ))}
                 </div>
               </div>
-              <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {content.directions.signals.map((signal) => (
-                  <div
+              <ol className="mt-12 border-y border-[#2A2D33] lg:grid lg:grid-cols-5">
+                {content.directions.signals.map((signal, index) => (
+                  <li
                     key={signal}
-                    className="scroll-rise rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-5"
+                    className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#2A2D33] py-5 last:border-b-0 lg:grid-cols-1 lg:gap-8 lg:border-b-0 lg:border-r lg:p-6 lg:last:border-r-0"
                   >
+                    <span className="eyebrow pt-1 text-[#B49459]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     <p className="text-sm font-medium leading-6 text-[#F2EFE8]">
                       {signal}
                     </p>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </section>
         ) : null}
@@ -464,7 +486,7 @@ export function HomePage({ locale }: HomePageProps) {
               href="#top"
               aria-label={content.footer.backToTopLabel}
               title={content.footer.backToTopLabel}
-              className="inline-flex size-11 items-center justify-center rounded-full border border-[#2A2D33] text-base text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.46)] hover:text-[#F2EFE8]"
+              className="inline-flex size-11 items-center justify-center rounded-md border border-[#2A2D33] text-base text-[#A6A39A] transition hover:border-[rgba(198,161,91,0.46)] hover:text-[#F2EFE8]"
             >
               <span aria-hidden="true">&#8593;</span>
             </a>

@@ -42,6 +42,7 @@ export type SiteContent = {
     secondaryCta: string;
     secondaryHref: string;
     tags: string[];
+    ledger: { value: string; label: string }[];
     note?: string;
   };
   thesis: {
@@ -218,7 +219,7 @@ export const siteContent: Record<Locale, SiteContent> = {
     ],
     languageSwitch: { label: "中文", href: "/zh", lang: "zh-CN" },
     hero: {
-      eyebrow: "Operating group",
+      eyebrow: "Parent operating group",
       title: "Decision infrastructure for trust-heavy markets.",
       body: [
         "Xentra builds vertical companies where information is fragmented, trust is expensive, and execution quality determines outcomes.",
@@ -228,6 +229,12 @@ export const siteContent: Record<Locale, SiteContent> = {
       secondaryCta: "Contact",
       secondaryHref: "#contact",
       tags: ["AI Capability", "Local Access", "Scientific Sourcing"],
+      ledger: [
+        { value: "01", label: "parent operating thesis" },
+        { value: "03", label: "operating companies" },
+        { value: "04", label: "shared operating moves" },
+      ],
+      note: "Information is abundant. Judgment is expensive. Trust is scarce.",
     },
     thesis: {
       eyebrow: "Thesis",
@@ -247,7 +254,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     companies: {
-      eyebrow: "Portfolio Companies",
+      eyebrow: "Operating Companies",
       title: "Three markets. One operating thesis.",
       body: [
         "Each company owns its market. Xentra owns the operating thesis.",
@@ -497,6 +504,11 @@ export const siteContent: Record<Locale, SiteContent> = {
       secondaryCta: "了解方法",
       secondaryHref: "#model",
       tags: [],
+      ledger: [
+        { value: "01", label: "母公司方法" },
+        { value: "03", label: "垂直业务公司" },
+        { value: "04", label: "共用运营动作" },
+      ],
       note: "信息很多。判断很贵。信任很稀缺。",
     },
     thesis: {

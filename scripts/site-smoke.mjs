@@ -266,6 +266,9 @@ function verifyPage(result, locale) {
   const chapterNavMarkers = isChinese
     ? ["返回集团架构", "下一家公司", "运营方法"]
     : ["Back to architecture", "Next company", "Operating model"];
+  const heroLedgerMarkers = isChinese
+    ? ["母公司方法", "垂直业务公司", "共用运营动作"]
+    : ["parent operating thesis", "operating companies", "shared operating moves"];
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   const contactSubjects = isChinese
     ? ["Xentra 垂直业务合作", "Xentra 行业专家合作", "Xentra 资本合作"]
@@ -293,6 +296,9 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, `<title>${pageTitle}</title>`, `${label} metadata title`);
   for (const marker of heroTitleMarkers) {
     assertIncludes(result.body, marker, `${label} hero positioning`);
+  }
+  for (const marker of heroLedgerMarkers) {
+    assertIncludes(result.body, marker, `${label} group register`);
   }
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   assertIncludes(result.body, buildTitle, `${label} build thesis`);

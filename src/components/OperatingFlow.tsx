@@ -4,11 +4,11 @@ type OperatingFlowProps = {
 
 export function OperatingFlow({ steps }: OperatingFlowProps) {
   return (
-    <ol className="mt-14 grid gap-3">
+    <ol className="mt-14 border-y border-[#2A2D33]">
       {steps.map((step, index) => (
         <li
           key={step.title}
-          className="scroll-rise grid gap-5 rounded-lg border border-[#2A2D33] bg-[#101214] p-6 transition duration-500 hover:border-[rgba(198,161,91,0.22)] hover:bg-[#17191D] md:grid-cols-[4rem_0.55fr_1fr] md:items-start md:p-7"
+          className="scroll-rise grid gap-5 border-b border-[#2A2D33] py-6 last:border-b-0 transition duration-500 hover:bg-[#101214] md:grid-cols-[4rem_0.55fr_1fr] md:items-start md:py-7"
         >
           <span className="text-xs font-semibold text-[#9B978E] md:pt-1">
             {String(index + 1).padStart(2, "0")}

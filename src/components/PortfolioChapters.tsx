@@ -227,7 +227,7 @@ export function PortfolioChapters({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${visitLabel}: ${company.title} (${externalLinkLabel})`}
-                    className={`mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border ${tone.border} px-5 text-sm font-medium text-[#F2EFE8] transition ${tone.hover} hover:bg-[#17191D] sm:mt-8`}
+                    className={`mt-6 inline-flex min-h-11 items-center gap-2 rounded-md border ${tone.border} px-5 text-sm font-medium text-[#F2EFE8] transition ${tone.hover} hover:bg-[#17191D] sm:mt-8`}
                   >
                     {visitLabel}
                     <span aria-hidden="true">&#8599;</span>
