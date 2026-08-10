@@ -558,15 +558,15 @@ export const siteContent: Record<Locale, SiteContent> = {
           vertical: "企业 AI 能力",
           headline: "让 AI 真正进入工作流。",
           body: [
-            "AI Agent Coach 以行业为入口，把专业经验、AI 指导和具体决策场景组织成可使用的职业教练。",
+            "AI Agent Coach 从具体行业和任务出发，为团队提供结合专业经验的 AI 指导，把工具尝试变成可执行的工作方式。",
           ],
           href: companyLinks.agentCoach,
           evidence: {
             image: "/images/portfolio/ai-agent-coach.jpg",
             imageAlt: "AI Agent Coach 官网，展示按行业组织的专业 AI 教练。",
             audience: "面对复杂行业决策的专业人士与团队。",
-            decision: "当前问题适合哪类教练、哪种工作方式。",
-            delivery: "行业化 AI 教练、结构化指导与专业复核。",
+            decision: "判断当前任务适合哪类教练，以及怎样的工作方式。",
+            delivery: "按行业组织的 AI 教练、结构化指导与专业复核。",
             proof: [
               { label: "行业教练目录", href: evidenceLinks.agentCoach.industries },
               { label: "用户准入申请", href: evidenceLinks.agentCoach.access },
@@ -580,7 +580,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           vertical: "本地信任网络",
           headline: "重新定义高端私人旅行的本地进入方式。",
           body: [
-            "Localhost 为希望深入理解中国的国际旅行者，提供私人路线、本地主理人匹配与现实行程支持。",
+            "Localhost 为希望深入理解中国的国际旅行者，匹配本地主理人，设计私人路线，并提供行程落地支持。",
           ],
           href: companyLinks.localhost,
           evidence: {
@@ -588,7 +588,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             imageAlt: "Localhost Global 官网，展示由本地主理人设计的私人中国路线。",
             audience: "希望以私人方式进入中国的国际旅行者。",
             decision: "哪些地方、主理人和文化语境值得信任。",
-            delivery: "私人路线、主理人匹配、文化解释与现实支持。",
+            delivery: "私人路线、主理人匹配、文化解释与行程支持。",
             proof: [
               { label: "公开路线样本", href: evidenceLinks.localhost.routes },
               { label: "私人路线需求表", href: evidenceLinks.localhost.inquiry },
@@ -602,7 +602,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           vertical: "生命科学供应",
           headline: "让生命科学采购更清晰。",
           body: [
-            "BioAxis 把产品清单、替代匹配、样品、文件和询价需求整理成清晰的采购路径。",
+            "BioAxis 将产品清单、替代品、样品、文件和询价整理成一条清晰的采购路径。",
           ],
           href: companyLinks.bioaxis,
           evidence: {

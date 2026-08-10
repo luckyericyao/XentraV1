@@ -231,6 +231,13 @@ function verifyPage(result, locale) {
     ? "不同市场，同一种底层问题。"
     : "Three markets. One operating thesis.";
   const companyEntryLabel = isChinese ? "查看业务证据" : "View operating brief";
+  const companyCopyMarkers = isChinese
+    ? [
+        "AI Agent Coach 从具体行业和任务出发",
+        "匹配本地主理人，设计私人路线",
+        "将产品清单、替代品、样品、文件和询价整理",
+      ]
+    : [];
   const groupCapabilities = isChinese
     ? ["选择市场", "建立判断产品", "设定验证标准", "搭建公司系统"]
     : [
@@ -306,6 +313,9 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   assertIncludes(result.body, companyEntryLabel, `${label} company entry`);
+  for (const marker of companyCopyMarkers) {
+    assertIncludes(result.body, marker, `${label} native company copy`);
+  }
   for (const capability of groupCapabilities) {
     assertIncludes(result.body, capability, `${label} group capability`);
   }
