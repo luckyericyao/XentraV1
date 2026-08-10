@@ -182,21 +182,21 @@ export function HomePage({ locale }: HomePageProps) {
           <section
             id="build"
             aria-labelledby="build-title"
-            className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+            className="border-y border-[#2A2D33] bg-[#070809] px-5 py-14 text-[#F2EFE8] sm:px-8 sm:py-16 lg:py-20"
           >
-            <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
               <div>
-                <p className="eyebrow mb-5 text-[#C6A15B]">
+                <p className="eyebrow mb-4 text-[#C6A15B]">
                   {content.build.eyebrow}
                 </p>
                 <h2
                   id="build-title"
-                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                  className="max-w-xl text-balance text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl"
                 >
                   {content.build.title}
                 </h2>
               </div>
-              <div className="space-y-5 border-l border-[#2A2D33] pl-6 text-base leading-8 text-[#A6A39A] sm:text-lg sm:leading-8">
+              <div className="grid gap-4 border-l border-[#2A2D33] pl-5 text-sm leading-7 text-[#A6A39A] sm:text-base sm:leading-7 lg:grid-cols-2 lg:gap-8">
                 {content.build.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -273,7 +273,7 @@ export function HomePage({ locale }: HomePageProps) {
         <section
           id="model"
           aria-labelledby="model-title"
-          className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          className="bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28"
         >
           <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
@@ -295,7 +295,7 @@ export function HomePage({ locale }: HomePageProps) {
           <section
             id="directions"
             aria-labelledby="directions-title"
-            className="bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+            className="bg-[#070809] px-5 py-16 text-[#F2EFE8] sm:px-8 sm:py-20 lg:py-24"
           >
             <div className="mx-auto max-w-7xl">
               <div className="max-w-3xl">
@@ -308,17 +308,17 @@ export function HomePage({ locale }: HomePageProps) {
                 >
                   {content.directions.title}
                 </h2>
-                <div className="mt-8 space-y-4 text-base leading-7 text-[#A6A39A] sm:text-lg sm:leading-8">
+                <div className="mt-6 space-y-4 text-base leading-7 text-[#A6A39A] sm:text-lg sm:leading-8">
                   {content.directions.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
               </div>
-              <ol className="mt-12 border-y border-[#2A2D33] lg:grid lg:grid-cols-5">
+              <ol className="mt-8 border-y border-[#2A2D33] lg:grid lg:grid-cols-5">
                 {content.directions.signals.map((signal, index) => (
                   <li
                     key={signal}
-                    className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#2A2D33] py-5 last:border-b-0 lg:grid-cols-1 lg:gap-8 lg:border-b-0 lg:border-r lg:p-6 lg:last:border-r-0"
+                    className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#2A2D33] py-4 last:border-b-0 lg:grid-cols-1 lg:gap-6 lg:border-b-0 lg:border-r lg:p-5 lg:last:border-r-0"
                   >
                     <span className="eyebrow pt-1 text-[#B49459]">
                       {String(index + 1).padStart(2, "0")}
@@ -336,7 +336,7 @@ export function HomePage({ locale }: HomePageProps) {
         <section
           id="contact"
           aria-labelledby="contact-title"
-          className="border-t border-[#2A2D33] bg-[#070809] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          className="border-t border-[#2A2D33] bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28"
         >
           <div className="mx-auto max-w-7xl">
             <div className="rounded-lg border border-[rgba(198,161,91,0.24)] bg-[#101214] p-8 shadow-[0_34px_120px_rgba(0,0,0,0.34)] sm:p-10 lg:p-14">

@@ -46,7 +46,7 @@ export function PortfolioChapters({
       aria-labelledby="portfolio-title"
       className="border-b border-[#2A2D33] bg-[#070809] text-[#F2EFE8]"
     >
-      <div className="px-5 py-24 sm:px-8 lg:py-32">
+      <div className="px-5 py-20 sm:px-8 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_0.7fr] lg:items-end">
             <div>
@@ -63,7 +63,7 @@ export function PortfolioChapters({
             </p>
           </div>
 
-          <div className="mt-14 sm:mt-16">
+          <div className="mt-12 sm:mt-14">
             <div className="scroll-rise grid border-y border-[#2A2D33] lg:grid-cols-[0.78fr_1.22fr]">
               <div className="flex min-h-48 flex-col justify-between border-b border-[#2A2D33] py-7 lg:border-b-0 lg:border-r lg:p-8">
                 <p className="eyebrow text-[#B49459]">{copy.systemLabel}</p>
@@ -172,7 +172,7 @@ export function PortfolioChapters({
               id={`${company.slug}-chapter`}
               data-portfolio-tone={tone.tone}
               aria-labelledby={`${company.slug}-chapter-title`}
-              className="portfolio-chapter relative isolate overflow-hidden border-t border-[#2A2D33] px-5 py-16 sm:px-8 sm:py-24 lg:flex lg:min-h-[100svh] lg:flex-col lg:items-center lg:py-32"
+              className="portfolio-chapter relative isolate overflow-hidden border-t border-[#2A2D33] px-5 py-16 sm:px-8 sm:py-20 lg:flex lg:min-h-[100svh] lg:flex-col lg:items-center lg:py-24"
             >
               <div className="portfolio-chapter-field" aria-hidden="true" />
               <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 sm:gap-14 lg:grid-cols-[0.72fr_1.28fr] lg:items-center xl:gap-20">
@@ -305,7 +305,7 @@ export function PortfolioChapters({
               </div>
               <nav
                 aria-label={copy.chapterNavLabel}
-                className="relative z-10 mx-auto mt-12 flex w-full max-w-7xl items-stretch justify-between gap-6 border-t border-[#2A2D33] pt-5 sm:mt-16 sm:pt-6"
+                className="relative z-10 mx-auto mt-10 flex w-full max-w-7xl items-stretch justify-between gap-6 border-t border-[#2A2D33] pt-5 sm:mt-12 sm:pt-6"
               >
                 <a
                   href={previousHref}
