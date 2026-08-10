@@ -257,6 +257,9 @@ function verifyPage(result, locale) {
   const contactNote = isChinese
     ? "点击任一方向，会打开一封预填邮件。"
     : "Each path opens a prefilled email brief.";
+  const contactTrustNote = isChinese
+    ? "不会在本页提交信息。"
+    : "Nothing is submitted on this site.";
   const chapterNavMarkers = isChinese
     ? ["返回集团架构", "下一家公司", "运营方法"]
     : ["Back to architecture", "Next company", "Operating model"];
@@ -304,6 +307,7 @@ function verifyPage(result, locale) {
   );
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(result.body, contactNote, `${label} contact note`);
+  assertIncludes(result.body, contactTrustNote, `${label} contact trust note`);
   for (const marker of chapterNavMarkers) {
     assertIncludes(result.body, marker, `${label} chapter navigation`);
   }

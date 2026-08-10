@@ -429,7 +429,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       pathwaysLabel: "Choose a conversation",
       intakeNote:
-        "Each path opens a prefilled email brief. A market, a point of view, and a question are enough to start.",
+        "Each path opens a prefilled email brief. Nothing is submitted on this site.",
       pathways: [
         {
           audience: "Operators",
@@ -690,7 +690,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       pathwaysLabel: "选择合作方向",
       intakeNote:
-        "点击任一方向，会打开一封预填邮件。不必先准备完整方案，写清市场、背景和想讨论的问题即可。",
+        "点击任一方向，会打开一封预填邮件。不会在本页提交信息。",
       pathways: [
         {
           audience: "运营者",
