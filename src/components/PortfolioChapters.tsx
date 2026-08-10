@@ -153,6 +153,18 @@ export function PortfolioChapters({
         {companies.map((company, index) => {
           const tone =
             chapterTone[company.slug as keyof typeof chapterTone] ?? defaultTone;
+          const previousCompany = companies[index - 1];
+          const nextCompany = companies[index + 1];
+          const previousHref = previousCompany
+            ? `#${previousCompany.slug}-chapter`
+            : "#portfolio";
+          const nextHref = nextCompany ? `#${nextCompany.slug}-chapter` : "#model";
+          const previousLabel = previousCompany
+            ? copy.previousLabel
+            : copy.backLabel;
+          const previousTitle = previousCompany?.title ?? "Xentra";
+          const nextLabel = nextCompany ? copy.nextLabel : copy.modelLabel;
+          const nextTitle = nextCompany?.title ?? copy.modelLabel;
 
           return (
             <article
@@ -160,7 +172,7 @@ export function PortfolioChapters({
               id={`${company.slug}-chapter`}
               data-portfolio-tone={tone.tone}
               aria-labelledby={`${company.slug}-chapter-title`}
-              className="portfolio-chapter relative isolate overflow-hidden border-t border-[#2A2D33] px-5 py-16 sm:px-8 sm:py-24 lg:flex lg:min-h-[100svh] lg:items-center lg:py-32"
+              className="portfolio-chapter relative isolate overflow-hidden border-t border-[#2A2D33] px-5 py-16 sm:px-8 sm:py-24 lg:flex lg:min-h-[100svh] lg:flex-col lg:items-center lg:py-32"
             >
               <div className="portfolio-chapter-field" aria-hidden="true" />
               <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 sm:gap-14 lg:grid-cols-[0.72fr_1.28fr] lg:items-center xl:gap-20">
@@ -291,6 +303,39 @@ export function PortfolioChapters({
                   </div>
                 </figure>
               </div>
+              <nav
+                aria-label={copy.chapterNavLabel}
+                className="relative z-10 mx-auto mt-12 flex w-full max-w-7xl items-stretch justify-between gap-6 border-t border-[#2A2D33] pt-5 sm:mt-16 sm:pt-6"
+              >
+                <a
+                  href={previousHref}
+                  className="group flex min-h-11 max-w-[48%] flex-col justify-center text-left"
+                >
+                  <span className={`eyebrow ${tone.label}`}>
+                    <span aria-hidden="true" className="mr-2">
+                      &#8592;
+                    </span>
+                    {previousLabel}
+                  </span>
+                  <span className="mt-2 text-sm text-[#A6A39A] transition group-hover:text-[#F2EFE8]">
+                    {previousTitle}
+                  </span>
+                </a>
+                <a
+                  href={nextHref}
+                  className="group flex min-h-11 max-w-[48%] flex-col justify-center text-right"
+                >
+                  <span className={`eyebrow ${tone.label}`}>
+                    {nextLabel}
+                    <span aria-hidden="true" className="ml-2">
+                      &#8594;
+                    </span>
+                  </span>
+                  <span className="mt-2 text-sm text-[#A6A39A] transition group-hover:text-[#F2EFE8]">
+                    {nextTitle}
+                  </span>
+                </a>
+              </nav>
             </article>
           );
         })}

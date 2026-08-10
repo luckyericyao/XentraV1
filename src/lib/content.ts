@@ -83,6 +83,11 @@ export type SiteContent = {
     audienceLabel: string;
     decisionLabel: string;
     deliveryLabel: string;
+    chapterNavLabel: string;
+    backLabel: string;
+    previousLabel: string;
+    nextLabel: string;
+    modelLabel: string;
   };
   model: {
     eyebrow: string;
@@ -374,6 +379,11 @@ export const siteContent: Record<Locale, SiteContent> = {
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
       deliveryLabel: "Delivers",
+      chapterNavLabel: "Portfolio chapter navigation",
+      backLabel: "Back to architecture",
+      previousLabel: "Previous company",
+      nextLabel: "Next company",
+      modelLabel: "Operating model",
     },
     model: {
       eyebrow: "Operating Model",
@@ -630,6 +640,11 @@ export const siteContent: Record<Locale, SiteContent> = {
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",
       deliveryLabel: "实际交付",
+      chapterNavLabel: "业务章节导航",
+      backLabel: "返回集团架构",
+      previousLabel: "上一家公司",
+      nextLabel: "下一家公司",
+      modelLabel: "运营方法",
     },
     model: {
       eyebrow: "运营方法",
