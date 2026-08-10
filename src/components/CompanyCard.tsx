@@ -11,6 +11,8 @@ type CompanyCardProps = {
   href: string;
   chapterHref: string;
   chapterLabel: string;
+  evidenceLabel?: string;
+  evidenceVerifiedLabel?: string;
   showSummary?: boolean;
   showDetails?: boolean;
   visitLabel: string;
@@ -38,6 +40,8 @@ export function CompanyCard({
   href,
   chapterHref,
   chapterLabel,
+  evidenceLabel,
+  evidenceVerifiedLabel,
   showSummary = true,
   showDetails = true,
   visitLabel,
@@ -122,26 +126,38 @@ export function CompanyCard({
           ) : null}
         </details>
       ) : null}
-      <div className="mt-auto flex flex-wrap items-center justify-between gap-x-5 gap-y-2 pt-6 sm:pt-8">
-        <a
-          href={chapterHref}
-          className="inline-flex min-h-11 items-center text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B]"
-        >
-          {chapterLabel}
-          <span aria-hidden="true" className="ml-2">&#8595;</span>
-        </a>
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${visitLabel}: ${title} (${externalLinkLabel})`}
-          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#A6A39A] transition hover:text-[#C6A15B]"
-        >
-          {visitLabel}
-          <span aria-hidden="true" className="transition group-hover:translate-x-1">
-            &#8599;
-          </span>
-        </a>
+      <div className="mt-auto pt-6 sm:pt-8">
+        {evidenceLabel ? (
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-t border-[#2A2D33] pt-4">
+            <p className="eyebrow text-[#8D97A5]">{evidenceLabel}</p>
+            {evidenceVerifiedLabel ? (
+              <span className="text-[10px] font-medium text-[#8D97A5]">
+                {evidenceVerifiedLabel}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
+          <a
+            href={chapterHref}
+            className="inline-flex min-h-11 items-center text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B]"
+          >
+            {chapterLabel}
+            <span aria-hidden="true" className="ml-2">&#8595;</span>
+          </a>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${visitLabel}: ${title} (${externalLinkLabel})`}
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#A6A39A] transition hover:text-[#C6A15B]"
+          >
+            {visitLabel}
+            <span aria-hidden="true" className="transition group-hover:translate-x-1">
+              &#8599;
+            </span>
+          </a>
+        </div>
       </div>
     </article>
   );
