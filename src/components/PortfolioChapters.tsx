@@ -4,6 +4,7 @@ import type { Company, SiteContent } from "@/lib/content";
 type PortfolioChaptersProps = {
   companies: Company[];
   copy: SiteContent["portfolio"];
+  chapterLabel: string;
   visitLabel: string;
   externalLinkLabel: string;
 };
@@ -37,6 +38,7 @@ const defaultTone = chapterTone.localhost;
 export function PortfolioChapters({
   companies,
   copy,
+  chapterLabel,
   visitLabel,
   externalLinkLabel,
 }: PortfolioChaptersProps) {
@@ -127,6 +129,7 @@ export function PortfolioChapters({
                   <a
                     key={`${company.slug}-architecture`}
                     href={`#${company.slug}-chapter`}
+                    aria-label={`${chapterLabel}: ${company.title}`}
                     className="group relative flex min-h-40 flex-col justify-between border-b border-[#2A2D33] py-6 pl-10 last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
                   >
                     <span

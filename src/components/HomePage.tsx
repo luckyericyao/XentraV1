@@ -275,6 +275,7 @@ export function HomePage({ locale }: HomePageProps) {
         <PortfolioChapters
           companies={content.companies.items}
           copy={content.portfolio}
+          chapterLabel={content.companies.chapterLabel}
           visitLabel={content.companies.visitLabel}
           externalLinkLabel={content.companies.externalLinkLabel}
         />

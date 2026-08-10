@@ -313,6 +313,13 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   assertIncludes(result.body, companyEntryLabel, `${label} company entry`);
+  for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
+    assertIncludes(
+      result.body,
+      `aria-label="${companyEntryLabel}: ${company}"`,
+      `${label} architecture link label`,
+    );
+  }
   for (const marker of companyCopyMarkers) {
     assertIncludes(result.body, marker, `${label} native company copy`);
   }

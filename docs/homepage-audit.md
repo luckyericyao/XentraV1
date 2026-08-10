@@ -83,6 +83,7 @@
 - 三张业务组合卡加入轻量的 `Public product evidence / Checked ...` 登记行，让证据状态在首次看到业务时就与真实入口同时出现。
 - 英文桌面首屏将三条 portfolio 标签移入集团登记栏右侧，确保 1280×720 首屏直接呈现母公司旗下方向；平板与手机继续采用纵向排列。
 - 中文三条业务简介改为更自然的业务档案语气，并为 AI Agent Coach、Localhost、BioAxis 的关键描述加入 smoke 回归标记，避免后续直译或空泛文案回退。
+- 集团架构三条内部入口补充双语可访问名称，明确它们会进入对应业务分章；smoke 同步检查 6 个 locale-specific link labels。
 
 ## 下一轮建议
 
