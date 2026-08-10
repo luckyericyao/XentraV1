@@ -387,6 +387,14 @@ function verifyPage(result, locale) {
     `${label}: invalid contact point URL`,
   );
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
+  assert(
+    webpage?.dateModified === "2026-08-10",
+    `${label}: missing structured-data review date`,
+  );
+  assert(
+    webpage?.mainEntity?.["@id"] === `${canonicalUrl}/#organization`,
+    `${label}: invalid structured-data main entity`,
+  );
 
   assertSecurityHeaders(result, label);
   if (isChinese) {

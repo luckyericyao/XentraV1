@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/content";
 import { siteContent } from "@/lib/content";
+import { siteReviewDate } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
 type StructuredDataProps = {
@@ -10,12 +11,14 @@ export function StructuredData({ locale }: StructuredDataProps) {
   const content = siteContent[locale];
   const siteUrl = getSiteUrl();
   const pageUrl = locale === "zh" ? `${siteUrl}/zh` : `${siteUrl}/`;
+  const organizationId = `${siteUrl}/#organization`;
+  const websiteId = `${siteUrl}/#website`;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${siteUrl}/#organization`,
+        "@id": organizationId,
         name: "Xentra",
         alternateName: "Xentra Operating Group",
         url: siteUrl,
@@ -36,22 +39,23 @@ export function StructuredData({ locale }: StructuredDataProps) {
         },
         subOrganization: content.companies.items.map((company) => ({
           "@type": "Organization",
-          "@id": company.href,
+          "@id": `${company.href}#organization`,
           name: company.title,
           url: company.href,
           description: company.headline,
           parentOrganization: {
-            "@id": `${siteUrl}/#organization`,
+            "@id": organizationId,
           },
         })),
       },
       {
         "@type": "WebSite",
-        "@id": `${siteUrl}/#website`,
+        "@id": websiteId,
         name: "Xentra",
         url: siteUrl,
+        description: content.hero.body[0],
         publisher: {
-          "@id": `${siteUrl}/#organization`,
+          "@id": organizationId,
         },
         inLanguage: ["en", "zh-CN"],
       },
@@ -62,11 +66,15 @@ export function StructuredData({ locale }: StructuredDataProps) {
         url: pageUrl,
         description: content.hero.body[0],
         inLanguage: content.lang,
+        dateModified: siteReviewDate.iso,
         isPartOf: {
-          "@id": `${siteUrl}/#website`,
+          "@id": websiteId,
+        },
+        mainEntity: {
+          "@id": organizationId,
         },
         about: {
-          "@id": `${siteUrl}/#organization`,
+          "@id": organizationId,
         },
       },
     ],
