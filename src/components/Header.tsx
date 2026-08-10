@@ -1,6 +1,12 @@
 "use client";
 
-import { type MouseEvent, useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type HeaderProps = {
   homeHref?: string;
@@ -25,17 +31,32 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       ? "打开导航"
       : "Open navigation";
 
-  const focusMain = (event: MouseEvent<HTMLAnchorElement>) => {
+  const moveToMain = () => {
     const main = document.getElementById("top");
 
     if (!main) {
       return;
     }
 
-    event.preventDefault();
+    main.focus({ preventScroll: true });
     main.scrollIntoView({ behavior: "smooth", block: "start" });
     window.history.replaceState(null, "", "#top");
-    window.setTimeout(() => main.focus({ preventScroll: true }), 0);
+  };
+
+  const focusMain = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    moveToMain();
+  };
+
+  const focusMainFromKeyboard = (
+    event: ReactKeyboardEvent<HTMLAnchorElement>,
+  ) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    moveToMain();
   };
 
   useEffect(() => {
@@ -129,6 +150,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       <a
         href="#top"
         onClick={focusMain}
+        onKeyDown={focusMainFromKeyboard}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
       >
         {skipLabel}
