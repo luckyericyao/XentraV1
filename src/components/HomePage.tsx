@@ -234,6 +234,9 @@ export function HomePage({ locale }: HomePageProps) {
                   </span>
                   <span>{content.portfolio.evidenceVerifiedLabel}</span>
                 </p>
+                <p className="max-w-lg text-xs leading-5 text-[#8D97A5]">
+                  {content.portfolio.evidenceNote}
+                </p>
               </div>
             </div>
             {content.companies.principles ? (

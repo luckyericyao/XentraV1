@@ -80,6 +80,7 @@ export type SiteContent = {
     companyRole: string;
     evidenceLabel: string;
     evidenceVerifiedLabel: string;
+    evidenceNote: string;
     proofLabel: string;
     audienceLabel: string;
     decisionLabel: string;
@@ -382,6 +383,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
       evidenceVerifiedLabel: `Checked ${siteReviewDate.english}`,
+      evidenceNote:
+        "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.",
       proofLabel: "Available on the public site",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
@@ -648,6 +651,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
       evidenceVerifiedLabel: `核验于 ${siteReviewDate.chinese}`,
+      evidenceNote: "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。",
       proofLabel: "公开网站当前提供",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",

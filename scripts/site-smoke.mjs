@@ -264,6 +264,9 @@ function verifyPage(result, locale) {
   const evidenceVerifiedLabel = isChinese
     ? "核验于 2026.08.10"
     : "Checked 10 Aug 2026";
+  const evidenceNote = isChinese
+    ? "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。"
+    : "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.";
   const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
   const contactNote = isChinese
     ? "点击任一方向，会打开一封预填邮件。"
@@ -334,6 +337,7 @@ function verifyPage(result, locale) {
     evidenceVerifiedLabel,
     `${label} evidence verification date`,
   );
+  assertIncludes(result.body, evidenceNote, `${label} evidence scope`);
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(result.body, contactNote, `${label} contact note`);
   assertIncludes(result.body, contactTrustNote, `${label} contact trust note`);
