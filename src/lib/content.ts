@@ -259,7 +259,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       body: [
         "Each company owns its market. Xentra owns the operating thesis.",
       ],
-      chapterLabel: "Explore company",
+      chapterLabel: "View operating brief",
       visitLabel: "Visit site",
       externalLinkLabel: "opens in a new tab",
       detailsLabel: "Read operating brief",
@@ -546,7 +546,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       body: [
         "企业 AI、私人旅行和生命科学供应，看似不同，却都要求用户在碎片信息中做高价值决定。",
       ],
-      chapterLabel: "展开业务",
+      chapterLabel: "查看业务证据",
       visitLabel: "访问网站",
       externalLinkLabel: "在新窗口打开",
       detailsLabel: "查看业务说明",

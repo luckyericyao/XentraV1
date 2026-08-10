@@ -251,6 +251,8 @@ export function HomePage({ locale }: HomePageProps) {
                   {...company}
                   chapterHref={`#${company.slug}-chapter`}
                   chapterLabel={content.companies.chapterLabel}
+                  showSummary={false}
+                  showDetails={false}
                   visitLabel={content.companies.visitLabel}
                   externalLinkLabel={content.companies.externalLinkLabel}
                   detailsLabel={content.companies.detailsLabel}

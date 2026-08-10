@@ -11,6 +11,8 @@ type CompanyCardProps = {
   href: string;
   chapterHref: string;
   chapterLabel: string;
+  showSummary?: boolean;
+  showDetails?: boolean;
   visitLabel: string;
   externalLinkLabel: string;
   detailsLabel: string;
@@ -36,6 +38,8 @@ export function CompanyCard({
   href,
   chapterHref,
   chapterLabel,
+  showSummary = true,
+  showDetails = true,
   visitLabel,
   externalLinkLabel,
   detailsLabel,
@@ -70,12 +74,13 @@ export function CompanyCard({
       <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8">
         {headline}
       </p>
-      {body?.[0] ? (
+      {showSummary && body?.[0] ? (
         <p className="mt-4 text-sm leading-6 text-[#A6A39A] sm:leading-7">
           {body[0]}
         </p>
       ) : null}
-      {body && body.length > 1 || useCases?.length || problem ? (
+      {showDetails &&
+      ((body && body.length > (showSummary ? 1 : 0)) || useCases?.length || problem) ? (
         <details className="mt-5 border-y border-[#2A2D33] py-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-xs font-medium text-[#A6A39A] transition hover:text-[#F2EFE8]">
             <span>{detailsLabel}</span>
@@ -86,9 +91,9 @@ export function CompanyCard({
               +
             </span>
           </summary>
-          {body && body.length > 1 ? (
+          {body && body.length > (showSummary ? 1 : 0) ? (
             <div className="mt-4 space-y-3 border-t border-[#2A2D33] pt-4 text-sm leading-6 text-[#A6A39A] sm:leading-7">
-              {body.slice(1).map((paragraph) => (
+              {body.slice(showSummary ? 1 : 0).map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
