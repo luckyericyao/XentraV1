@@ -221,6 +221,9 @@ function verifyPage(result, locale) {
   const directionsTitle = isChinese
     ? "从难服务的市场开始。"
     : "The next company starts with a hard-to-serve market.";
+  const companiesTitle = isChinese
+    ? "不同市场，同一种底层问题。"
+    : "Three markets. One operating thesis.";
   const groupCapabilities = isChinese
     ? ["选择市场", "建立判断产品", "设定验证标准", "搭建公司系统"]
     : [
@@ -278,6 +281,7 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   assertIncludes(result.body, buildTitle, `${label} build thesis`);
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
+  assertIncludes(result.body, companiesTitle, `${label} company overview`);
   for (const capability of groupCapabilities) {
     assertIncludes(result.body, capability, `${label} group capability`);
   }

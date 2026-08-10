@@ -240,7 +240,7 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     companies: {
       eyebrow: "Portfolio Companies",
-      title: "Vertical companies, shared infrastructure.",
+      title: "Three markets. One operating thesis.",
       body: [
         "Each company owns its market. Xentra owns the operating thesis.",
       ],
