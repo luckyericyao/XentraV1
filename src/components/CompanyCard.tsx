@@ -140,6 +140,7 @@ export function CompanyCard({
         <div className="mt-3 flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
           <a
             href={chapterHref}
+            aria-label={`${chapterLabel}: ${title}`}
             className="inline-flex min-h-11 items-center text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B]"
           >
             {chapterLabel}

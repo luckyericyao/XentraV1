@@ -317,10 +317,11 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   assertIncludes(result.body, companyEntryLabel, `${label} company entry`);
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
-    assertIncludes(
-      result.body,
-      `aria-label="${companyEntryLabel}: ${company}"`,
-      `${label} architecture link label`,
+    const accessibleEntry = `aria-label="${companyEntryLabel}: ${company}"`;
+    const entryCount = result.body.split(accessibleEntry).length - 1;
+    assert(
+      entryCount >= 2,
+      `${label}: expected overview and architecture links for ${company}`,
     );
   }
   for (const marker of companyCopyMarkers) {
