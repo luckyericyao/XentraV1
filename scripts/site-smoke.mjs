@@ -218,6 +218,9 @@ function verifyPage(result, locale) {
   const heroTitleMarkers = isChinese
     ? ["把复杂市场，", "做成可信系统。"]
     : ["Decision infrastructure for trust-heavy markets."];
+  const pageTitle = isChinese
+    ? "Xentra | 把复杂市场，做成可信系统"
+    : "Xentra | AI-native operating group";
   const buildTitle = isChinese
     ? "我们建立垂直运营公司。"
     : "Operating companies, not standalone tools.";
@@ -287,6 +290,7 @@ function verifyPage(result, locale) {
   assertIncludes(contentType(result), "text/html", `${label} content type`);
   assertAccessibleSurface(result.body, label);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
+  assertIncludes(result.body, `<title>${pageTitle}</title>`, `${label} metadata title`);
   for (const marker of heroTitleMarkers) {
     assertIncludes(result.body, marker, `${label} hero positioning`);
   }

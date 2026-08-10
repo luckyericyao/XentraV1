@@ -29,9 +29,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Xentra | Decision infrastructure for trust-heavy markets",
+  title: "Xentra | AI-native operating group",
   description:
-    "Xentra is an AI-native operating group building vertical companies for trust-heavy markets.",
+    "Xentra is an AI-native operating group building vertical companies for markets where trust, judgment, and execution matter.",
   keywords: [
     "Xentra",
     "AI-native operating group",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Xentra | Decision infrastructure for trust-heavy markets",
+    title: "Xentra | AI-native operating group",
     description:
-      "An AI-native operating group building vertical companies for trust-heavy markets.",
+      "An AI-native operating group building vertical companies for markets where trust, judgment, and execution matter.",
     siteName: "Xentra",
     type: "website",
     url: "/",
@@ -67,15 +67,15 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Xentra - Decision infrastructure for trust-heavy markets",
+        alt: "Xentra - AI-native operating group",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xentra | Decision infrastructure for trust-heavy markets",
+    title: "Xentra | AI-native operating group",
     description:
-      "An AI-native operating group building vertical companies for trust-heavy markets.",
+      "An AI-native operating group building vertical companies for markets where trust, judgment, and execution matter.",
     images: ["/twitter-image"],
   },
   icons: {
