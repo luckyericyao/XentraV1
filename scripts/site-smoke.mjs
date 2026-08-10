@@ -7,6 +7,10 @@ const canonicalUrl = (
 ).replace(/\/+$/, "");
 const checkExternal = process.env.SMOKE_EXTERNAL === "1";
 const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 30_000);
+const requestAttempts = Math.max(
+  1,
+  Number(process.env.SMOKE_REQUEST_ATTEMPTS || 3),
+);
 const runId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let assertionCount = 0;
 
@@ -76,7 +80,7 @@ async function get(pathname, options = {}) {
   const url = requestUrl(pathname);
 
   try {
-    const response = await fetch(url, {
+    const response = await fetchWithRetry(url, {
       cache: "no-store",
       headers: { "Cache-Control": "no-cache" },
       redirect: "follow",
@@ -107,6 +111,36 @@ function assertStatus(result, expected, label) {
 
 function assertIncludes(value, expected, label) {
   assert(value.includes(expected), `${label}: missing ${JSON.stringify(expected)}`);
+}
+
+function isRetryableStatus(status) {
+  return status === 408 || status === 429 || status >= 500;
+}
+
+async function fetchWithRetry(url, options = {}) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= requestAttempts; attempt += 1) {
+    try {
+      const response = await fetch(url, options);
+
+      if (!isRetryableStatus(response.status) || attempt === requestAttempts) {
+        return response;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+    } catch (error) {
+      lastError = error;
+
+      if (attempt === requestAttempts) {
+        throw error;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+    }
+  }
+
+  throw lastError || new Error(`Request failed: ${url}`);
 }
 
 function assertSecurityHeaders(result, label) {
@@ -495,7 +529,7 @@ async function verifyExternalCompanies() {
 
   for (const { url, markers } of companyEvidencePages) {
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithRetry(url, {
         cache: "no-store",
         headers: { "Cache-Control": "no-cache" },
         redirect: "follow",
