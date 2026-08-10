@@ -291,48 +291,6 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        {content.directions ? (
-          <section
-            id="directions"
-            aria-labelledby="directions-title"
-            className="bg-[#070809] px-5 py-16 text-[#F2EFE8] sm:px-8 sm:py-20 lg:py-24"
-          >
-            <div className="mx-auto max-w-7xl">
-              <div className="max-w-3xl">
-                <p className="eyebrow mb-5 text-[#C6A15B]">
-                  {content.directions.eyebrow}
-                </p>
-                <h2
-                  id="directions-title"
-                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
-                >
-                  {content.directions.title}
-                </h2>
-                <div className="mt-6 space-y-4 text-base leading-7 text-[#A6A39A] sm:text-lg sm:leading-8">
-                  {content.directions.body.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-              <ol className="mt-8 border-y border-[#2A2D33] lg:grid lg:grid-cols-5">
-                {content.directions.signals.map((signal, index) => (
-                  <li
-                    key={signal}
-                    className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#2A2D33] py-4 last:border-b-0 lg:grid-cols-1 lg:gap-6 lg:border-b-0 lg:border-r lg:p-5 lg:last:border-r-0"
-                  >
-                    <span className="eyebrow pt-1 text-[#B49459]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-sm font-medium leading-6 text-[#F2EFE8]">
-                      {signal}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </section>
-        ) : null}
-
         <section
           id="contact"
           aria-labelledby="contact-title"
@@ -361,6 +319,46 @@ export function HomePage({ locale }: HomePageProps) {
                 </div>
 
                 <div>
+                  {content.directions ? (
+                    <div
+                      id="directions"
+                      className="mb-10 border-b border-[#2A2D33] pb-8"
+                    >
+                      <div className="grid gap-5 sm:grid-cols-[0.9fr_1.1fr] sm:items-end">
+                        <div>
+                          <p className="eyebrow mb-4 text-[#B49459]">
+                            {content.directions.eyebrow}
+                          </p>
+                          <h3
+                            id="directions-title"
+                            className="text-balance text-2xl font-semibold leading-tight text-[#F2EFE8] sm:text-3xl"
+                          >
+                            {content.directions.title}
+                          </h3>
+                        </div>
+                        <div className="space-y-3 text-sm leading-6 text-[#A6A39A]">
+                          {content.directions.body.map((paragraph) => (
+                            <p key={paragraph}>{paragraph}</p>
+                          ))}
+                        </div>
+                      </div>
+                      <ol className="mt-7 grid border-t border-[#2A2D33] sm:grid-cols-5 sm:border-y">
+                        {content.directions.signals.map((signal, index) => (
+                          <li
+                            key={signal}
+                            className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#2A2D33] py-4 last:border-b-0 sm:grid-cols-1 sm:gap-5 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0"
+                          >
+                            <span className="eyebrow pt-1 text-[#B49459]">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <p className="text-sm font-medium leading-6 text-[#F2EFE8]">
+                              {signal}
+                            </p>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  ) : null}
                   <p
                     id="contact-pathways-title"
                     className="eyebrow text-[#B49459]"
