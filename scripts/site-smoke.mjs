@@ -11,54 +11,82 @@ const requestAttempts = Math.max(
   1,
   Number(process.env.SMOKE_REQUEST_ATTEMPTS || 3),
 );
+const smokeContactEmail =
+  process.env.SMOKE_CONTACT_EMAIL?.trim() || "contact@xentra.ai";
 const runId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let assertionCount = 0;
 
+function configuredSmokeUrl(name, fallback) {
+  const raw = process.env[name]?.trim() || fallback;
+  const url = new URL(raw);
+
+  if (url.protocol !== "https:" || url.search || url.hash) {
+    throw new Error(`${name} must be an HTTPS URL without a query or hash.`);
+  }
+
+  return `${url.toString().replace(/\/+$/, "")}/`;
+}
+
+const companyBaseUrls = {
+  agentCoach: configuredSmokeUrl(
+    "SMOKE_AGENT_COACH_URL",
+    "https://agentcoach-three.vercel.app/",
+  ),
+  localhost: configuredSmokeUrl(
+    "SMOKE_LOCALHOST_URL",
+    "https://localhostchinav1.vercel.app/",
+  ),
+  bioaxis: configuredSmokeUrl(
+    "SMOKE_BIOAXIS_URL",
+    "https://bioaxisv3.vercel.app/",
+  ),
+};
+
 const companyUrls = [
-  "https://agentcoach-three.vercel.app/",
-  "https://localhostchinav1.vercel.app/",
-  "https://bioaxisv3.vercel.app/",
+  companyBaseUrls.agentCoach,
+  companyBaseUrls.localhost,
+  companyBaseUrls.bioaxis,
 ];
 
 const companyEvidenceUrls = [
-  "https://agentcoach-three.vercel.app/#industries",
-  "https://agentcoach-three.vercel.app/#waitlist",
-  "https://agentcoach-three.vercel.app/#coaches",
-  "https://localhostchinav1.vercel.app/journeys",
-  "https://localhostchinav1.vercel.app/inquiry?type=traveler",
-  "https://localhostchinav1.vercel.app/trust",
-  "https://bioaxisv3.vercel.app/ready-supply",
-  "https://bioaxisv3.vercel.app/equivalent-finder",
-  "https://bioaxisv3.vercel.app/request-quote",
+  `${companyBaseUrls.agentCoach}#industries`,
+  `${companyBaseUrls.agentCoach}#waitlist`,
+  `${companyBaseUrls.agentCoach}#coaches`,
+  `${companyBaseUrls.localhost}journeys`,
+  `${companyBaseUrls.localhost}inquiry?type=traveler`,
+  `${companyBaseUrls.localhost}trust`,
+  `${companyBaseUrls.bioaxis}ready-supply`,
+  `${companyBaseUrls.bioaxis}equivalent-finder`,
+  `${companyBaseUrls.bioaxis}request-quote`,
 ];
 
 const companyEvidencePages = [
   {
-    url: "https://agentcoach-three.vercel.app/",
+    url: companyBaseUrls.agentCoach,
     markers: ['id="industries"', 'id="waitlist"', 'id="coaches"'],
   },
   {
-    url: "https://localhostchinav1.vercel.app/journeys",
+    url: `${companyBaseUrls.localhost}journeys`,
     markers: ["A cultural atlas for the China you want to enter."],
   },
   {
-    url: "https://localhostchinav1.vercel.app/inquiry?type=traveler",
+    url: `${companyBaseUrls.localhost}inquiry?type=traveler`,
     markers: ["Tell us how you want to enter China."],
   },
   {
-    url: "https://localhostchinav1.vercel.app/trust",
+    url: `${companyBaseUrls.localhost}trust`,
     markers: ["A local-host network only works if it protects both sides."],
   },
   {
-    url: "https://bioaxisv3.vercel.app/ready-supply",
+    url: `${companyBaseUrls.bioaxis}ready-supply`,
     markers: ["Warehouse-backed consumables for faster lab procurement."],
   },
   {
-    url: "https://bioaxisv3.vercel.app/equivalent-finder",
+    url: `${companyBaseUrls.bioaxis}equivalent-finder`,
     markers: ["Find compatible alternatives for your current consumables"],
   },
   {
-    url: "https://bioaxisv3.vercel.app/request-quote",
+    url: `${companyBaseUrls.bioaxis}request-quote`,
     markers: ["Start a sourcing request"],
   },
 ];
@@ -501,7 +529,7 @@ function verifyPrivacyPage(result, locale) {
   );
   assertIncludes(
     result.body,
-    `mailto:contact@xentra.ai?subject=${contactSubject}`,
+    `mailto:${smokeContactEmail}?subject=${contactSubject}`,
     `${label} contact subject`,
   );
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {

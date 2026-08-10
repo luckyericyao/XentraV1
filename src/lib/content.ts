@@ -1,3 +1,7 @@
+import {
+  contactEmail,
+  publicCompanyLinks,
+} from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 
 export type Locale = "en" | "zh";
@@ -131,11 +135,7 @@ export type SiteContent = {
   };
 };
 
-const companyLinks = {
-  agentCoach: "https://agentcoach-three.vercel.app/",
-  localhost: "https://localhostchinav1.vercel.app/",
-  bioaxis: "https://bioaxisv3.vercel.app/",
-};
+const companyLinks = publicCompanyLinks;
 
 const evidenceLinks = {
   agentCoach: {
@@ -155,7 +155,6 @@ const evidenceLinks = {
   },
 } as const;
 
-const contactEmail = "contact@xentra.ai";
 const createContactMailto = (subject: string, body?: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}${
     body ? `&body=${encodeURIComponent(body)}` : ""
@@ -471,7 +470,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       companiesLabel: "Company inquiries",
       bodyPrefix: "Contact:",
-      ctaLabel: "contact@xentra.ai",
+      ctaLabel: contactEmail,
       email: contactEmail,
       mailto: contactMailto.en,
       copyLabel: "Copy email",
@@ -738,7 +737,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
       companiesLabel: "具体业务咨询",
       bodyPrefix: "邮箱：",
-      ctaLabel: "contact@xentra.ai",
+      ctaLabel: contactEmail,
       email: contactEmail,
       mailto: contactMailto.zh,
       copyLabel: "复制邮箱",

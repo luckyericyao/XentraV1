@@ -13,7 +13,16 @@ The currently verified production addresses are:
 - Localhost: `https://localhostchinav1.vercel.app/`
 - BioAxis: `https://bioaxisv3.vercel.app/`
 
-No branded domain for Xentra or the three operating companies was confirmed in the available repositories or deployment configuration. Before changing the links in `src/lib/content.ts`, confirm each target domain, Vercel alias, TLS certificate, redirect policy, and canonical metadata.
+No branded domain for Xentra or the three operating companies was confirmed in the available repositories or deployment configuration. The site keeps the verified defaults until an owner confirms replacement targets, then the build-time variables below can be set without editing page content directly.
+
+Build-time replacement variables:
+
+- `XENTRA_AGENT_COACH_URL`
+- `XENTRA_LOCALHOST_URL`
+- `XENTRA_BIOAXIS_URL`
+- `XENTRA_CONTACT_EMAIL`
+
+The URL variables must be absolute HTTPS URLs without query strings or hashes; invalid values fail the build. The email variable must be a valid address. When these values are supplied, run smoke with matching `SMOKE_AGENT_COACH_URL`, `SMOKE_LOCALHOST_URL`, `SMOKE_BIOAXIS_URL`, and `SMOKE_CONTACT_EMAIL` values so public links, evidence paths, JSON-LD, canonical output, and mailto actions are checked against the same targets.
 
 ## Enterprise email
 

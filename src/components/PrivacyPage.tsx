@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { siteContent, type Locale } from "@/lib/content";
+import { contactEmail } from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 
 type PrivacySection = {
@@ -75,7 +76,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     contactLabel: "Questions about this page",
     contactBody:
       "For questions about the Xentra homepage or a partnership inquiry, contact",
-    contactMailto: `mailto:contact@xentra.ai?subject=${encodeURIComponent("Xentra privacy question")}`,
+    contactMailto: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra privacy question")}`,
     homeHref: "/",
     footer: "Xentra — AI-native operating group for trust-heavy markets.",
     footerHomeLabel: "Return to Xentra",
@@ -125,7 +126,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     ],
     contactLabel: "关于本页的问题",
     contactBody: "如需询问 Xentra 主页或合作事宜，请联系",
-    contactMailto: `mailto:contact@xentra.ai?subject=${encodeURIComponent("Xentra 隐私说明")}`,
+    contactMailto: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra 隐私说明")}`,
     homeHref: "/zh",
     footer: "Xentra — 把复杂市场，做成可信系统。",
     footerHomeLabel: "返回 Xentra",
@@ -254,7 +255,7 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
                     href={copy.contactMailto}
                     className="text-[#F2EFE8] underline decoration-[rgba(198,161,91,0.52)] underline-offset-4 transition hover:text-[#C6A15B]"
                   >
-                    contact@xentra.ai
+                    {contactEmail}
                   </a>
                   .
                 </p>
