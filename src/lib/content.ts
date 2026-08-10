@@ -503,7 +503,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       primaryHref: "#companies",
       secondaryCta: "了解方法",
       secondaryHref: "#model",
-      tags: [],
+      tags: ["企业 AI 能力", "本地信任网络", "生命科学供应"],
       ledger: [
         { value: "01", label: "母公司方法" },
         { value: "03", label: "垂直业务公司" },
