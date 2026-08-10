@@ -253,25 +253,6 @@ details[open] .disclosure-icon {
   will-change: opacity, transform;
 }
 
-.decision-node {
-  animation: node-drift 9s ease-in-out infinite;
-}
-
-.decision-node:nth-child(2n) {
-  animation-duration: 11s;
-  animation-delay: -2s;
-}
-
-.decision-node:nth-child(3n) {
-  animation-duration: 13s;
-  animation-delay: -4s;
-}
-
-.decision-path {
-  stroke-dasharray: 8 18;
-  animation: path-flow 9s linear infinite;
-}
-
 .reveal {
   animation: reveal-up 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -282,24 +263,6 @@ details[open] .disclosure-icon {
 
 .reveal-delay-2 {
   animation-delay: 360ms;
-}
-
-@keyframes node-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate3d(5px, -7px, 0);
-    opacity: 0.9;
-  }
-}
-
-@keyframes path-flow {
-  to {
-    stroke-dashoffset: -160;
-  }
 }
 
 @keyframes reveal-up {

@@ -77,17 +77,31 @@ export function createSocialImage(locale: SocialImageLocale = "en") {
           </div>
           <div
             style={{
-              border: "1px solid rgba(198,161,91,0.38)",
-              borderRadius: 999,
+              alignItems: "center",
               color: "#C6A15B",
               display: "flex",
-              fontSize: 14,
-              letterSpacing: "0.12em",
-              padding: "12px 18px",
-              textTransform: locale === "en" ? "uppercase" : "none",
+              gap: 16,
             }}
           >
-            {copy.eyebrow}
+            <div
+              style={{
+                background: "#C6A15B",
+                display: "flex",
+                height: 1,
+                width: 42,
+              }}
+            />
+            <div
+              style={{
+                color: "#C6A15B",
+                display: "flex",
+                fontSize: 14,
+                letterSpacing: "0.14em",
+                textTransform: locale === "en" ? "uppercase" : "none",
+              }}
+            >
+              {copy.eyebrow}
+            </div>
           </div>
         </div>
         <div

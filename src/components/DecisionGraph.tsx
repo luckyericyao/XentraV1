@@ -20,16 +20,11 @@ export function DecisionGraph() {
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
       <svg
-        className="absolute left-1/2 top-20 h-[520px] w-[1120px] -translate-x-1/2 opacity-20"
+        className="absolute left-1/2 top-20 h-[520px] w-[1120px] -translate-x-1/2 opacity-30"
         viewBox="0 0 1040 320"
         fill="none"
       >
         <defs>
-          <linearGradient id="pathGradient" x1="150" x2="920" y1="160" y2="170">
-            <stop stopColor="#F2EFE8" stopOpacity="0.018" />
-            <stop offset="0.5" stopColor="#C6A15B" stopOpacity="0.22" />
-            <stop offset="1" stopColor="#F2EFE8" stopOpacity="0.04" />
-          </linearGradient>
           <pattern
             id="decisionGrid"
             width="72"
@@ -40,23 +35,23 @@ export function DecisionGraph() {
           </pattern>
         </defs>
         <rect width="1040" height="320" fill="url(#decisionGrid)" />
-        <circle cx="160" cy="166" r="7" fill="#C6A15B" opacity="0.38" />
-        <circle cx="160" cy="166" r="24" stroke="#F2EFE8" strokeOpacity="0.08" />
+        <rect x="154" y="160" width="12" height="12" fill="#C6A15B" opacity="0.3" />
+        <rect x="146" y="152" width="28" height="28" stroke="#F2EFE8" strokeOpacity="0.1" />
         {branches.map((branch) => (
           <g key={branch.path}>
             <path
-              className="decision-path"
               d={branch.path}
-              stroke="url(#pathGradient)"
-              strokeWidth="1.2"
+              stroke="#F2EFE8"
+              strokeOpacity="0.12"
+              strokeWidth="1"
             />
-            <circle
-              className="decision-node"
-              cx={branch.node.cx}
-              cy={branch.node.cy}
-              r="4"
+            <rect
+              x={branch.node.cx - 3}
+              y={branch.node.cy - 3}
+              width="6"
+              height="6"
               fill="#C6A15B"
-              opacity="0.34"
+              opacity="0.28"
             />
           </g>
         ))}
