@@ -103,16 +103,21 @@ export function PortfolioChapters({
 
             <div
               aria-hidden="true"
-              className="group-architecture-lines scroll-rise relative mx-auto hidden h-16 w-2/3 sm:block"
+              className="group-architecture-lines scroll-rise relative mx-auto block h-12 w-full sm:h-16 sm:w-2/3"
             >
-              <span className="absolute left-1/2 top-0 h-8 w-px bg-[#2A2D33]" />
-              <span className="absolute left-1/6 right-1/6 top-8 h-px bg-[#2A2D33]" />
-              <span className="absolute bottom-0 left-1/6 top-8 w-px bg-[#2A2D33]" />
-              <span className="absolute bottom-0 left-1/2 top-8 w-px bg-[#2A2D33]" />
-              <span className="absolute bottom-0 right-1/6 top-8 w-px bg-[#2A2D33]" />
+              <span className="absolute bottom-0 left-4 top-0 w-px bg-[#2A2D33] sm:hidden" />
+              <span className="absolute left-1/2 top-0 hidden h-8 w-px bg-[#2A2D33] sm:block" />
+              <span className="absolute left-1/6 right-1/6 top-8 hidden h-px bg-[#2A2D33] sm:block" />
+              <span className="absolute bottom-0 left-1/6 top-8 hidden w-px bg-[#2A2D33] sm:block" />
+              <span className="absolute bottom-0 left-1/2 top-8 hidden w-px bg-[#2A2D33] sm:block" />
+              <span className="absolute bottom-0 right-1/6 top-8 hidden w-px bg-[#2A2D33] sm:block" />
             </div>
 
-            <div className="scroll-rise border-y border-[#2A2D33] sm:grid sm:grid-cols-3">
+            <div className="relative scroll-rise border-y border-[#2A2D33] sm:grid sm:grid-cols-3">
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 left-4 top-0 w-px bg-[#2A2D33] sm:hidden"
+              />
               {companies.map((company) => {
                 const tone =
                   chapterTone[company.slug as keyof typeof chapterTone] ??
@@ -122,8 +127,12 @@ export function PortfolioChapters({
                   <a
                     key={`${company.slug}-architecture`}
                     href={`#${company.slug}-chapter`}
-                    className="group flex min-h-40 flex-col justify-between border-b border-[#2A2D33] py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
+                    className="group relative flex min-h-40 flex-col justify-between border-b border-[#2A2D33] py-6 pl-10 last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
                   >
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-4 top-1/2 h-px w-5 bg-[#2A2D33] sm:hidden"
+                    />
                     <div className="flex items-center justify-between gap-4">
                       <span className={`eyebrow ${tone.label}`}>
                         {copy.companyRoleLabel}
