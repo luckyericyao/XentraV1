@@ -227,6 +227,13 @@ export function HomePage({ locale }: HomePageProps) {
                 {content.companies.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
+                <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 text-[#8D97A5]">
+                  <span>{content.portfolio.evidenceLabel}</span>
+                  <span aria-hidden="true" className="text-[#B49459]">
+                    /
+                  </span>
+                  <span>{content.portfolio.evidenceVerifiedLabel}</span>
+                </p>
               </div>
             </div>
             {content.companies.principles ? (
