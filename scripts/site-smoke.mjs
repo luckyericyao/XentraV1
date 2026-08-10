@@ -465,6 +465,14 @@ function verifyPrivacyPage(result, locale) {
     `mailto:contact@xentra.ai?subject=${contactSubject}`,
     `${label} contact subject`,
   );
+  for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
+    assertIncludes(result.body, company, `${label} operating company disclosure`);
+    assertIncludes(
+      result.body,
+      `${company} (${isChinese ? "在新窗口打开" : "opens in a new tab"})`,
+      `${label} operating company external label`,
+    );
+  }
   assert(!result.body.includes("<form"), `${label}: unexpected form`);
   assertSecurityHeaders(result, label);
   if (isChinese) {

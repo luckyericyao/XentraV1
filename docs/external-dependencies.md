@@ -13,7 +13,7 @@ The currently verified production addresses are:
 - Localhost: `https://localhostchinav1.vercel.app/`
 - BioAxis: `https://bioaxisv3.vercel.app/`
 
-No branded domain for the three operating companies was confirmed in the available repositories or deployment configuration. Before changing the links in `src/lib/content.ts`, confirm each target domain, Vercel alias, TLS certificate, redirect policy, and canonical metadata.
+No branded domain for Xentra or the three operating companies was confirmed in the available repositories or deployment configuration. Before changing the links in `src/lib/content.ts`, confirm each target domain, Vercel alias, TLS certificate, redirect policy, and canonical metadata.
 
 ## Enterprise email
 

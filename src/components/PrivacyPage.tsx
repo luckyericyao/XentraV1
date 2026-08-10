@@ -1,10 +1,11 @@
 import { Header } from "@/components/Header";
-import type { Locale } from "@/lib/content";
+import { siteContent, type Locale } from "@/lib/content";
 import { siteReviewDate } from "@/lib/site-meta";
 
 type PrivacySection = {
   title: string;
   body: string[];
+  showCompanyLinks?: boolean;
 };
 
 type PrivacyPageCopy = {
@@ -25,6 +26,8 @@ type PrivacyPageCopy = {
   homeHref: string;
   footer: string;
   footerHomeLabel: string;
+  companyLinksLabel: string;
+  companyExternalLinkLabel: string;
 };
 
 const privacyCopy: Record<Locale, PrivacyPageCopy> = {
@@ -66,6 +69,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         body: [
           "Links to AI Agent Coach, Localhost, and BioAxis lead to separate sites with their own products, infrastructure, and information practices. Review the relevant site's terms before submitting anything there.",
         ],
+        showCompanyLinks: true,
       },
     ],
     contactLabel: "Questions about this page",
@@ -75,6 +79,8 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     homeHref: "/",
     footer: "Xentra — AI-native operating group for trust-heavy markets.",
     footerHomeLabel: "Return to Xentra",
+    companyLinksLabel: "Public company sites",
+    companyExternalLinkLabel: "opens in a new tab",
   },
   zh: {
     lang: "zh-CN",
@@ -114,6 +120,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         body: [
           "AI Agent Coach、Localhost 和 BioAxis 都是独立网站，拥有各自的产品、基础设施与信息处理方式。在对应网站提交信息前，请阅读该网站的说明。",
         ],
+        showCompanyLinks: true,
       },
     ],
     contactLabel: "关于本页的问题",
@@ -122,6 +129,8 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     homeHref: "/zh",
     footer: "Xentra — 把复杂市场，做成可信系统。",
     footerHomeLabel: "返回 Xentra",
+    companyLinksLabel: "公开业务网站",
+    companyExternalLinkLabel: "在新窗口打开",
   },
 };
 
@@ -131,6 +140,7 @@ type PrivacyPageProps = {
 
 export function PrivacyPage({ locale }: PrivacyPageProps) {
   const copy = privacyCopy[locale];
+  const companyItems = siteContent[locale].companies.items;
 
   return (
     <>
@@ -199,6 +209,37 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
                         <p key={paragraph}>{paragraph}</p>
                       ))}
                     </div>
+                    {section.showCompanyLinks ? (
+                      <div className="mt-6 border-t border-[#2A2D33] pt-5">
+                        <p className="eyebrow text-[#B49459]">
+                          {copy.companyLinksLabel}
+                        </p>
+                        <ul className="mt-3 border-y border-[#2A2D33]">
+                          {companyItems.map((company) => (
+                            <li
+                              key={company.slug}
+                              className="border-b border-[#2A2D33] last:border-b-0"
+                            >
+                              <a
+                                href={company.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${company.title} (${copy.companyExternalLinkLabel})`}
+                                className="group flex min-h-12 items-center justify-between gap-4 text-sm text-[#A6A39A] transition hover:text-[#F2EFE8]"
+                              >
+                                <span>{company.title}</span>
+                                <span
+                                  aria-hidden="true"
+                                  className="text-[#B49459] transition group-hover:translate-x-1 group-hover:text-[#C6A15B]"
+                                >
+                                  &#8599;
+                                </span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
                   </div>
                 </article>
               ))}
