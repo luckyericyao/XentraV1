@@ -544,7 +544,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "业务布局",
       title: "不同市场，同一种底层问题。",
       body: [
-        "企业 AI、私人旅行和生命科学供应，看似不同，却都要求用户在碎片信息中做高价值决定。",
+        "企业 AI、私人旅行和生命科学供应，看似不同，却都要求用户在碎片信息中做出高价值决定。",
       ],
       chapterLabel: "查看业务证据",
       visitLabel: "访问网站",
@@ -555,10 +555,10 @@ export const siteContent: Record<Locale, SiteContent> = {
         {
           slug: "ai-agent-coach",
           title: "AI Agent Coach",
-          vertical: "企业 AI 落地",
+          vertical: "企业 AI 能力",
           headline: "让 AI 真正进入工作流。",
           body: [
-            "AgentCoach 以行业为入口，把专业经验、AI 指导和具体决策场景组织成可使用的职业教练。",
+            "AI Agent Coach 以行业为入口，把专业经验、AI 指导和具体决策场景组织成可使用的职业教练。",
           ],
           href: companyLinks.agentCoach,
           evidence: {
@@ -577,7 +577,7 @@ export const siteContent: Record<Locale, SiteContent> = {
         {
           slug: "localhost",
           title: "Localhost",
-          vertical: "可信本地旅行",
+          vertical: "本地信任网络",
           headline: "重新定义高端私人旅行的本地进入方式。",
           body: [
             "Localhost 为希望深入理解中国的国际旅行者，提供私人路线、本地主理人匹配与现实行程支持。",
@@ -623,9 +623,9 @@ export const siteContent: Record<Locale, SiteContent> = {
     portfolio: {
       eyebrow: "集团架构",
       title: "集团复用能力，业务承担结果。",
-      body: "Xentra 集中建设可跨市场复用的能力；每家公司贴近客户，独立负责市场与交付。",
-      systemLabel: "AI 原生运营集团",
-      systemBody: "建设每家公司背后可复用的系统。",
+      body: "集团建设可跨市场复用的能力；每家公司贴近客户，独立负责市场与交付。",
+      systemLabel: "母公司运营系统",
+      systemBody: "每家公司背后的共用系统。",
       systemItems: [
         {
           title: "选择市场",
