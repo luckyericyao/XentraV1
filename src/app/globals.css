@@ -143,6 +143,10 @@ details[open] .disclosure-icon {
   padding-bottom: 3rem;
 }
 
+.cjk-hero-subtitle {
+  word-break: keep-all;
+}
+
 @media (max-width: 359px) {
   .cjk .hero-title {
     font-size: 2.5rem;

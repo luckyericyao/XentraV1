@@ -55,7 +55,7 @@ export function HomePage({ locale }: HomePageProps) {
               </h1>
               {content.hero.subtitle ? (
                 <p
-                  className={`reveal reveal-delay-2 max-w-4xl text-pretty text-2xl font-medium text-[#F2EFE8] sm:text-3xl sm:leading-10 ${locale === "zh" ? "mt-5 leading-8" : "mt-7 leading-8"}`}
+                  className={`reveal reveal-delay-2 max-w-4xl text-pretty text-2xl font-medium text-[#F2EFE8] sm:text-3xl sm:leading-10 ${locale === "zh" ? "cjk-hero-subtitle mt-5 leading-8" : "mt-7 leading-8"}`}
                 >
                   {content.hero.subtitle}
                 </p>
