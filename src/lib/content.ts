@@ -1,3 +1,5 @@
+import { siteReviewDate } from "@/lib/site-meta";
+
 export type Locale = "en" | "zh";
 
 export type EvidenceProof = {
@@ -366,7 +368,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "Operating company",
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
-      evidenceVerifiedLabel: "Checked 10 Aug 2026",
+      evidenceVerifiedLabel: `Checked ${siteReviewDate.english}`,
       proofLabel: "Available on the public site",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
@@ -621,7 +623,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "业务公司",
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
-      evidenceVerifiedLabel: "核验于 2026.08.10",
+      evidenceVerifiedLabel: `核验于 ${siteReviewDate.chinese}`,
       proofLabel: "公开网站当前提供",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",

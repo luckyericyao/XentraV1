@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import type { Locale } from "@/lib/content";
+import { siteReviewDate } from "@/lib/site-meta";
 
 type PrivacySection = {
   title: string;
@@ -37,7 +38,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     title: "Privacy, in plain terms.",
     intro:
       "How the Xentra group homepage handles information. This page describes the current public site, not the separate practices of its operating companies.",
-    reviewedLabel: "Last reviewed 10 Aug 2026",
+    reviewedLabel: `Last reviewed ${siteReviewDate.english}`,
     sections: [
       {
         title: "On this site",
@@ -84,7 +85,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     title: "隐私说明。",
     intro:
       "这里说明 Xentra 集团主页如何处理信息，不代表旗下业务公司的独立数据实践。",
-    reviewedLabel: "最近核验：2026.08.10",
+    reviewedLabel: `最近核验：${siteReviewDate.chinese}`,
     sections: [
       {
         title: "本页会处理什么",

@@ -553,6 +553,11 @@ async function run() {
     `<loc>${canonicalUrl}/zh/privacy</loc>`,
     "Chinese privacy sitemap URL",
   );
+  assertIncludes(
+    sitemap.body,
+    "<lastmod>2026-08-10T00:00:00.000Z</lastmod>",
+    "Sitemap stable review date",
+  );
 
   await verifyExternalCompanies();
   console.log(
