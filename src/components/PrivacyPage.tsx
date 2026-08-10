@@ -21,6 +21,7 @@ type PrivacyPageCopy = {
   sections: PrivacySection[];
   contactLabel: string;
   contactBody: string;
+  contactMailto: string;
   homeHref: string;
   footer: string;
   footerHomeLabel: string;
@@ -70,6 +71,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     contactLabel: "Questions about this page",
     contactBody:
       "For questions about the Xentra homepage or a partnership inquiry, contact",
+    contactMailto: `mailto:contact@xentra.ai?subject=${encodeURIComponent("Xentra privacy question")}`,
     homeHref: "/",
     footer: "Xentra — AI-native operating group for trust-heavy markets.",
     footerHomeLabel: "Return to Xentra",
@@ -116,6 +118,7 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     ],
     contactLabel: "关于本页的问题",
     contactBody: "如需询问 Xentra 主页或合作事宜，请联系",
+    contactMailto: `mailto:contact@xentra.ai?subject=${encodeURIComponent("Xentra 隐私说明")}`,
     homeHref: "/zh",
     footer: "Xentra — 把复杂市场，做成可信系统。",
     footerHomeLabel: "返回 Xentra",
@@ -207,7 +210,7 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
                 <p className="mt-4 max-w-xl text-base leading-8 text-[#A6A39A]">
                   {copy.contactBody}{" "}
                   <a
-                    href="mailto:contact@xentra.ai"
+                    href={copy.contactMailto}
                     className="text-[#F2EFE8] underline decoration-[rgba(198,161,91,0.52)] underline-offset-4 transition hover:text-[#C6A15B]"
                   >
                     contact@xentra.ai
@@ -217,7 +220,7 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
               </div>
               <a
                 href={copy.homeHref}
-                className="mt-8 inline-flex min-h-11 items-center rounded-full border border-[rgba(198,161,91,0.42)] px-5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B] sm:mt-0"
+                className="mt-8 inline-flex min-h-11 items-center rounded-md border border-[rgba(198,161,91,0.42)] px-5 text-sm font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B] sm:mt-0"
               >
                 {copy.footerHomeLabel}
               </a>

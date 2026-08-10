@@ -25,6 +25,19 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       ? "打开导航"
       : "Open navigation";
 
+  const focusMain = (event: MouseEvent<HTMLAnchorElement>) => {
+    const main = document.getElementById("top");
+
+    if (!main) {
+      return;
+    }
+
+    event.preventDefault();
+    main.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", "#top");
+    window.setTimeout(() => main.focus({ preventScroll: true }), 0);
+  };
+
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -115,18 +128,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
     <>
       <a
         href="#top"
-        onClick={(event) => {
-          const main = document.getElementById("top");
-
-          if (!main) {
-            return;
-          }
-
-          event.preventDefault();
-          main.focus();
-          main.scrollIntoView({ behavior: "smooth", block: "start" });
-          window.history.replaceState(null, "", "#top");
-        }}
+        onClick={focusMain}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
       >
         {skipLabel}
@@ -152,16 +154,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
               return;
             }
 
-            const main = document.getElementById("top");
-
-            if (!main) {
-              return;
-            }
-
-            event.preventDefault();
-            main.focus();
-            main.scrollIntoView({ behavior: "smooth", block: "start" });
-            window.history.replaceState(null, "", "#top");
+            focusMain(event);
           }}
         >
           Xentra

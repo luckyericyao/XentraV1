@@ -408,6 +408,9 @@ function verifyPrivacyPage(result, locale) {
   const reviewedLabel = isChinese
     ? "最近核验：2026.08.10"
     : "Last reviewed 10 Aug 2026";
+  const contactSubject = isChinese
+    ? "Xentra%20%E9%9A%90%E7%A7%81%E8%AF%B4%E6%98%8E"
+    : "Xentra%20privacy%20question";
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
@@ -430,7 +433,11 @@ function verifyPrivacyPage(result, locale) {
     `hrefLang="en" href="${canonicalUrl}/privacy"`,
     `${label} English alternate`,
   );
-  assertIncludes(result.body, "mailto:contact@xentra.ai", `${label} contact`);
+  assertIncludes(
+    result.body,
+    `mailto:contact@xentra.ai?subject=${contactSubject}`,
+    `${label} contact subject`,
+  );
   assert(!result.body.includes("<form"), `${label}: unexpected form`);
   assertSecurityHeaders(result, label);
   if (isChinese) {
