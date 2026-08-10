@@ -9,6 +9,7 @@ type NotFoundPageProps = {
 const notFoundCopy = {
   en: {
     lang: "en",
+    skipLabel: "Skip to content",
     eyebrow: "404 / Page not found",
     title: "This path does not lead to an operating company.",
     body: "The page may have moved, or the address may be incomplete. Return to Xentra to continue.",
@@ -21,6 +22,7 @@ const notFoundCopy = {
   },
   zh: {
     lang: "zh-CN",
+    skipLabel: "跳到主要内容",
     eyebrow: "404 / 页面不存在",
     title: "这个地址，没有对应的业务页面。",
     body: "页面可能已经移动，或链接并不完整。回到 Xentra 中文首页继续浏览。",
@@ -37,14 +39,23 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
   const copy = notFoundCopy[locale];
 
   return (
-    <main
-      lang={copy.lang}
-      aria-labelledby="not-found-title"
-      aria-describedby="not-found-body"
-      className={`relative isolate flex min-h-svh overflow-hidden bg-[#070809] px-5 py-8 text-[#F2EFE8] sm:px-8 sm:py-10 ${
-        locale === "zh" ? "cjk" : ""
-      }`}
-    >
+    <>
+      <a
+        href="#not-found-main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
+      >
+        {copy.skipLabel}
+      </a>
+      <main
+        id="not-found-main"
+        tabIndex={-1}
+        lang={copy.lang}
+        aria-labelledby="not-found-title"
+        aria-describedby="not-found-body"
+        className={`relative isolate flex min-h-svh overflow-hidden bg-[#070809] px-5 py-8 text-[#F2EFE8] sm:px-8 sm:py-10 ${
+          locale === "zh" ? "cjk" : ""
+        }`}
+      >
       <div className="hero-color-field" aria-hidden="true" />
       <DecisionGraph />
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col">
@@ -101,6 +112,7 @@ export function NotFoundPage({ locale }: NotFoundPageProps) {
           {copy.footerLabel}
         </p>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

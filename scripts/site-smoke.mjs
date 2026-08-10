@@ -488,6 +488,21 @@ async function run() {
   assertIncludes(englishMissing.body, "Page not found", "English 404 copy");
   assertIncludes(
     englishMissing.body,
+    "#not-found-main",
+    "English 404 skip link",
+  );
+  assertIncludes(
+    englishMissing.body,
+    "not-found-main",
+    "English 404 main target",
+  );
+  assertIncludes(
+    englishMissing.body,
+    'tabIndex\\":-1',
+    "English 404 main focus target",
+  );
+  assertIncludes(
+    englishMissing.body,
     "AI-native operating group",
     "English 404 positioning",
   );
@@ -498,6 +513,21 @@ async function run() {
   assertSecurityHeaders(englishMissing, "English 404");
   assertStatus(chineseMissing, 404, "Chinese 404");
   assertIncludes(chineseMissing.body, "页面不存在", "Chinese 404 copy");
+  assertIncludes(
+    chineseMissing.body,
+    "#not-found-main",
+    "Chinese 404 skip link",
+  );
+  assertIncludes(
+    chineseMissing.body,
+    "not-found-main",
+    "Chinese 404 main target",
+  );
+  assertIncludes(
+    chineseMissing.body,
+    'tabIndex\\":-1',
+    "Chinese 404 main focus target",
+  );
   assert(
     chineseMissing.headers.get("content-language") === "zh-CN",
     "Chinese 404: missing Content-Language",
