@@ -91,7 +91,7 @@ export function HomePage({ locale }: HomePageProps) {
                 </a>
               </div>
             </div>
-            <div className="hero-register mt-8 border-t border-[#2A2D33] pt-5">
+            <div className="hero-register mt-8 border-t border-[#2A2D33] pt-5 lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-8">
               <div className="grid grid-cols-3 gap-4">
                 {content.hero.ledger.map((item) => (
                   <div key={item.label} className="min-w-0">
@@ -105,7 +105,7 @@ export function HomePage({ locale }: HomePageProps) {
                 ))}
               </div>
               {content.hero.tags.length ? (
-                <div className="eyebrow mt-6 flex flex-wrap gap-x-4 gap-y-2 text-[#9B978E]">
+                <div className="eyebrow mt-6 flex flex-wrap gap-x-4 gap-y-2 text-[#9B978E] lg:mt-0 lg:max-w-lg lg:justify-end lg:border-l lg:border-[#2A2D33] lg:pl-6 lg:pt-1">
                   {content.hero.tags.map((tag, index) => (
                     <span key={tag} className="contents">
                       {index > 0 ? <span aria-hidden="true">/</span> : null}
