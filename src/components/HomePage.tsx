@@ -45,7 +45,13 @@ export function HomePage({ locale }: HomePageProps) {
                 id="hero-title"
                 className="hero-title reveal reveal-delay-1 max-w-5xl text-balance"
               >
-                {content.hero.title}
+                {content.hero.titleLines
+                  ? content.hero.titleLines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))
+                  : content.hero.title}
               </h1>
               {content.hero.subtitle ? (
                 <p

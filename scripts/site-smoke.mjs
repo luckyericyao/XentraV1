@@ -215,6 +215,9 @@ function verifyPage(result, locale) {
   const portfolioTitle = isChinese
     ? "集团复用能力，业务承担结果。"
     : "Shared capabilities. Accountable operators.";
+  const heroTitleMarkers = isChinese
+    ? ["把复杂市场，", "做成可信系统。"]
+    : ["Decision infrastructure for trust-heavy markets."];
   const buildTitle = isChinese
     ? "我们建立垂直运营公司。"
     : "Operating companies, not standalone tools.";
@@ -278,6 +281,9 @@ function verifyPage(result, locale) {
   assertIncludes(contentType(result), "text/html", `${label} content type`);
   assertAccessibleSurface(result.body, label);
   assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
+  for (const marker of heroTitleMarkers) {
+    assertIncludes(result.body, marker, `${label} hero positioning`);
+  }
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   assertIncludes(result.body, buildTitle, `${label} build thesis`);
   assertIncludes(result.body, directionsTitle, `${label} new directions`);

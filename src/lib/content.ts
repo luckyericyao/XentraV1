@@ -34,6 +34,7 @@ export type SiteContent = {
   hero: {
     eyebrow: string;
     title: string;
+    titleLines?: string[];
     subtitle?: string;
     body: string[];
     primaryCta: string;
@@ -476,6 +477,7 @@ export const siteContent: Record<Locale, SiteContent> = {
     hero: {
       eyebrow: "AI 原生运营集团",
       title: "把复杂市场，做成可信系统。",
+      titleLines: ["把复杂市场，", "做成可信系统。"],
       subtitle: "Xentra 是一家 AI 原生运营集团。",
       body: [
         "我们进入信息很多、判断困难、结果依赖执行的市场，建立垂直运营公司，用 AI 提高判断效率，用真实运营完成交付。",
