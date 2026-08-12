@@ -93,7 +93,7 @@ const companyEvidencePages = [
   },
   {
     url: `${companyBaseUrls.localhost}journeys`,
-    markers: ["Choose a China that matches your attention."],
+    markers: ["Four private ways into China."],
   },
   {
     url: `${companyBaseUrls.localhost}inquiry?type=traveler`,
@@ -428,6 +428,13 @@ function verifyPage(result, locale) {
   }
   for (const marker of companyCopyMarkers) {
     assertIncludes(result.body, marker, `${label} native company copy`);
+  }
+  for (const slug of ["ai-agent-coach", "localhost", "bioaxis"]) {
+    assertIncludes(
+      result.body,
+      `data-company-decision="${slug}"`,
+      `${label} overview decision question for ${slug}`,
+    );
   }
   for (const capability of groupCapabilities) {
     assertIncludes(result.body, capability, `${label} group capability`);

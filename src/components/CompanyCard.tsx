@@ -5,6 +5,8 @@ type CompanyCardProps = {
   vertical: string;
   layer?: string;
   headline: string;
+  decision?: string;
+  decisionLabel?: string;
   body?: string[];
   problem?: string;
   useCases?: string[];
@@ -40,6 +42,8 @@ export function CompanyCard({
   vertical,
   layer,
   headline,
+  decision,
+  decisionLabel,
   body,
   problem,
   useCases,
@@ -87,6 +91,17 @@ export function CompanyCard({
       <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8">
         {headline}
       </p>
+      {decision && decisionLabel ? (
+        <div className="mt-5 border-t border-[#2A2D33] pt-4">
+          <p className={`eyebrow ${labelTone}`}>{decisionLabel}</p>
+          <blockquote
+            data-company-decision={slug}
+            className="mt-3 text-pretty text-base leading-7 text-[#D9D5CC]"
+          >
+            {decision}
+          </blockquote>
+        </div>
+      ) : null}
       {showSummary && body?.[0] ? (
         <p className="mt-4 text-sm leading-6 text-[#A6A39A] sm:leading-7">
           {body[0]}

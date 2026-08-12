@@ -293,6 +293,8 @@ export function HomePage({ locale }: HomePageProps) {
                   chapterLabel={content.companies.chapterLabel}
                   evidenceLabel={content.portfolio.evidenceLabel}
                   evidenceVerifiedLabel={content.portfolio.evidenceVerifiedLabel}
+                  decision={company.evidence.decision}
+                  decisionLabel={content.companies.decisionLabel}
                   showSummary={false}
                   showDetails={false}
                   visitLabel={content.companies.visitLabel}

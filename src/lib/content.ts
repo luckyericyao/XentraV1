@@ -75,6 +75,7 @@ export type SiteContent = {
     externalLinkLabel: string;
     detailsLabel: string;
     useCasesLabel: string;
+    decisionLabel: string;
     items: Company[];
   };
   portfolio: {
@@ -234,6 +235,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       externalLinkLabel: "opens in a new tab",
       detailsLabel: "Read operating brief",
       useCasesLabel: "Use cases",
+      decisionLabel: "Decision at stake",
       items: [
         {
           slug: "ai-agent-coach",
@@ -531,6 +533,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       externalLinkLabel: "在新窗口打开",
       detailsLabel: "查看业务说明",
       useCasesLabel: "适用场景",
+      decisionLabel: "关键问题",
       items: [
         {
           slug: "ai-agent-coach",
