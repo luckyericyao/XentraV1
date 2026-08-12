@@ -240,9 +240,18 @@ export const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "Thesis",
       title: "Trust cost is the hidden tax on complex markets.",
       points: [
-        { title: "Fragmented information" },
-        { title: "Expensive trust" },
-        { title: "Execution quality" },
+        {
+          title: "Fragmented information",
+          body: "Sources, standards, and signals do not arrive in a usable order.",
+        },
+        {
+          title: "Expensive trust",
+          body: "The real cost sits in knowing which signal deserves belief.",
+        },
+        {
+          title: "Execution quality",
+          body: "The outcome still depends on what happens after the decision.",
+        },
       ],
     },
     build: {
@@ -522,12 +531,15 @@ export const siteContent: Record<Locale, SiteContent> = {
       points: [
         {
           title: "信息多，质量不一。",
+          body: "来源复杂，标准不同，不能直接拿来比较。",
         },
         {
           title: "选择多，信任不足。",
+          body: "真正困难的，是判断谁值得相信。",
         },
         {
           title: "结果取决于执行。",
+          body: "决定之后，仍然要有人把结果交付出来。",
         },
       ],
       closing: [

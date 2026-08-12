@@ -31,18 +31,18 @@ export function DecisionGraph() {
             height="72"
             patternUnits="userSpaceOnUse"
           >
-            <path d="M72 0H0V72" stroke="#F2EFE8" strokeOpacity="0.035" />
+            <path d="M72 0H0V72" stroke="#F2EFE8" strokeOpacity="0.045" />
           </pattern>
         </defs>
         <rect width="1040" height="320" fill="url(#decisionGrid)" />
-        <rect x="154" y="160" width="12" height="12" fill="#C6A15B" opacity="0.3" />
-        <rect x="146" y="152" width="28" height="28" stroke="#F2EFE8" strokeOpacity="0.1" />
+        <rect x="154" y="160" width="12" height="12" fill="#C6A15B" opacity="0.42" />
+        <rect x="146" y="152" width="28" height="28" stroke="#F2EFE8" strokeOpacity="0.15" />
         {branches.map((branch) => (
           <g key={branch.path}>
             <path
               d={branch.path}
               stroke="#F2EFE8"
-              strokeOpacity="0.12"
+              strokeOpacity="0.17"
               strokeWidth="1"
             />
             <rect
@@ -51,7 +51,7 @@ export function DecisionGraph() {
               width="6"
               height="6"
               fill="#C6A15B"
-              opacity="0.28"
+              opacity="0.38"
             />
           </g>
         ))}
