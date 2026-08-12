@@ -133,6 +133,10 @@ details[open] .disclosure-icon {
   line-height: 1.06;
 }
 
+.cjk .letter-title {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+}
+
 .cjk #companies-title {
   max-width: 20rem;
 }

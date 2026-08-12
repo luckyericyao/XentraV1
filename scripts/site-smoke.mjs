@@ -394,6 +394,16 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, buildEyebrow, `${label} founder note label`);
   assertIncludes(result.body, buildSignature, `${label} founder note signature`);
   assertIncludes(result.body, buildVoice, `${label} founder note voice`);
+  assertIncludes(
+    result.body,
+    `href="${isChinese ? "/zh/letter" : "/letter"}"`,
+    `${label} founder letter link`,
+  );
+  assertIncludes(
+    result.body,
+    isChinese ? "阅读创始人手记" : "Read the founder letter",
+    `${label} founder letter label`,
+  );
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   for (const principle of companyPrinciples) {
@@ -615,6 +625,110 @@ function verifyPrivacyPage(result, locale) {
   }
 }
 
+function verifyFounderLetter(result, locale) {
+  const isChinese = locale === "zh";
+  const label = isChinese ? "Chinese founder letter" : "English founder letter";
+  const expectedLang = isChinese ? "zh-CN" : "en";
+  const letterPath = isChinese ? "/zh/letter" : "/letter";
+  const canonicalHref = `${canonicalUrl}${letterPath}`;
+  const pageTitle = isChinese ? "创始人手记 | Xentra" : "Founder Letter | Xentra";
+  const headline = isChinese
+    ? "一家公司，应该在变大以后，更值得信任。"
+    : "A company should become more trusted as it grows.";
+  const deck = isChinese
+    ? "规模往往制造距离。Xentra 想做相反的事"
+    : "Scale often creates distance. Xentra is built on a different premise";
+  const sectionTitles = isChinese
+    ? [
+        "判断不是多余成本。",
+        "最后一公里，本来就是产品的一部分。",
+        "母公司必须证明自己值得存在。",
+      ]
+    : [
+        "Judgment is not friction.",
+        "The last mile belongs inside the company.",
+        "The center must earn its place.",
+      ];
+  const closing = isChinese
+    ? "我们会少进入一些市场，也会比多数人更深入地理解它们。"
+    : "We will enter fewer markets than we could. We intend to understand them more deeply than most.";
+  const companiesHref = isChinese ? "/zh#companies" : "/#companies";
+  const contactHref = isChinese ? "/zh#contact" : "/#contact";
+  const privacyHref = isChinese ? "/zh/privacy" : "/privacy";
+
+  assertStatus(result, 200, label);
+  assertIncludes(contentType(result), "text/html", `${label} content type`);
+  assertAccessibleSurface(result.body, label);
+  assertIncludes(result.body, `<html lang="${expectedLang}"`, `${label} lang`);
+  assertIncludes(result.body, `<title>${pageTitle}</title>`, `${label} metadata title`);
+  assertIncludes(
+    result.body,
+    `aria-label="${headline}"`,
+    `${label} accessible headline`,
+  );
+  assertIncludes(result.body, deck, `${label} editorial deck`);
+  for (const sectionTitle of sectionTitles) {
+    assertIncludes(result.body, sectionTitle, `${label} section thesis`);
+  }
+  assertIncludes(result.body, closing, `${label} closing conviction`);
+  assertIncludes(result.body, `href="${companiesHref}"`, `${label} companies CTA`);
+  assertIncludes(result.body, `href="${contactHref}"`, `${label} contact CTA`);
+  assertIncludes(result.body, `href="${privacyHref}"`, `${label} privacy link`);
+  assertIncludes(
+    result.body,
+    `<link rel="canonical" href="${canonicalHref}"`,
+    `${label} canonical`,
+  );
+  assertIncludes(
+    result.body,
+    `hrefLang="zh-CN" href="${canonicalUrl}/zh/letter"`,
+    `${label} Chinese alternate`,
+  );
+  assertIncludes(
+    result.body,
+    `hrefLang="en" href="${canonicalUrl}/letter"`,
+    `${label} English alternate`,
+  );
+  assert(!result.body.includes("<form"), `${label}: unexpected form`);
+  assert(
+    !result.body.includes("contact@xentra.ai"),
+    `${label}: unverified xentra.ai email is published`,
+  );
+
+  const structuredData = extractStructuredData(result.body, label);
+  assert(structuredData["@type"] === "Article", `${label}: invalid schema type`);
+  assert(structuredData.headline === headline, `${label}: invalid schema headline`);
+  assert(
+    structuredData.datePublished === "2026-08-13",
+    `${label}: invalid publication date`,
+  );
+  assert(
+    structuredData.dateModified === "2026-08-13",
+    `${label}: invalid modified date`,
+  );
+  assert(
+    structuredData.mainEntityOfPage === canonicalHref,
+    `${label}: invalid schema page URL`,
+  );
+  assert(
+    structuredData.author?.["@type"] === "Organization" &&
+      structuredData.author?.name === "Xentra",
+    `${label}: invalid schema author`,
+  );
+  assert(
+    structuredData.publisher?.name === "Xentra",
+    `${label}: invalid schema publisher`,
+  );
+
+  assertSecurityHeaders(result, label);
+  if (isChinese) {
+    assert(
+      result.headers.get("content-language") === "zh-CN",
+      `${label}: missing Content-Language`,
+    );
+  }
+}
+
 async function verifyExternalCompanies() {
   if (!checkExternal) {
     return;
@@ -687,6 +801,8 @@ async function run() {
     chineseMissing,
     englishPrivacy,
     chinesePrivacy,
+    englishLetter,
+    chineseLetter,
     englishManifest,
     chineseManifest,
     englishSocial,
@@ -701,6 +817,8 @@ async function run() {
     get("/zh/smoke-missing-route"),
     get("/privacy"),
     get("/zh/privacy"),
+    get("/letter"),
+    get("/zh/letter"),
     get("/manifest.webmanifest"),
     get("/zh/manifest.webmanifest"),
     get("/opengraph-image", { binary: true }),
@@ -716,6 +834,8 @@ async function run() {
   verifyPage(chinese, "zh");
   verifyPrivacyPage(englishPrivacy, "en");
   verifyPrivacyPage(chinesePrivacy, "zh");
+  verifyFounderLetter(englishLetter, "en");
+  verifyFounderLetter(chineseLetter, "zh");
 
   assertStatus(englishMissing, 404, "English 404");
   assertIncludes(englishMissing.body, "Page not found", "English 404 copy");
@@ -815,6 +935,16 @@ async function run() {
     sitemap.body,
     `<loc>${canonicalUrl}/zh/privacy</loc>`,
     "Chinese privacy sitemap URL",
+  );
+  assertIncludes(
+    sitemap.body,
+    `<loc>${canonicalUrl}/letter</loc>`,
+    "English founder letter sitemap URL",
+  );
+  assertIncludes(
+    sitemap.body,
+    `<loc>${canonicalUrl}/zh/letter</loc>`,
+    "Chinese founder letter sitemap URL",
   );
   assertIncludes(
     sitemap.body,

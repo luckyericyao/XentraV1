@@ -210,13 +210,29 @@ export function HomePage({ locale }: HomePageProps) {
                   ))}
                 </div>
                 {content.build.signature ? (
-                  <p className="eyebrow mt-6 flex items-center gap-3 border-t border-[#2A2D33] pt-4 text-[#B49459]">
-                    <span
-                      aria-hidden="true"
-                      className="block h-px w-8 bg-[#8E7445]"
-                    />
-                    <span>{content.build.signature}</span>
-                  </p>
+                  <div className="mt-6 flex flex-col gap-4 border-t border-[#2A2D33] pt-4 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="eyebrow flex items-center gap-3 text-[#B49459]">
+                      <span
+                        aria-hidden="true"
+                        className="block h-px w-8 bg-[#8E7445]"
+                      />
+                      <span>{content.build.signature}</span>
+                    </p>
+                    {content.build.letterLabel && content.build.letterHref ? (
+                      <a
+                        href={content.build.letterHref}
+                        className="group inline-flex items-center gap-3 text-sm font-medium text-[#A6A39A] transition hover:text-[#F2EFE8]"
+                      >
+                        {content.build.letterLabel}
+                        <span
+                          aria-hidden="true"
+                          className="text-[#B49459] transition group-hover:translate-x-1"
+                        >
+                          &#8594;
+                        </span>
+                      </a>
+                    ) : null}
+                  </div>
                 ) : null}
               </div>
             </div>
@@ -496,6 +512,12 @@ export function HomePage({ locale }: HomePageProps) {
                 <span aria-hidden="true" className="text-[#B49459]">&#8599;</span>
               </a>
             ))}
+            <a
+              href={content.footer.letterHref}
+              className="text-sm transition hover:text-[#F2EFE8]"
+            >
+              {content.footer.letterLabel}
+            </a>
             <a
               href={content.contact.contactHref}
               target={content.contact.contactExternal ? "_blank" : undefined}

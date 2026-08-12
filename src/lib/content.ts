@@ -62,6 +62,8 @@ export type SiteContent = {
     titleLines?: string[];
     body: string[];
     signature?: string;
+    letterLabel?: string;
+    letterHref?: string;
   };
   companies: {
     eyebrow: string;
@@ -133,6 +135,8 @@ export type SiteContent = {
     backToTopLabel: string;
     privacyLabel: string;
     privacyHref: string;
+    letterLabel: string;
+    letterHref: string;
   };
 };
 
@@ -210,6 +214,8 @@ export const siteContent: Record<Locale, SiteContent> = {
         "Xentra is the operating model I am building around both disciplines: enter fewer markets, understand them deeply, and earn the right to compound.",
       ],
       signature: "Founder, Xentra",
+      letterLabel: "Read the founder letter",
+      letterHref: "/letter",
     },
     companies: {
       eyebrow: "Operating Companies",
@@ -437,6 +443,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       backToTopLabel: "Back to top",
       privacyLabel: "Privacy",
       privacyHref: "/privacy",
+      letterLabel: "Founder letter",
+      letterHref: "/letter",
     },
   },
   zh: {
@@ -501,6 +509,8 @@ export const siteContent: Record<Locale, SiteContent> = {
         "Xentra 是我围绕这两种能力建立的一套长期运营方法：少进入几个市场，深理解一些问题，让长期交付产生复利。",
       ],
       signature: "Xentra 创始人",
+      letterLabel: "阅读创始人手记",
+      letterHref: "/zh/letter",
     },
     companies: {
       eyebrow: "业务布局",
@@ -701,6 +711,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       backToTopLabel: "返回顶部",
       privacyLabel: "隐私说明",
       privacyHref: "/zh/privacy",
+      letterLabel: "创始人手记",
+      letterHref: "/zh/letter",
     },
   },
 };

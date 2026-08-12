@@ -15,6 +15,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "zh-CN": `${siteUrl}/zh/privacy`,
     "x-default": `${siteUrl}/privacy`,
   };
+  const letterLanguages = {
+    en: `${siteUrl}/letter`,
+    "zh-CN": `${siteUrl}/zh/letter`,
+    "x-default": `${siteUrl}/letter`,
+  };
 
   return [
     {
@@ -30,6 +35,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages },
+    },
+    {
+      url: `${siteUrl}/letter`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.7,
+      alternates: { languages: letterLanguages },
+    },
+    {
+      url: `${siteUrl}/zh/letter`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.7,
+      alternates: { languages: letterLanguages },
     },
     {
       url: `${siteUrl}/privacy`,

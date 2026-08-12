@@ -6,6 +6,9 @@ requires accountable operators.
 
 [View the public group site](https://xentra-v1.vercel.app/)
 
+[Read the founder letter](https://xentra-v1.vercel.app/letter) — a short note
+on judgment, accountability, delivery, and the role of the parent company.
+
 ## Operating companies
 
 - [AI Agent Coach](https://agentcoach-three.vercel.app/) — AI capability for
