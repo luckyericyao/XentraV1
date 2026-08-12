@@ -284,8 +284,13 @@ function verifyPage(result, locale) {
     ? "Xentra | 把复杂市场，做成可信系统"
     : "Xentra | AI-native operating group";
   const buildTitle = isChinese
-    ? "想法，要在现实里证明价值。"
-    : "Ideas earn their value in the real world.";
+    ? "我想建立的公司，规模越大，越值得信任。"
+    : "I want to build companies that become more trusted as they grow.";
+  const buildEyebrow = isChinese ? "创始人手记" : "From the Founder";
+  const buildSignature = isChinese ? "Xentra 创始人" : "Founder, Xentra";
+  const buildVoice = isChinese
+    ? "Xentra 是我围绕这两种能力建立的一套长期运营方法"
+    : "Xentra is the operating model I am building around both disciplines";
   const directionsTitle = isChinese
     ? "从难服务的市场开始。"
     : "The next company starts with a hard-to-serve market.";
@@ -382,6 +387,9 @@ function verifyPage(result, locale) {
   }
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   assertIncludes(result.body, buildTitle, `${label} build thesis`);
+  assertIncludes(result.body, buildEyebrow, `${label} founder note label`);
+  assertIncludes(result.body, buildSignature, `${label} founder note signature`);
+  assertIncludes(result.body, buildVoice, `${label} founder note voice`);
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   for (const principle of companyPrinciples) {

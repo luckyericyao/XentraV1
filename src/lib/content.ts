@@ -59,7 +59,9 @@ export type SiteContent = {
   build?: {
     eyebrow: string;
     title: string;
+    titleLines?: string[];
     body: string[];
+    signature?: string;
   };
   companies: {
     eyebrow: string;
@@ -255,12 +257,13 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     build: {
-      eyebrow: "Operating Conviction",
-      title: "Ideas earn their value in the real world.",
+      eyebrow: "From the Founder",
+      title: "I want to build companies that become more trusted as they grow.",
       body: [
-        "Xentra starts with a recurring customer decision, not a technology demo. We choose markets where clarity matters more than more choice.",
-        "AI removes repetition. Operators remain responsible for context, trust, and delivery. Scale comes after the handoff works.",
+        "Technology is useful when it makes a difficult choice clearer. Operations matter when someone remains accountable after the recommendation.",
+        "Xentra is the operating model I am building around both disciplines: enter fewer markets, understand them deeply, and earn the right to compound.",
       ],
+      signature: "Founder, Xentra",
     },
     companies: {
       eyebrow: "Operating Companies",
@@ -552,12 +555,14 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     build: {
-      eyebrow: "我们的取舍",
-      title: "想法，要在现实里证明价值。",
+      eyebrow: "创始人手记",
+      title: "我想建立的公司，规模越大，越值得信任。",
+      titleLines: ["我想建立的公司，", "规模越大，", "越值得信任。"],
       body: [
-        "Xentra 不从技术演示开始，而从一个反复发生、长期没有解决好的真实问题开始。用户需要的不是更多选择，而是更早看清什么值得选。",
-        "AI 消除重复，人负责语境、信任和交付。最后一公里没有跑通之前，我们不急着谈规模。",
+        "技术的价值，是让困难的选择更清楚；运营的价值，是在建议之后，仍有人对结果负责。",
+        "Xentra 是我围绕这两种能力建立的一套长期运营方法：少进入几个市场，深理解一些问题，让长期交付产生复利。",
       ],
+      signature: "Xentra 创始人",
     },
     companies: {
       eyebrow: "业务布局",

@@ -191,15 +191,33 @@ export function HomePage({ locale }: HomePageProps) {
                 </p>
                 <h2
                   id="build-title"
+                  aria-label={content.build.title}
                   className="max-w-xl text-balance text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl"
                 >
-                  {content.build.title}
+                  {content.build.titleLines
+                    ? content.build.titleLines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))
+                    : content.build.title}
                 </h2>
               </div>
-              <div className="grid gap-4 border-l border-[#2A2D33] pl-5 text-sm leading-7 text-[#A6A39A] sm:text-base sm:leading-7 lg:grid-cols-2 lg:gap-8">
-                {content.build.body.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+              <div className="border-l border-[#2A2D33] pl-5">
+                <div className="grid gap-4 text-sm leading-7 text-[#A6A39A] sm:text-base sm:leading-7 lg:grid-cols-2 lg:gap-8">
+                  {content.build.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                {content.build.signature ? (
+                  <p className="eyebrow mt-6 flex items-center gap-3 border-t border-[#2A2D33] pt-4 text-[#B49459]">
+                    <span
+                      aria-hidden="true"
+                      className="block h-px w-8 bg-[#8E7445]"
+                    />
+                    <span>{content.build.signature}</span>
+                  </p>
+                ) : null}
               </div>
             </div>
           </section>
@@ -211,7 +229,7 @@ export function HomePage({ locale }: HomePageProps) {
           className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)] lg:items-end lg:gap-16">
               <div>
                 <p className="eyebrow mb-5 text-[#C6A15B]">
                   {content.companies.eyebrow}
@@ -320,7 +338,7 @@ export function HomePage({ locale }: HomePageProps) {
                   </p>
                   <h2
                     id="contact-title"
-                    className="font-serif text-balance text-5xl font-normal leading-[0.98] sm:text-6xl lg:text-7xl"
+                    className="text-balance text-5xl font-semibold leading-[0.98] sm:text-6xl lg:text-7xl"
                   >
                     {content.contact.title}
                   </h2>
