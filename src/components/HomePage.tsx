@@ -14,6 +14,10 @@ type HomePageProps = {
 
 export function HomePage({ locale }: HomePageProps) {
   const content = siteContent[locale];
+  const publicEvidenceCount = content.companies.items.reduce(
+    (total, company) => total + company.evidence.proof.length,
+    0,
+  );
 
   return (
     <>
@@ -30,14 +34,14 @@ export function HomePage({ locale }: HomePageProps) {
       >
         <section
           aria-labelledby="hero-title"
-          className={`relative isolate flex min-h-[calc(100svh-4rem)] overflow-hidden bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 lg:py-20 ${locale === "zh" ? "cjk-hero" : ""}`}
+          className={`relative isolate flex min-h-[calc(90svh-4rem)] overflow-hidden bg-[#070809] px-5 py-16 text-[#F2EFE8] sm:px-8 lg:py-12 ${locale === "zh" ? "cjk-hero" : ""}`}
         >
           <div className="hero-color-field" aria-hidden="true" />
           <DecisionGraph />
           <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center">
             <div className="max-w-6xl">
               <p
-                className={`eyebrow reveal text-[#C6A15B] ${locale === "zh" ? "mb-5 lg:mb-6" : "mb-8"}`}
+                className={`eyebrow reveal text-[#C6A15B] ${locale === "zh" ? "mb-5 lg:mb-6" : "mb-8 lg:mb-6"}`}
               >
                 {content.hero.eyebrow}
               </p>
@@ -61,7 +65,7 @@ export function HomePage({ locale }: HomePageProps) {
                 </p>
               ) : null}
               <div
-                className={`reveal reveal-delay-2 max-w-3xl text-[#A6A39A] ${locale === "zh" ? "mt-6 space-y-3 text-[15px] leading-6 sm:text-base sm:leading-7" : "mt-9 space-y-5 text-base leading-7 sm:text-lg sm:leading-8"}`}
+                className={`reveal reveal-delay-2 max-w-3xl text-[#A6A39A] ${locale === "zh" ? "mt-6 space-y-3 text-[15px] leading-6 sm:text-base sm:leading-7" : "mt-9 space-y-5 text-base leading-7 sm:text-lg sm:leading-8 lg:mt-7"}`}
               >
                 {content.hero.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -69,13 +73,13 @@ export function HomePage({ locale }: HomePageProps) {
               </div>
               {content.hero.note ? (
                 <p
-                  className={`eyebrow reveal reveal-delay-2 text-[#C6A15B] ${locale === "zh" ? "mt-5" : "mt-8"}`}
+                  className={`eyebrow reveal reveal-delay-2 text-[#C6A15B] ${locale === "zh" ? "mt-5" : "mt-8 lg:mt-6"}`}
                 >
                   {content.hero.note}
                 </p>
               ) : null}
               <div
-                className={`flex flex-col gap-3 sm:flex-row ${locale === "zh" ? "mt-7 lg:mt-8" : "mt-11"}`}
+                className={`flex flex-col gap-3 sm:flex-row ${locale === "zh" ? "mt-7 lg:mt-8" : "mt-11 lg:mt-8"}`}
               >
                 <a
                   href={content.hero.primaryHref}
@@ -91,7 +95,7 @@ export function HomePage({ locale }: HomePageProps) {
                 </a>
               </div>
             </div>
-            <div className="hero-register mt-8 border-t border-[#2A2D33] pt-5 lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-8">
+            <div className="hero-register mt-8 border-t border-[#2A2D33] pt-5 lg:mt-6 lg:grid lg:grid-cols-[1fr_auto] lg:items-start lg:gap-8">
               <div className="grid grid-cols-3 gap-4">
                 {content.hero.ledger.map((item) => (
                   <div key={item.label} className="min-w-0">
@@ -121,14 +125,16 @@ export function HomePage({ locale }: HomePageProps) {
         <section
           id="thesis"
           aria-labelledby="thesis-title"
-          className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          className="relative border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
         >
+          <div className="pointer-events-none absolute inset-x-0 top-0 px-5 pt-4 sm:px-8">
+            <p className="eyebrow mx-auto max-w-7xl text-[#C6A15B]">
+              {content.thesis.eyebrow}
+            </p>
+          </div>
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
               <div>
-                <p className="eyebrow mb-5 text-[#C6A15B]">
-                  {content.thesis.eyebrow}
-                </p>
                 <h2
                   id="thesis-title"
                   className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
@@ -299,6 +305,12 @@ export function HomePage({ locale }: HomePageProps) {
             <div className="mt-8 grid gap-3 border-t border-[#2A2D33] pt-5 md:grid-cols-[auto_1fr] md:items-start md:gap-8">
               <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 text-[#8D97A5]">
                 <span>{content.portfolio.evidenceLabel}</span>
+                <span aria-hidden="true" className="text-[#B49459]">
+                  /
+                </span>
+                <span>
+                  {String(publicEvidenceCount).padStart(2, "0")} {content.portfolio.evidenceCountLabel}
+                </span>
                 <span aria-hidden="true" className="text-[#B49459]">
                   /
                 </span>

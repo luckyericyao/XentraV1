@@ -362,21 +362,21 @@ function verifyPage(result, locale) {
       ? "链接会打开邮件客户端，本页不会收集或提交信息。"
       : "This link opens your email client. Nothing is submitted on this site."
     : isChinese
-      ? "合作引荐通过创始人公开档案直接对接。"
-      : "Introductions are handled directly through the founder's verified public profile.";
+      ? "该公开档案列出当前业务背后的代码仓库。本页暂不发布未经核验的私下联系渠道。"
+      : "This verified public profile lists the repositories behind the current portfolio. No private contact channel is published on this site.";
   const contactCtaLabel = smokeContactEmailVerified
     ? isChinese
       ? "邮件联系 Xentra"
       : "Email Xentra"
     : isChinese
-      ? "创始人公开档案"
-      : "Founder profile";
+      ? "查看创始人构建记录"
+      : "Review founder build record";
   const chapterNavMarkers = isChinese
     ? ["返回集团架构", "下一家公司", "运营方法"]
     : ["Back to architecture", "Next company", "Operating model"];
   const heroLedgerMarkers = isChinese
-    ? ["母公司方法", "垂直业务公司", "共用运营动作"]
-    : ["parent operating thesis", "operating companies", "shared operating moves"];
+    ? ["垂直业务公司", "公开产品入口", "共用运营动作"]
+    : ["operating companies", "public product paths", "shared operating moves"];
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
@@ -389,6 +389,7 @@ function verifyPage(result, locale) {
   for (const marker of heroLedgerMarkers) {
     assertIncludes(result.body, marker, `${label} group register`);
   }
+  assertIncludes(result.body, ">09<", `${label} public path count`);
   assertIncludes(result.body, portfolioTitle, `${label} portfolio`);
   assertIncludes(result.body, buildTitle, `${label} build thesis`);
   assertIncludes(result.body, buildEyebrow, `${label} founder note label`);
@@ -431,6 +432,11 @@ function verifyPage(result, locale) {
     result.body,
     evidenceVerifiedLabel,
     `${label} evidence verification date`,
+  );
+  assertIncludes(
+    result.body.replaceAll("<!-- -->", ""),
+    isChinese ? "09 公开产品入口" : "09 public product paths",
+    `${label} aggregate evidence count`,
   );
   assertIncludes(result.body, evidenceNote, `${label} evidence scope`);
   assertIncludes(result.body, contactLabel, `${label} contact`);
@@ -507,22 +513,20 @@ function verifyPage(result, locale) {
       `${label}: invalid parent organization link`,
     );
   }
-  assert(
-    organization?.contactPoint?.url ===
-      (smokeContactEmailVerified
-        ? `${canonicalUrl}${canonicalPath}#contact`
-        : smokeContactProfileUrl),
-    `${label}: invalid contact point URL`,
-  );
   if (smokeContactEmailVerified) {
+    assert(
+      organization?.contactPoint?.url ===
+        `${canonicalUrl}${canonicalPath}#contact`,
+      `${label}: invalid contact point URL`,
+    );
     assert(
       organization?.contactPoint?.email === smokeContactEmail,
       `${label}: missing verified contact email`,
     );
   } else {
     assert(
-      !("email" in (organization?.contactPoint || {})),
-      `${label}: structured data exposes an unverified email`,
+      !("contactPoint" in (organization || {})),
+      `${label}: structured data misrepresents a public profile as a contact point`,
     );
     assert(
       organization?.sameAs?.includes(smokeContactProfileUrl),
@@ -566,8 +570,8 @@ function verifyPrivacyPage(result, locale) {
       ? "通过邮件联系"
       : "Contact by email"
     : isChinese
-      ? "公开联系入口"
-      : "Public contact";
+      ? "公开构建记录"
+      : "Public build record";
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
@@ -652,6 +656,12 @@ function verifyFounderLetter(result, locale) {
   const closing = isChinese
     ? "我们会少进入一些市场，也会比多数人更深入地理解它们。"
     : "We will enter fewer markets than we could. We intend to understand them more deeply than most.";
+  const proofTitle = isChinese
+    ? "判断必须进入业务。"
+    : "Conviction has to enter the work.";
+  const proofBody = isChinese
+    ? "共有九个公开产品入口"
+    : "nine public product paths show how the operating thesis is being applied";
   const companiesHref = isChinese ? "/zh#companies" : "/#companies";
   const contactHref = isChinese ? "/zh#contact" : "/#contact";
   const privacyHref = isChinese ? "/zh/privacy" : "/privacy";
@@ -669,6 +679,21 @@ function verifyFounderLetter(result, locale) {
   assertIncludes(result.body, deck, `${label} editorial deck`);
   for (const sectionTitle of sectionTitles) {
     assertIncludes(result.body, sectionTitle, `${label} section thesis`);
+  }
+  assertIncludes(result.body, proofTitle, `${label} operating proof title`);
+  assertIncludes(result.body, proofBody, `${label} operating proof body`);
+  assertIncludes(
+    result.body.replaceAll("<!-- -->", ""),
+    isChinese ? "03 垂直业务" : "03 operating companies",
+    `${label} operating company count`,
+  );
+  assertIncludes(
+    result.body.replaceAll("<!-- -->", ""),
+    isChinese ? "09 公开产品入口" : "09 public product paths",
+    `${label} public product path count`,
+  );
+  for (const evidenceUrl of companyEvidenceUrls) {
+    assertIncludes(result.body, evidenceUrl, `${label} public evidence link`);
   }
   assertIncludes(result.body, closing, `${label} closing conviction`);
   assertIncludes(result.body, `href="${companiesHref}"`, `${label} companies CTA`);

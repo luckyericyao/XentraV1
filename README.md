@@ -7,7 +7,8 @@ requires accountable operators.
 [View the public group site](https://xentra-v1.vercel.app/)
 
 [Read the founder letter](https://xentra-v1.vercel.app/letter) — a short note
-on judgment, accountability, delivery, and the role of the parent company.
+on judgment, accountability, delivery, and the role of the parent company,
+followed by nine public product paths across the three operating companies.
 
 ## Operating companies
 
@@ -49,8 +50,8 @@ Set `SMOKE_EXTERNAL=1` to include the three live operating-company URLs.
 
 Verified company URLs can be replaced at build time with
 `XENTRA_AGENT_COACH_URL`, `XENTRA_LOCALHOST_URL`, and
-`XENTRA_BIOAXIS_URL`. The public owner profile can be replaced with
-`XENTRA_CONTACT_URL`.
+`XENTRA_BIOAXIS_URL`. The public build-record profile can be replaced with
+`XENTRA_CONTACT_URL`; it is not presented as a private contact channel.
 
 An email is published only when both `XENTRA_CONTACT_EMAIL` and
 `XENTRA_CONTACT_EMAIL_VERIFIED=1` are supplied. This prevents an unverified or

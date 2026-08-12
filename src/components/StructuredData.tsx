@@ -34,18 +34,17 @@ export function StructuredData({ locale }: StructuredDataProps) {
             ...content.companies.items.map((company) => company.vertical),
           ]),
         ),
-        contactPoint: {
-          "@type": "ContactPoint",
-          contactType: "partnerships",
-          ...(publicContact.kind === "email"
-            ? { email: publicContact.value }
-            : {}),
-          url:
-            publicContact.kind === "profile"
-              ? publicContact.href
-              : `${pageUrl}#contact`,
-          availableLanguage: ["en", "zh-CN"],
-        },
+        ...(publicContact.kind === "email"
+          ? {
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "partnerships",
+                email: publicContact.value,
+                url: `${pageUrl}#contact`,
+                availableLanguage: ["en", "zh-CN"],
+              },
+            }
+          : {}),
         subOrganization: content.companies.items.map((company) => ({
           "@type": "Organization",
           "@id": `${company.href}#organization`,

@@ -28,9 +28,14 @@ URL variables must be absolute HTTPS URLs without query strings or hashes; inval
 
 ## Public contact and enterprise email
 
-Published contact: `https://github.com/luckyericyao/`
+Published build record: `https://github.com/luckyericyao/`
 
-Status: repository-owner profile verified; enterprise mailbox unavailable.
+Status: repository-owner profile verified; no private contact channel or enterprise mailbox is published.
+
+The profile is presented only as a public record of the repositories behind the
+current portfolio. In this fallback mode the site does not emit a JSON-LD
+`ContactPoint`. Company-specific inquiries continue through the three verified
+operating-company sites.
 
 `contact@xentra.ai` was removed from the public site because the domain redirects to a sale page and no MX route was present during the 13 Aug 2026 check. An owner with registrar and mail-provider access must confirm domain ownership, mailbox delivery, MX, SPF, DKIM, and DMARC before enabling a branded address. Do not claim that an inbox is monitored until an end-to-end delivery test passes.
 

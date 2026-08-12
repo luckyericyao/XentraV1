@@ -87,6 +87,7 @@ export type SiteContent = {
     companyRoleLabel: string;
     companyRole: string;
     evidenceLabel: string;
+    evidenceCountLabel: string;
     evidenceVerifiedLabel: string;
     evidenceNote: string;
     proofLabel: string;
@@ -182,8 +183,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       secondaryHref: "#contact",
       tags: ["AI Capability", "Local Access", "Scientific Sourcing"],
       ledger: [
-        { value: "01", label: "parent operating thesis" },
         { value: "03", label: "operating companies" },
+        { value: "09", label: "public product paths" },
         { value: "04", label: "shared operating moves" },
       ],
       note: "Information is abundant. Judgment is expensive. Trust is scarce.",
@@ -350,6 +351,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "Operating company",
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
+      evidenceCountLabel: "public product paths",
       evidenceVerifiedLabel: `Checked ${siteReviewDate.english}`,
       evidenceNote:
         "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.",
@@ -426,15 +428,20 @@ export const siteContent: Record<Locale, SiteContent> = {
         },
       ],
       companiesLabel: "Company inquiries",
-      bodyPrefix: "Verified public contact",
+      bodyPrefix:
+        publicContact.kind === "profile"
+          ? "Public build record"
+          : "Verified public contact",
       ctaLabel:
-        publicContact.kind === "profile" ? "Founder profile" : "Email Xentra",
+        publicContact.kind === "profile"
+          ? "Review founder build record"
+          : "Email Xentra",
       contactValue: publicContact.value,
       contactHref: publicContact.href,
       contactExternal: publicContact.opensNewWindow,
       channelNote:
         publicContact.kind === "profile"
-          ? "Introductions are handled directly through the founder's verified public profile."
+          ? "This verified public profile lists the repositories behind the current portfolio. No private contact channel is published on this site."
           : "This link opens your email client. Nothing is submitted on this site.",
       externalLinkLabel: "opens in a new tab",
     },
@@ -470,8 +477,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       secondaryHref: "#model",
       tags: ["企业 AI 能力", "本地信任网络", "生命科学供应"],
       ledger: [
-        { value: "01", label: "母公司方法" },
         { value: "03", label: "垂直业务公司" },
+        { value: "09", label: "公开产品入口" },
         { value: "04", label: "共用运营动作" },
       ],
       note: "信息很多。判断很贵。信任很稀缺。",
@@ -620,6 +627,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "业务公司",
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
+      evidenceCountLabel: "公开产品入口",
       evidenceVerifiedLabel: `核验于 ${siteReviewDate.chinese}`,
       evidenceNote: "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。",
       proofLabel: "公开网站当前提供",
@@ -694,15 +702,18 @@ export const siteContent: Record<Locale, SiteContent> = {
         },
       ],
       companiesLabel: "具体业务咨询",
-      bodyPrefix: "公开身份入口",
+      bodyPrefix:
+        publicContact.kind === "profile" ? "公开构建记录" : "已核验联系入口",
       ctaLabel:
-        publicContact.kind === "profile" ? "创始人公开档案" : "邮件联系 Xentra",
+        publicContact.kind === "profile"
+          ? "查看创始人构建记录"
+          : "邮件联系 Xentra",
       contactValue: publicContact.value,
       contactHref: publicContact.href,
       contactExternal: publicContact.opensNewWindow,
       channelNote:
         publicContact.kind === "profile"
-          ? "合作引荐通过创始人公开档案直接对接。"
+          ? "该公开档案列出当前业务背后的代码仓库。本页暂不发布未经核验的私下联系渠道。"
           : "链接会打开邮件客户端，本页不会收集或提交信息。",
       externalLinkLabel: "在新窗口打开",
     },

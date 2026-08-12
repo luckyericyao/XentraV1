@@ -56,12 +56,12 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
       {
         title:
           publicContact.kind === "profile"
-            ? "Public contact"
+            ? "Public build record"
             : "Contact by email",
         body:
           publicContact.kind === "profile"
             ? [
-                "Xentra does not collect partnership messages on this site. The contact link opens the repository owner's public profile in a new tab.",
+                "Xentra does not collect partnership messages on this site. The build-record link opens the repository owner's verified public profile in a new tab.",
                 "Activity on that destination is governed by its own terms and privacy practices. Do not post confidential client material or sensitive personal data through a public channel.",
               ]
             : [
@@ -83,9 +83,14 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         showCompanyLinks: true,
       },
     ],
-    contactLabel: "Questions about this page",
+    contactLabel:
+      publicContact.kind === "profile"
+        ? "Public record for this site"
+        : "Questions about this page",
     contactBody:
-      "For questions about the Xentra homepage or a partnership inquiry, use the verified public contact below:",
+      publicContact.kind === "profile"
+        ? "To review the public repositories behind the current Xentra portfolio, use the verified profile below:"
+        : "For questions about the Xentra homepage or a partnership inquiry, use the verified email below:",
     contactHref: publicContact.href,
     contactExternalLinkLabel: "opens in a new tab",
     homeHref: "/",
@@ -115,11 +120,11 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         ],
       },
       {
-        title: publicContact.kind === "profile" ? "公开联系入口" : "通过邮件联系",
+        title: publicContact.kind === "profile" ? "公开构建记录" : "通过邮件联系",
         body:
           publicContact.kind === "profile"
             ? [
-                "Xentra 不在本页收集合作信息。联系链接会在新窗口打开仓库所有者的公开档案。",
+                "Xentra 不在本页收集合作信息。构建记录链接会在新窗口打开仓库所有者已核验的公开档案。",
                 "该页面的信息处理遵循对应平台的规则。请不要通过公开渠道发布客户机密或敏感个人信息。",
               ]
             : [
@@ -141,8 +146,12 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         showCompanyLinks: true,
       },
     ],
-    contactLabel: "关于本页的问题",
-    contactBody: "如需询问 Xentra 主页或合作事宜，请使用下方已核验公开入口：",
+    contactLabel:
+      publicContact.kind === "profile" ? "本页公开记录" : "关于本页的问题",
+    contactBody:
+      publicContact.kind === "profile"
+        ? "如需核对当前 Xentra 业务背后的公开代码仓库，请使用下方已核验档案："
+        : "如需询问 Xentra 主页或合作事宜，请使用下方已核验邮箱：",
     contactHref: publicContact.href,
     contactExternalLinkLabel: "在新窗口打开",
     homeHref: "/zh",

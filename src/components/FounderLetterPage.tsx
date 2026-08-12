@@ -1,5 +1,7 @@
 import { Header } from "@/components/Header";
+import { siteContent } from "@/lib/content";
 import type { Locale } from "@/lib/content";
+import { siteReviewDate } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
 type LetterCopy = {
@@ -17,6 +19,15 @@ type LetterCopy = {
   publishedLabel: string;
   indexLabel: string;
   sections: { title: string; body: string }[];
+  proof: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    companyCountLabel: string;
+    countLabel: string;
+    chapterLabel: string;
+    externalLinkLabel: string;
+  };
   closing: string;
   signature: string;
   companiesLabel: string;
@@ -59,6 +70,15 @@ const letterCopy: Record<Locale, LetterCopy> = {
         body: "A parent company is useful only if it improves what each business can do alone. Xentra shares methods for structure, reasoning, verification, and execution while every company remains answerable to its market.",
       },
     ],
+    proof: {
+      eyebrow: "Operating Proof",
+      title: "Conviction has to enter the work.",
+      body: "Across AI adoption, private travel, and laboratory sourcing, nine public product paths show how the operating thesis is being applied.",
+      companyCountLabel: "operating companies",
+      countLabel: "public product paths",
+      chapterLabel: "Review evidence",
+      externalLinkLabel: "opens in a new tab",
+    },
     closing:
       "We will enter fewer markets than we could. We intend to understand them more deeply than most.",
     signature: "Founder, Xentra",
@@ -102,6 +122,15 @@ const letterCopy: Record<Locale, LetterCopy> = {
         body: "如果集团不能让每家公司做得更好，中心就只是管理成本。Xentra 共享结构化、推理、验证与执行的方法；每家公司仍然直接面对市场，并对结果负责。",
       },
     ],
+    proof: {
+      eyebrow: "公开进展",
+      title: "判断必须进入业务。",
+      body: "企业 AI、私人旅行与生命科学采购，共有九个公开产品入口，展示当前的产品与交付设计。",
+      companyCountLabel: "垂直业务",
+      countLabel: "公开产品入口",
+      chapterLabel: "查看证据",
+      externalLinkLabel: "在新窗口打开",
+    },
     closing: "我们会少进入一些市场，也会比多数人更深入地理解它们。",
     signature: "Xentra 创始人",
     companiesLabel: "查看业务布局",
@@ -120,6 +149,11 @@ type FounderLetterPageProps = {
 
 export function FounderLetterPage({ locale }: FounderLetterPageProps) {
   const copy = letterCopy[locale];
+  const companies = siteContent[locale].companies.items;
+  const publicPathCount = companies.reduce(
+    (total, company) => total + company.evidence.proof.length,
+    0,
+  );
   const siteUrl = getSiteUrl();
   const pagePath = locale === "zh" ? "/zh/letter" : "/letter";
   const pageUrl = `${siteUrl}${pagePath}`;
@@ -247,7 +281,105 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
           </div>
         </section>
 
-        <section className="border-y border-[#2A2D33] bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28">
+        <section
+          aria-labelledby="letter-proof-title"
+          className="border-y border-[#2A2D33] bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_0.7fr] lg:items-end lg:gap-20">
+              <div>
+                <p className="eyebrow mb-5 text-[#C6A15B]">
+                  {copy.proof.eyebrow}
+                </p>
+                <h2
+                  id="letter-proof-title"
+                  className="max-w-4xl text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                >
+                  {copy.proof.title}
+                </h2>
+              </div>
+              <div>
+                <p className="text-base leading-8 text-[#A6A39A] sm:text-lg">
+                  {copy.proof.body}
+                </p>
+                <p className="eyebrow mt-6 flex flex-wrap gap-x-3 gap-y-2 text-[#8D97A5]">
+                  <span>
+                    {String(companies.length).padStart(2, "0")} {copy.proof.companyCountLabel}
+                  </span>
+                  <span aria-hidden="true" className="text-[#B49459]">
+                    /
+                  </span>
+                  <span>
+                    {String(publicPathCount).padStart(2, "0")} {copy.proof.countLabel}
+                  </span>
+                  <span aria-hidden="true" className="text-[#B49459]">
+                    /
+                  </span>
+                  <span>
+                    {locale === "zh"
+                      ? siteReviewDate.chinese
+                      : siteReviewDate.english}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <ol className="mt-12 border-y border-[#2A2D33]">
+              {companies.map((company, index) => (
+                <li
+                  key={company.slug}
+                  className="grid gap-5 border-b border-[#2A2D33] py-7 last:border-b-0 lg:grid-cols-[3rem_0.55fr_1fr] lg:items-start lg:gap-8 lg:py-9"
+                >
+                  <span className="eyebrow pt-1 text-[#B49459]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <p className="eyebrow text-[#8D97A5]">{company.vertical}</p>
+                    <h3 className="mt-3 text-2xl font-semibold text-[#F2EFE8]">
+                      {company.title}
+                    </h3>
+                  </div>
+                  <div>
+                    <p className="text-base leading-7 text-[#A6A39A]">
+                      {company.headline}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-[#2A2D33] pt-4">
+                      {company.evidence.proof.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${item.label} (${copy.proof.externalLinkLabel})`}
+                          className="inline-flex min-h-8 items-center gap-2 text-xs text-[#A6A39A] transition hover:text-[#F2EFE8]"
+                        >
+                          <span aria-hidden="true" className="text-[#B49459]">
+                            &#8599;
+                          </span>
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                    <a
+                      href={`${copy.homeHref}#${company.slug}-chapter`}
+                      className="group mt-4 inline-flex min-h-9 items-center gap-3 text-sm font-medium text-[#F2EFE8] transition hover:text-[#C6A15B]"
+                    >
+                      {copy.proof.chapterLabel}
+                      <span
+                        aria-hidden="true"
+                        className="text-[#B49459] transition group-hover:translate-x-1"
+                      >
+                        &#8594;
+                      </span>
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="border-y border-[#2A2D33] bg-[#101214] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_0.38fr] lg:items-end lg:gap-20">
             <div>
               <p className="max-w-4xl text-balance text-3xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
