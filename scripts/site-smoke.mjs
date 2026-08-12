@@ -331,8 +331,8 @@ function verifyPage(result, locale) {
       "RFQ workflow",
     ];
   const evidenceVerifiedLabel = isChinese
-    ? "核验于 2026.08.10"
-    : "Checked 10 Aug 2026";
+    ? "核验于 2026.08.12"
+    : "Checked 12 Aug 2026";
   const evidenceNote = isChinese
     ? "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。"
     : "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.";
@@ -482,7 +482,7 @@ function verifyPage(result, locale) {
   );
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-08-10",
+    webpage?.dateModified === "2026-08-12",
     `${label}: missing structured-data review date`,
   );
   assert(
@@ -510,8 +510,8 @@ function verifyPrivacyPage(result, locale) {
     ? "本页没有嵌入式分析工具、广告像素或账号系统。"
     : "The page does not use embedded analytics, advertising pixels, or an account system.";
   const reviewedLabel = isChinese
-    ? "最近核验：2026.08.10"
-    : "Last reviewed 10 Aug 2026";
+    ? "最近核验：2026.08.12"
+    : "Last reviewed 12 Aug 2026";
   const contactSubject = isChinese
     ? "Xentra%20%E9%9A%90%E7%A7%81%E8%AF%B4%E6%98%8E"
     : "Xentra%20privacy%20question";
@@ -730,7 +730,7 @@ async function run() {
   );
   assertIncludes(
     sitemap.body,
-    "<lastmod>2026-08-10T00:00:00.000Z</lastmod>",
+    "<lastmod>2026-08-12T00:00:00.000Z</lastmod>",
     "Sitemap stable review date",
   );
 
