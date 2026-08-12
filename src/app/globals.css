@@ -258,15 +258,15 @@ details[open] .disclosure-icon {
 }
 
 .reveal {
-  animation: reveal-up 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: reveal-up 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .reveal-delay-1 {
-  animation-delay: 180ms;
+  animation-delay: 120ms;
 }
 
 .reveal-delay-2 {
-  animation-delay: 360ms;
+  animation-delay: 240ms;
 }
 
 @keyframes reveal-up {

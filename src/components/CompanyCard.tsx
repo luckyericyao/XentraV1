@@ -27,6 +27,12 @@ const companyAccent = {
   bioaxis: "text-[#939D90]",
 } as const;
 
+const companyRail = {
+  "ai-agent-coach": "border-t-[rgba(167,179,195,0.72)]",
+  localhost: "border-t-[rgba(198,161,91,0.72)]",
+  bioaxis: "border-t-[rgba(154,167,151,0.72)]",
+} as const;
+
 export function CompanyCard({
   index,
   slug,
@@ -51,12 +57,15 @@ export function CompanyCard({
 }: CompanyCardProps) {
   const labelTone =
     companyAccent[slug as keyof typeof companyAccent] ?? "text-[#C6A15B]";
+  const railTone =
+    companyRail[slug as keyof typeof companyRail] ??
+    "border-t-[rgba(198,161,91,0.72)]";
 
   return (
     <article
       id={slug}
       aria-labelledby={`${slug}-title`}
-      className="scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(198,161,91,0.28)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(198,161,91,0.055)] sm:min-h-[24rem]"
+      className={`scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] border-t-2 ${railTone} bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(242,239,232,0.18)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(0,0,0,0.26)] sm:min-h-[24rem]`}
     >
       <div className="flex items-center justify-between gap-4">
         <p className={`eyebrow ${labelTone}`}>{vertical}</p>
@@ -72,7 +81,7 @@ export function CompanyCard({
           {title}
         </h3>
         {layer ? (
-          <p className="mt-4 text-sm font-medium text-[#B49459]">{layer}</p>
+          <p className={`mt-4 text-sm font-medium ${labelTone}`}>{layer}</p>
         ) : null}
       </div>
       <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8">
