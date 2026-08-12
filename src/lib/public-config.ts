@@ -26,11 +26,16 @@ function readHttpsUrl(name: string, fallback: string) {
   return `${url.toString().replace(/\/+$/, "")}/`;
 }
 
-function readEmail(name: string, fallback: string) {
+function readVerifiedEmail(name: string, verificationName: string) {
   const email = process.env[name]?.trim();
+  const verified = process.env[verificationName] === "1";
+
+  if (!verified) {
+    return null;
+  }
 
   if (!email) {
-    return fallback;
+    throw new Error(`${name} is required when ${verificationName}=1.`);
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -38,6 +43,13 @@ function readEmail(name: string, fallback: string) {
   }
 
   return email;
+}
+
+function displayHttpsUrl(value: string) {
+  const url = new URL(value);
+  const path = url.pathname.replace(/\/+$/, "");
+
+  return `${url.hostname.replace(/^www\./, "")}${path}`;
 }
 
 export const publicCompanyLinks = {
@@ -55,7 +67,25 @@ export const publicCompanyLinks = {
   ),
 } as const;
 
-export const contactEmail = readEmail(
+const verifiedContactEmail = readVerifiedEmail(
   "XENTRA_CONTACT_EMAIL",
-  "contact@xentra.ai",
+  "XENTRA_CONTACT_EMAIL_VERIFIED",
 );
+const contactProfileUrl = readHttpsUrl(
+  "XENTRA_CONTACT_URL",
+  "https://github.com/luckyericyao/",
+);
+
+export const publicContact = verifiedContactEmail
+  ? {
+      kind: "email" as const,
+      href: `mailto:${verifiedContactEmail}`,
+      value: verifiedContactEmail,
+      opensNewWindow: false,
+    }
+  : {
+      kind: "profile" as const,
+      href: contactProfileUrl,
+      value: displayHttpsUrl(contactProfileUrl),
+      opensNewWindow: true,
+    };

@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { siteContent, type Locale } from "@/lib/content";
-import { contactEmail } from "@/lib/public-config";
+import { publicContact } from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 
 type PrivacySection = {
@@ -23,7 +23,8 @@ type PrivacyPageCopy = {
   sections: PrivacySection[];
   contactLabel: string;
   contactBody: string;
-  contactMailto: string;
+  contactHref: string;
+  contactExternalLinkLabel: string;
   homeHref: string;
   footer: string;
   footerHomeLabel: string;
@@ -53,16 +54,25 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         ],
       },
       {
-        title: "Contact by email",
-        body: [
-          "The contact links open your email client. Information you choose to send is used to respond to your inquiry and to assess the conversation you initiated.",
-          "Please do not send passwords, confidential client material, or sensitive personal data in an initial email.",
-        ],
+        title:
+          publicContact.kind === "profile"
+            ? "Public contact"
+            : "Contact by email",
+        body:
+          publicContact.kind === "profile"
+            ? [
+                "Xentra does not collect partnership messages on this site. The contact link opens the repository owner's public profile in a new tab.",
+                "Activity on that destination is governed by its own terms and privacy practices. Do not post confidential client material or sensitive personal data through a public channel.",
+              ]
+            : [
+                "The contact link opens your email client. Information you choose to send is used to respond to the inquiry you initiated.",
+                "Please do not send passwords, confidential client material, or sensitive personal data in an initial email.",
+              ],
       },
       {
-        title: "Copying the email",
+        title: "No hidden intake",
         body: [
-          "The copy-email action runs in your browser. Copying the address does not send it to Xentra or create a contact record.",
+          "The partnership pathways on the homepage are descriptions, not forms or submission controls. Browsing or selecting nothing creates no contact record.",
         ],
       },
       {
@@ -75,8 +85,9 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
     ],
     contactLabel: "Questions about this page",
     contactBody:
-      "For questions about the Xentra homepage or a partnership inquiry, contact",
-    contactMailto: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra privacy question")}`,
+      "For questions about the Xentra homepage or a partnership inquiry, use the verified public contact below:",
+    contactHref: publicContact.href,
+    contactExternalLinkLabel: "opens in a new tab",
     homeHref: "/",
     footer: "Xentra — AI-native operating group for trust-heavy markets.",
     footerHomeLabel: "Return to Xentra",
@@ -104,16 +115,22 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
         ],
       },
       {
-        title: "通过邮件联系",
-        body: [
-          "联系链接会打开你的邮件客户端。你主动发送的信息将用于回复咨询，并了解你发起的合作方向。",
-          "首次联系时，请不要发送密码、客户机密或敏感个人信息。",
-        ],
+        title: publicContact.kind === "profile" ? "公开联系入口" : "通过邮件联系",
+        body:
+          publicContact.kind === "profile"
+            ? [
+                "Xentra 不在本页收集合作信息。联系链接会在新窗口打开仓库所有者的公开档案。",
+                "该页面的信息处理遵循对应平台的规则。请不要通过公开渠道发布客户机密或敏感个人信息。",
+              ]
+            : [
+                "联系链接会打开你的邮件客户端。你主动发送的信息将用于回复咨询。",
+                "首次联系时，请不要发送密码、客户机密或敏感个人信息。",
+              ],
       },
       {
-        title: "复制邮箱",
+        title: "不做隐形收集",
         body: [
-          "复制邮箱只在你的浏览器中完成。复制这个动作不会把邮箱发送给 Xentra，也不会生成联系记录。",
+          "首页展示的合作方向只是说明，不是表单或提交入口。仅浏览页面不会生成联系记录。",
         ],
       },
       {
@@ -125,8 +142,9 @@ const privacyCopy: Record<Locale, PrivacyPageCopy> = {
       },
     ],
     contactLabel: "关于本页的问题",
-    contactBody: "如需询问 Xentra 主页或合作事宜，请联系",
-    contactMailto: `mailto:${contactEmail}?subject=${encodeURIComponent("Xentra 隐私说明")}`,
+    contactBody: "如需询问 Xentra 主页或合作事宜，请使用下方已核验公开入口：",
+    contactHref: publicContact.href,
+    contactExternalLinkLabel: "在新窗口打开",
     homeHref: "/zh",
     footer: "Xentra — 把复杂市场，做成可信系统。",
     footerHomeLabel: "返回 Xentra",
@@ -252,10 +270,21 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
                 <p className="mt-4 max-w-xl text-base leading-8 text-[#A6A39A]">
                   {copy.contactBody}{" "}
                   <a
-                    href={copy.contactMailto}
+                    href={copy.contactHref}
+                    target={publicContact.opensNewWindow ? "_blank" : undefined}
+                    rel={
+                      publicContact.opensNewWindow
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    aria-label={
+                      publicContact.opensNewWindow
+                        ? `${publicContact.value} (${copy.contactExternalLinkLabel})`
+                        : publicContact.value
+                    }
                     className="text-[#F2EFE8] underline decoration-[rgba(198,161,91,0.52)] underline-offset-4 transition hover:text-[#C6A15B]"
                   >
-                    {contactEmail}
+                    {publicContact.value}
                   </a>
                   .
                 </p>

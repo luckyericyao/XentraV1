@@ -1,6 +1,6 @@
 import {
-  contactEmail,
   publicCompanyLinks,
+  publicContact,
 } from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 
@@ -113,15 +113,14 @@ export type SiteContent = {
       audience: string;
       title: string;
       body: string;
-      mailto: string;
     }[];
     companiesLabel: string;
-    ctaLabel?: string;
-    email: string;
-    mailto: string;
-    copyLabel: string;
-    copiedLabel: string;
-    copyErrorLabel: string;
+    ctaLabel: string;
+    contactValue: string;
+    contactHref: string;
+    contactExternal: boolean;
+    channelNote: string;
+    externalLinkLabel: string;
   };
   directions?: {
     eyebrow: string;
@@ -156,59 +155,6 @@ const evidenceLinks = {
     quote: `${companyLinks.bioaxis}request-quote`,
   },
 } as const;
-
-const createContactMailto = (subject: string, body?: string) =>
-  `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}${
-    body ? `&body=${encodeURIComponent(body)}` : ""
-  }`;
-
-const contactPrompts = {
-  en: {
-    general: [
-      "Market or domain:",
-      "What you currently operate or know:",
-      "What you would like to discuss:",
-    ].join("\n\n"),
-    operators: [
-      "Market or domain:",
-      "What you currently operate:",
-      "What you would like to build with Xentra:",
-    ].join("\n\n"),
-    experts: [
-      "Market or domain:",
-      "Where judgment or execution breaks down:",
-      "What expertise or context you bring:",
-    ].join("\n\n"),
-    capital: [
-      "Markets or themes you back:",
-      "Your investment horizon:",
-      "What you would like to explore with Xentra:",
-    ].join("\n\n"),
-  },
-  zh: {
-    general: ["市场或行业：", "你正在运营或掌握的资源：", "希望讨论的方向："].join(
-      "\n\n",
-    ),
-    operators: ["市场或行业：", "你正在运营的业务：", "希望与 Xentra 共同建立什么："].join(
-      "\n\n",
-    ),
-    experts: [
-      "市场或行业：",
-      "哪里最需要专业判断或现实验证：",
-      "你能带来的经验或语境：",
-    ].join("\n\n"),
-    capital: [
-      "你关注的市场或方向：",
-      "你的投资周期：",
-      "希望与 Xentra 探讨什么：",
-    ].join("\n\n"),
-  },
-};
-
-const contactMailto = {
-  en: createContactMailto("Xentra partnership inquiry", contactPrompts.en.general),
-  zh: createContactMailto("Xentra 业务合作咨询", contactPrompts.zh.general),
-};
 
 export const siteContent: Record<Locale, SiteContent> = {
   en: {
@@ -453,46 +399,38 @@ export const siteContent: Record<Locale, SiteContent> = {
       body: [
         "We work with operators, specialists, and capital partners who can stay with a market for the long term.",
       ],
-      pathwaysLabel: "Choose a conversation",
+      pathwaysLabel: "Who we build with",
       intakeNote:
-        "Each path opens a prefilled email brief. Nothing is submitted on this site.",
+        "Three ways to contribute to a vertical company: own delivery, sharpen judgment, or support patient formation.",
       pathways: [
         {
           audience: "Operators",
           title: "Build an operating company.",
           body: "For people with market access, domain context, and the ability to own delivery.",
-          mailto: createContactMailto(
-            "Xentra operating company discussion",
-            contactPrompts.en.operators,
-          ),
         },
         {
           audience: "Experts",
           title: "Bring domain judgment.",
           body: "For specialists who know where trust, context, and execution break down.",
-          mailto: createContactMailto(
-            "Xentra domain partnership",
-            contactPrompts.en.experts,
-          ),
         },
         {
           audience: "Capital",
           title: "Back durable verticals.",
           body: "For capital partners exploring long-term company formation in complex markets.",
-          mailto: createContactMailto(
-            "Xentra capital partnership",
-            contactPrompts.en.capital,
-          ),
         },
       ],
       companiesLabel: "Company inquiries",
-      bodyPrefix: "Contact:",
-      ctaLabel: contactEmail,
-      email: contactEmail,
-      mailto: contactMailto.en,
-      copyLabel: "Copy email",
-      copiedLabel: "Copied",
-      copyErrorLabel: "Copy failed",
+      bodyPrefix: "Verified public contact",
+      ctaLabel:
+        publicContact.kind === "profile" ? "Founder profile" : "Email Xentra",
+      contactValue: publicContact.value,
+      contactHref: publicContact.href,
+      contactExternal: publicContact.opensNewWindow,
+      channelNote:
+        publicContact.kind === "profile"
+          ? "Introductions are handled directly through the founder's verified public profile."
+          : "This link opens your email client. Nothing is submitted on this site.",
+      externalLinkLabel: "opens in a new tab",
     },
     footer: {
       line: "Xentra — AI-native operating group for trust-heavy markets.",
@@ -726,46 +664,37 @@ export const siteContent: Record<Locale, SiteContent> = {
       body: [
         "我们寻找真正理解市场，能够长期投入运营、专业判断或资本支持的合作方。",
       ],
-      pathwaysLabel: "选择合作方向",
-      intakeNote:
-        "点击任一方向，会打开一封预填邮件。不会在本页提交信息。",
+      pathwaysLabel: "合作对象",
+      intakeNote: "参与一家公司有三种方式：负责交付、提供判断，或支持长期建设。",
       pathways: [
         {
           audience: "运营者",
           title: "共同建立业务。",
           body: "适合熟悉具体市场，并能长期负责运营与交付的团队。",
-          mailto: createContactMailto(
-            "Xentra 垂直业务合作",
-            contactPrompts.zh.operators,
-          ),
         },
         {
           audience: "行业专家",
           title: "提供专业判断。",
           body: "适合了解行业规则、信任关系与交付难点的专业人士。",
-          mailto: createContactMailto(
-            "Xentra 行业专家合作",
-            contactPrompts.zh.experts,
-          ),
         },
         {
           audience: "资本伙伴",
           title: "讨论长期建设。",
           body: "适合关注垂直业务建设与长期价值的资本伙伴。",
-          mailto: createContactMailto(
-            "Xentra 资本合作",
-            contactPrompts.zh.capital,
-          ),
         },
       ],
       companiesLabel: "具体业务咨询",
-      bodyPrefix: "邮箱：",
-      ctaLabel: contactEmail,
-      email: contactEmail,
-      mailto: contactMailto.zh,
-      copyLabel: "复制邮箱",
-      copiedLabel: "已复制",
-      copyErrorLabel: "复制失败",
+      bodyPrefix: "公开身份入口",
+      ctaLabel:
+        publicContact.kind === "profile" ? "创始人公开档案" : "邮件联系 Xentra",
+      contactValue: publicContact.value,
+      contactHref: publicContact.href,
+      contactExternal: publicContact.opensNewWindow,
+      channelNote:
+        publicContact.kind === "profile"
+          ? "合作引荐通过创始人公开档案直接对接。"
+          : "链接会打开邮件客户端，本页不会收集或提交信息。",
+      externalLinkLabel: "在新窗口打开",
     },
     footer: {
       line: "Xentra — 把复杂市场，做成可信系统。",

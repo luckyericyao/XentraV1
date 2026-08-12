@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/content";
 import { siteContent } from "@/lib/content";
+import { publicContact } from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -24,6 +25,9 @@ export function StructuredData({ locale }: StructuredDataProps) {
         url: siteUrl,
         logo: `${siteUrl}/favicon.svg`,
         description: content.hero.body[0],
+        ...(publicContact.kind === "profile"
+          ? { sameAs: [publicContact.href] }
+          : {}),
         knowsAbout: Array.from(
           new Set([
             ...content.hero.tags,
@@ -33,8 +37,13 @@ export function StructuredData({ locale }: StructuredDataProps) {
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "partnerships",
-          email: content.contact.email,
-          url: `${pageUrl}#contact`,
+          ...(publicContact.kind === "email"
+            ? { email: publicContact.value }
+            : {}),
+          url:
+            publicContact.kind === "profile"
+              ? publicContact.href
+              : `${pageUrl}#contact`,
           availableLanguage: ["en", "zh-CN"],
         },
         subOrganization: content.companies.items.map((company) => ({

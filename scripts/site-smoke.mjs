@@ -11,8 +11,6 @@ const requestAttempts = Math.max(
   1,
   Number(process.env.SMOKE_REQUEST_ATTEMPTS || 3),
 );
-const smokeContactEmail =
-  process.env.SMOKE_CONTACT_EMAIL?.trim() || "contact@xentra.ai";
 const runId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let assertionCount = 0;
 
@@ -26,6 +24,34 @@ function configuredSmokeUrl(name, fallback) {
 
   return `${url.toString().replace(/\/+$/, "")}/`;
 }
+
+const smokeContactEmailVerified =
+  process.env.SMOKE_CONTACT_EMAIL_VERIFIED === "1";
+const smokeContactEmail = process.env.SMOKE_CONTACT_EMAIL?.trim();
+
+if (smokeContactEmailVerified && !smokeContactEmail) {
+  throw new Error(
+    "SMOKE_CONTACT_EMAIL is required when SMOKE_CONTACT_EMAIL_VERIFIED=1.",
+  );
+}
+
+if (
+  smokeContactEmail &&
+  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(smokeContactEmail)
+) {
+  throw new Error("SMOKE_CONTACT_EMAIL must be a valid email address.");
+}
+
+const smokeContactProfileUrl = configuredSmokeUrl(
+  "SMOKE_CONTACT_URL",
+  "https://github.com/luckyericyao/",
+);
+const smokeContactHref = smokeContactEmailVerified
+  ? `mailto:${smokeContactEmail}`
+  : smokeContactProfileUrl;
+const smokeContactValue = smokeContactEmailVerified
+  ? smokeContactEmail
+  : "github.com/luckyericyao";
 
 const companyBaseUrls = {
   agentCoach: configuredSmokeUrl(
@@ -254,20 +280,6 @@ function extractStructuredData(html, label) {
   }
 }
 
-function mailtoSubjects(html) {
-  return [...html.matchAll(/href="(mailto:[^"]+)"/g)].map((match) => {
-    const href = match[1].replaceAll("&amp;", "&");
-    return new URL(href).searchParams.get("subject");
-  });
-}
-
-function mailtoBodies(html) {
-  return [...html.matchAll(/href="(mailto:[^"]+)"/g)].map((match) => {
-    const href = match[1].replaceAll("&amp;", "&");
-    return new URL(href).searchParams.get("body") || "";
-  });
-}
-
 function verifyPage(result, locale) {
   const isChinese = locale === "zh";
   const label = isChinese ? "Chinese homepage" : "English homepage";
@@ -336,18 +348,29 @@ function verifyPage(result, locale) {
       "RFQ workflow",
     ];
   const evidenceVerifiedLabel = isChinese
-    ? "核验于 2026.08.12"
-    : "Checked 12 Aug 2026";
+    ? "核验于 2026.08.13"
+    : "Checked 13 Aug 2026";
   const evidenceNote = isChinese
     ? "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。"
     : "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.";
-  const contactLabel = isChinese ? "选择合作方向" : "Choose a conversation";
+  const contactLabel = isChinese ? "合作对象" : "Who we build with";
   const contactNote = isChinese
-    ? "点击任一方向，会打开一封预填邮件。"
-    : "Each path opens a prefilled email brief.";
-  const contactTrustNote = isChinese
-    ? "不会在本页提交信息。"
-    : "Nothing is submitted on this site.";
+    ? "参与一家公司有三种方式：负责交付、提供判断，或支持长期建设。"
+    : "Three ways to contribute to a vertical company: own delivery, sharpen judgment, or support patient formation.";
+  const contactTrustNote = smokeContactEmailVerified
+    ? isChinese
+      ? "链接会打开邮件客户端，本页不会收集或提交信息。"
+      : "This link opens your email client. Nothing is submitted on this site."
+    : isChinese
+      ? "合作引荐通过创始人公开档案直接对接。"
+      : "Introductions are handled directly through the founder's verified public profile.";
+  const contactCtaLabel = smokeContactEmailVerified
+    ? isChinese
+      ? "邮件联系 Xentra"
+      : "Email Xentra"
+    : isChinese
+      ? "创始人公开档案"
+      : "Founder profile";
   const chapterNavMarkers = isChinese
     ? ["返回集团架构", "下一家公司", "运营方法"]
     : ["Back to architecture", "Next company", "Operating model"];
@@ -355,25 +378,6 @@ function verifyPage(result, locale) {
     ? ["母公司方法", "垂直业务公司", "共用运营动作"]
     : ["parent operating thesis", "operating companies", "shared operating moves"];
   const privacyPath = isChinese ? "/zh/privacy" : "/privacy";
-  const contactSubjects = isChinese
-    ? ["Xentra 垂直业务合作", "Xentra 行业专家合作", "Xentra 资本合作"]
-    : [
-        "Xentra operating company discussion",
-        "Xentra domain partnership",
-        "Xentra capital partnership",
-      ];
-  const contactBodyMarkers = isChinese
-    ? [
-        "你正在运营的业务：",
-        "哪里最需要专业判断或现实验证：",
-        "你关注的市场或方向：",
-      ]
-    : [
-        "What you currently operate:",
-        "Where judgment or execution breaks down:",
-        "Markets or themes you back:",
-      ];
-
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
   assertAccessibleSurface(result.body, label);
@@ -422,6 +426,13 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, contactLabel, `${label} contact`);
   assertIncludes(result.body, contactNote, `${label} contact note`);
   assertIncludes(result.body, contactTrustNote, `${label} contact trust note`);
+  assertIncludes(result.body, contactCtaLabel, `${label} contact CTA`);
+  assertIncludes(result.body, smokeContactValue, `${label} contact value`);
+  assertIncludes(
+    result.body,
+    `href="${smokeContactHref}"`,
+    `${label} verified contact link`,
+  );
   for (const marker of chapterNavMarkers) {
     assertIncludes(result.body, marker, `${label} chapter navigation`);
   }
@@ -459,13 +470,15 @@ function verifyPage(result, locale) {
     assertIncludes(result.body, evidenceUrl, `${label} evidence link`);
   }
 
-  const subjects = mailtoSubjects(result.body);
-  for (const subject of contactSubjects) {
-    assert(subjects.includes(subject), `${label}: missing mailto subject ${subject}`);
-  }
-  const bodies = mailtoBodies(result.body);
-  for (const marker of contactBodyMarkers) {
-    assert(bodies.some((body) => body.includes(marker)), `${label}: missing mailto prompt ${marker}`);
+  if (!smokeContactEmailVerified) {
+    assert(
+      !result.body.includes("contact@xentra.ai"),
+      `${label}: unverified xentra.ai email is still published`,
+    );
+    assert(
+      !result.body.includes("mailto:"),
+      `${label}: unexpected email contact in public-profile mode`,
+    );
   }
 
   const structuredData = extractStructuredData(result.body, label);
@@ -485,12 +498,30 @@ function verifyPage(result, locale) {
     );
   }
   assert(
-    organization?.contactPoint?.url === `${canonicalUrl}${canonicalPath}#contact`,
+    organization?.contactPoint?.url ===
+      (smokeContactEmailVerified
+        ? `${canonicalUrl}${canonicalPath}#contact`
+        : smokeContactProfileUrl),
     `${label}: invalid contact point URL`,
   );
+  if (smokeContactEmailVerified) {
+    assert(
+      organization?.contactPoint?.email === smokeContactEmail,
+      `${label}: missing verified contact email`,
+    );
+  } else {
+    assert(
+      !("email" in (organization?.contactPoint || {})),
+      `${label}: structured data exposes an unverified email`,
+    );
+    assert(
+      organization?.sameAs?.includes(smokeContactProfileUrl),
+      `${label}: missing verified owner profile`,
+    );
+  }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-08-12",
+    webpage?.dateModified === "2026-08-13",
     `${label}: missing structured-data review date`,
   );
   assert(
@@ -518,11 +549,15 @@ function verifyPrivacyPage(result, locale) {
     ? "本页没有嵌入式分析工具、广告像素或账号系统。"
     : "The page does not use embedded analytics, advertising pixels, or an account system.";
   const reviewedLabel = isChinese
-    ? "最近核验：2026.08.12"
-    : "Last reviewed 12 Aug 2026";
-  const contactSubject = isChinese
-    ? "Xentra%20%E9%9A%90%E7%A7%81%E8%AF%B4%E6%98%8E"
-    : "Xentra%20privacy%20question";
+    ? "最近核验：2026.08.13"
+    : "Last reviewed 13 Aug 2026";
+  const contactSection = smokeContactEmailVerified
+    ? isChinese
+      ? "通过邮件联系"
+      : "Contact by email"
+    : isChinese
+      ? "公开联系入口"
+      : "Public contact";
 
   assertStatus(result, 200, label);
   assertIncludes(contentType(result), "text/html", `${label} content type`);
@@ -530,6 +565,8 @@ function verifyPrivacyPage(result, locale) {
   assertIncludes(result.body, title, `${label} title`);
   assertIncludes(result.body, evidence, `${label} data note`);
   assertIncludes(result.body, reviewedLabel, `${label} review date`);
+  assertIncludes(result.body, contactSection, `${label} contact disclosure`);
+  assertIncludes(result.body, smokeContactValue, `${label} contact value`);
   assertIncludes(
     result.body,
     `<link rel="canonical" href="${canonicalHref}"`,
@@ -547,9 +584,19 @@ function verifyPrivacyPage(result, locale) {
   );
   assertIncludes(
     result.body,
-    `mailto:${smokeContactEmail}?subject=${contactSubject}`,
-    `${label} contact subject`,
+    `href="${smokeContactHref}"`,
+    `${label} verified contact link`,
   );
+  if (!smokeContactEmailVerified) {
+    assert(
+      !result.body.includes("contact@xentra.ai"),
+      `${label}: unverified xentra.ai email is still published`,
+    );
+    assert(
+      !result.body.includes("mailto:"),
+      `${label}: unexpected email contact in public-profile mode`,
+    );
+  }
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
     assertIncludes(result.body, company, `${label} operating company disclosure`);
     assertIncludes(
@@ -594,6 +641,39 @@ async function verifyExternalCompanies() {
     } catch (error) {
       throw new Error(
         `Evidence URL failed: ${url} (${error instanceof Error ? error.message : String(error)})`,
+      );
+    }
+  }
+
+  if (!smokeContactEmailVerified) {
+    try {
+      const response = await fetchWithRetry(smokeContactProfileUrl, {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+          "User-Agent": "Xentra-site-smoke",
+        },
+        redirect: "follow",
+        signal: AbortSignal.timeout(timeoutMs),
+      });
+      const body = await response.text();
+      assert(
+        response.ok,
+        `Public contact URL failed: ${smokeContactProfileUrl} (${response.status})`,
+      );
+      assertIncludes(
+        response.headers.get("content-type") || "",
+        "text/html",
+        `Public contact content type: ${smokeContactProfileUrl}`,
+      );
+      assertIncludes(
+        body,
+        "luckyericyao",
+        `Public contact identity marker: ${smokeContactProfileUrl}`,
+      );
+    } catch (error) {
+      throw new Error(
+        `Public contact URL failed: ${smokeContactProfileUrl} (${error instanceof Error ? error.message : String(error)})`,
       );
     }
   }
@@ -738,7 +818,7 @@ async function run() {
   );
   assertIncludes(
     sitemap.body,
-    "<lastmod>2026-08-12T00:00:00.000Z</lastmod>",
+    "<lastmod>2026-08-13T00:00:00.000Z</lastmod>",
     "Sitemap stable review date",
   );
 

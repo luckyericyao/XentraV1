@@ -411,12 +411,11 @@ export function HomePage({ locale }: HomePageProps) {
                     className="mt-5 border-y border-[#2A2D33]"
                   >
                     {content.contact.pathways.map((pathway, index) => (
-                      <a
+                      <div
                         key={pathway.title}
-                        href={pathway.mailto}
-                        className="group grid min-h-28 grid-cols-[1fr_auto] items-center gap-x-5 gap-y-3 border-b border-[#2A2D33] py-5 last:border-b-0 sm:grid-cols-[8.5rem_1fr_auto] sm:py-6"
+                        className="grid min-h-28 items-center gap-x-5 gap-y-3 border-b border-[#2A2D33] py-5 last:border-b-0 sm:grid-cols-[8.5rem_1fr] sm:py-6"
                       >
-                        <span className="eyebrow col-span-2 text-[#8D97A5] transition group-hover:text-[#C6A15B] sm:col-span-1">
+                        <span className="eyebrow text-[#8D97A5]">
                           {String(index + 1).padStart(2, "0")} / {pathway.audience}
                         </span>
                         <span className="min-w-0">
@@ -427,13 +426,7 @@ export function HomePage({ locale }: HomePageProps) {
                             {pathway.body}
                           </span>
                         </span>
-                        <span
-                          aria-hidden="true"
-                          className="text-lg text-[#B49459] transition duration-300 group-hover:translate-x-1 group-hover:text-[#C6A15B]"
-                        >
-                          &#8599;
-                        </span>
-                      </a>
+                      </div>
                     ))}
                   </div>
 
@@ -443,12 +436,12 @@ export function HomePage({ locale }: HomePageProps) {
                         {content.contact.bodyPrefix}
                       </p>
                       <ContactActions
-                        email={content.contact.email}
-                        emailLabel={content.contact.ctaLabel}
-                        mailto={content.contact.mailto}
-                        copyLabel={content.contact.copyLabel}
-                        copiedLabel={content.contact.copiedLabel}
-                        copyErrorLabel={content.contact.copyErrorLabel}
+                        href={content.contact.contactHref}
+                        label={content.contact.ctaLabel}
+                        value={content.contact.contactValue}
+                        note={content.contact.channelNote}
+                        external={content.contact.contactExternal}
+                        externalLinkLabel={content.contact.externalLinkLabel}
                       />
                     </div>
                     <div>
@@ -504,10 +497,24 @@ export function HomePage({ locale }: HomePageProps) {
               </a>
             ))}
             <a
-              href={content.contact.mailto}
-              className="text-sm transition hover:text-[#F2EFE8]"
+              href={content.contact.contactHref}
+              target={content.contact.contactExternal ? "_blank" : undefined}
+              rel={
+                content.contact.contactExternal
+                  ? "noopener noreferrer"
+                  : undefined
+              }
+              aria-label={
+                content.contact.contactExternal
+                  ? `${content.contact.ctaLabel} (${content.contact.externalLinkLabel})`
+                  : content.contact.ctaLabel
+              }
+              className="inline-flex items-center gap-1.5 text-sm transition hover:text-[#F2EFE8]"
             >
-              {content.contact.email}
+              {content.contact.ctaLabel}
+              <span aria-hidden="true" className="text-[#B49459]">
+                &#8599;
+              </span>
             </a>
             <a
               href={content.footer.privacyHref}
