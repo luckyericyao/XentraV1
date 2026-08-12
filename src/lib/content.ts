@@ -211,8 +211,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "From the Founder",
       title: "I want to build companies that become more trusted as they grow.",
       body: [
-        "Technology is useful when it makes a difficult choice clearer. Operations matter when someone remains accountable after the recommendation.",
-        "Xentra is the operating model I am building around both disciplines: enter fewer markets, understand them deeply, and earn the right to compound.",
+        "The three companies look unrelated at the category level. At the moment of decision, each customer faces the same problem: enough information to hesitate, not enough trusted context to act.",
+        "Xentra is how I am testing whether one operating discipline can travel across very different markets: enter fewer, understand them deeply, and stay for the handoff.",
       ],
       signature: "Founder, Xentra",
       letterLabel: "Read the founder letter",
@@ -220,9 +220,9 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     companies: {
       eyebrow: "Operating Companies",
-      title: "Three markets. One operating thesis.",
+      title: "The categories change. The hard decision stays.",
       body: [
-        "Different industries, the same operating pattern: fragmented choices, expensive judgment, and accountable delivery.",
+        "AI adoption, private travel, and laboratory sourcing look unrelated until someone has to decide. In each market, information is abundant, trusted context is scarce, and the outcome still needs an accountable operator.",
       ],
       principles: [
         "Problem before technology",
@@ -248,7 +248,7 @@ export const siteContent: Record<Locale, SiteContent> = {
               "AI Agent Coach homepage showing professional AI coaches organized by industry.",
             audience: "Professionals and teams working in complex industries.",
             decision:
-              "Which coach and workflow fit the field and decision at hand.",
+              "How does AI become part of the work, not another tool people stop using?",
             delivery:
               "Industry-specific AI coaches, structured guidance, and professional review.",
             proof: [
@@ -277,7 +277,7 @@ export const siteContent: Record<Locale, SiteContent> = {
               "Localhost Global homepage showing a private China route shaped by local hosts.",
             audience: "International travelers seeking a private way into China.",
             decision:
-              "Which places, hosts, and local context are worth trusting.",
+              "Who can help me enter a place without reducing it to a checklist?",
             delivery:
               "Private route design, host matching, cultural context, and practical support.",
             proof: [
@@ -306,7 +306,7 @@ export const siteContent: Record<Locale, SiteContent> = {
               "BioAxis homepage showing a structured sourcing request for life science consumables.",
             audience: "Life science buyers and laboratories sourcing consumables.",
             decision:
-              "Which product, equivalent, document path, and supplier route fit the request.",
+              "Which option will fit the experiment, arrive, and hold up?",
             delivery:
               "Equivalent review, sample paths, supplier documents, and RFQ-ready briefs.",
             proof: [
@@ -512,8 +512,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       title: "我想建立的公司，规模越大，越值得信任。",
       titleLines: ["我想建立的公司，", "规模越大，", "越值得信任。"],
       body: [
-        "技术的价值，是让困难的选择更清楚；运营的价值，是在建议之后，仍有人对结果负责。",
-        "Xentra 是我围绕这两种能力建立的一套长期运营方法：少进入几个市场，深理解一些问题，让长期交付产生复利。",
+        "三家公司在行业分类上毫不相干。真正做决定时，用户面对的却是同一个困境：信息足够让人犹豫，可信语境不足以让人行动。",
+        "Xentra 是我对同一种运营方法能否穿过不同市场的长期验证：少进入几个市场，深理解真实问题，并留在最后的交付现场。",
       ],
       signature: "Xentra 创始人",
       letterLabel: "阅读创始人手记",
@@ -521,9 +521,9 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     companies: {
       eyebrow: "业务布局",
-      title: "不同市场，同一种底层问题。",
+      title: "行业不同，难点都在决定那一刻。",
       body: [
-        "行业不同，底层结构相同：选择碎片化，判断代价高，结果必须有人负责。",
+        "企业 AI、私人旅行、生命科学采购，看起来毫不相关。真正做决定时，用户面对的是同一个缺口：信息很多，可信语境很少，结果仍要有人负责。",
       ],
       principles: ["问题先于技术", "证据先于声量", "交付先于规模"],
       chapterLabel: "查看业务证据",
@@ -545,7 +545,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             image: "/images/portfolio/ai-agent-coach.jpg",
             imageAlt: "AI Agent Coach 官网，展示按行业组织的专业 AI 教练。",
             audience: "面对复杂行业决策的专业人士与团队。",
-            decision: "判断当前任务适合哪类教练，以及怎样的工作方式。",
+            decision: "怎样让 AI 真正进入工作，而不是又一个很快被放弃的工具？",
             delivery: "按行业组织的 AI 教练、结构化指导与专业复核。",
             proof: [
               { label: "行业教练目录", href: evidenceLinks.agentCoach.industries },
@@ -567,7 +567,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             image: "/images/portfolio/localhost.jpg",
             imageAlt: "Localhost Global 官网，展示由本地主理人设计的私人中国路线。",
             audience: "希望以私人方式进入中国的国际旅行者。",
-            decision: "哪些地方、主理人和文化语境值得信任。",
+            decision: "谁能带我进入一个地方，而不是只带我去一串景点？",
             delivery: "私人路线、主理人匹配、文化解释与行程支持。",
             proof: [
               { label: "公开路线样本", href: evidenceLinks.localhost.routes },
@@ -589,7 +589,7 @@ export const siteContent: Record<Locale, SiteContent> = {
             image: "/images/portfolio/bioaxis.jpg",
             imageAlt: "BioAxis 官网，展示生命科学耗材的结构化采购请求。",
             audience: "采购生命科学耗材的实验室与专业买方。",
-            decision: "哪种产品、替代品、文件和供应路径符合需求。",
+            decision: "哪个产品真正适合实验、可以交付，也经得起核对？",
             delivery: "替代评估、样品路径、供应文件与询价简报。",
             proof: [
               { label: "现货供应路径", href: evidenceLinks.bioaxis.readySupply },

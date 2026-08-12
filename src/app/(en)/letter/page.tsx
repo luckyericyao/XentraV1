@@ -3,7 +3,7 @@ import { FounderLetterPage } from "@/components/FounderLetterPage";
 
 const title = "Founder Letter | Xentra";
 const description =
-  "Why Xentra keeps judgment, accountability, and delivery inside the operating model.";
+  "Why Xentra sees the same trust problem across AI adoption, private travel, and laboratory sourcing.";
 
 export const metadata: Metadata = {
   title,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { FounderLetterPage } from "@/components/FounderLetterPage";
 
 const title = "创始人手记 | Xentra";
-const description = "关于判断、责任、交付，以及 Xentra 为什么选择少进入一些市场。";
+const description = "为什么企业 AI、私人旅行与生命科学采购，面对的是同一种信任与交付问题。";
 
 export const metadata: Metadata = {
   title,

@@ -7,8 +7,9 @@ requires accountable operators.
 [View the public group site](https://xentra-v1.vercel.app/)
 
 [Read the founder letter](https://xentra-v1.vercel.app/letter) — a short note
-on judgment, accountability, delivery, and the role of the parent company,
-followed by nine public product paths across the three operating companies.
+on judgment, accountability, and why three very different markets break at the
+same moment of doubt, followed by nine public product paths across the three
+operating companies.
 
 ## Operating companies
 

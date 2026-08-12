@@ -23,6 +23,7 @@ type LetterCopy = {
     eyebrow: string;
     title: string;
     body: string;
+    questionLabel: string;
     companyCountLabel: string;
     countLabel: string;
     chapterLabel: string;
@@ -53,7 +54,7 @@ const letterCopy: Record<Locale, LetterCopy> = {
     ],
     eyebrow: "Founder Letter / 01",
     title: "A company should become more trusted as it grows.",
-    deck: "Scale often creates distance. Xentra is built on a different premise: use technology to remove repetition, then make responsibility more visible.",
+    deck: "Scale often creates distance. I am building Xentra around the opposite discipline: remove repetition with technology, then make judgment, responsibility, and delivery more visible.",
     publishedLabel: "13 Aug 2026",
     indexLabel: "Operating convictions",
     sections: [
@@ -71,16 +72,17 @@ const letterCopy: Record<Locale, LetterCopy> = {
       },
     ],
     proof: {
-      eyebrow: "Operating Proof",
-      title: "Conviction has to enter the work.",
-      body: "Across AI adoption, private travel, and laboratory sourcing, nine public product paths show how the operating thesis is being applied.",
+      eyebrow: "Why These Three",
+      title: "Three markets. The same moment of doubt.",
+      body: "I did not begin with a platform and look for markets to fit it. I kept finding people with plenty of information, but no trusted way to decide and no one accountable for what happened next.",
+      questionLabel: "The question",
       companyCountLabel: "operating companies",
       countLabel: "public product paths",
       chapterLabel: "Review evidence",
       externalLinkLabel: "opens in a new tab",
     },
     closing:
-      "We will enter fewer markets than we could. We intend to understand them more deeply than most.",
+      "The point is not to make the portfolio look coherent. It is to make difficult decisions more trustworthy, then stay long enough to deliver.",
     signature: "Founder, Xentra",
     companiesLabel: "View operating companies",
     companiesHref: "/#companies",
@@ -105,7 +107,7 @@ const letterCopy: Record<Locale, LetterCopy> = {
       mobile: ["一家公司，", "应该在", "变大以后，", "更值得信任。"],
       desktop: ["一家公司，", "应该在变大以后，", "更值得信任。"],
     },
-    deck: "规模往往制造距离。Xentra 想做相反的事：用技术减少重复，让责任变得更清楚。",
+    deck: "规模往往让人与结果越来越远。我建立 Xentra，是想做相反的事：用技术消除重复，却让判断、责任和交付变得更清楚。",
     publishedLabel: "2026.08.13",
     indexLabel: "经营判断",
     sections: [
@@ -123,15 +125,16 @@ const letterCopy: Record<Locale, LetterCopy> = {
       },
     ],
     proof: {
-      eyebrow: "公开进展",
-      title: "判断必须进入业务。",
-      body: "企业 AI、私人旅行与生命科学采购，共有九个公开产品入口，展示当前的产品与交付设计。",
+      eyebrow: "为什么是这三个市场",
+      title: "三个市场，同一个犹豫时刻。",
+      body: "我不是先做一个平台，再去寻找可以套用的市场。我反复看见的是同一个时刻：一个人手里信息很多，却仍然无法放心做决定，也没有人对之后的结果负责。",
+      questionLabel: "用户真正问的是",
       companyCountLabel: "垂直业务",
       countLabel: "公开产品入口",
       chapterLabel: "查看证据",
       externalLinkLabel: "在新窗口打开",
     },
-    closing: "我们会少进入一些市场，也会比多数人更深入地理解它们。",
+    closing: "重要的不是让业务版图看起来整齐，而是让困难的决定更可信，并留下来把结果交付出去。",
     signature: "Xentra 创始人",
     companiesLabel: "查看业务布局",
     companiesHref: "/zh#companies",
@@ -340,9 +343,14 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
                     </h3>
                   </div>
                   <div>
-                    <p className="text-base leading-7 text-[#A6A39A]">
-                      {company.headline}
+                    <p className="eyebrow text-[#8D97A5]">
+                      {copy.proof.questionLabel}
                     </p>
+                    <blockquote className="mt-3 max-w-2xl font-serif text-xl font-normal leading-8 text-[#F2EFE8] sm:text-2xl sm:leading-9">
+                      <span aria-hidden="true">&ldquo;</span>
+                      {company.evidence.decision}
+                      <span aria-hidden="true">&rdquo;</span>
+                    </blockquote>
                     <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-[#2A2D33] pt-4">
                       {company.evidence.proof.map((item) => (
                         <a
