@@ -227,32 +227,22 @@ export function HomePage({ locale }: HomePageProps) {
                 {content.companies.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
-                <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 text-[#8D97A5]">
-                  <span>{content.portfolio.evidenceLabel}</span>
-                  <span aria-hidden="true" className="text-[#B49459]">
-                    /
-                  </span>
-                  <span>{content.portfolio.evidenceVerifiedLabel}</span>
-                </p>
-                <p className="max-w-lg text-xs leading-5 text-[#8D97A5]">
-                  {content.portfolio.evidenceNote}
-                </p>
+                {content.companies.principles ? (
+                  <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 text-[#8D97A5]">
+                    {content.companies.principles.map((principle, index) => (
+                      <span key={principle} className="contents">
+                        {index > 0 ? (
+                          <span aria-hidden="true" className="text-[#B49459]">
+                            /
+                          </span>
+                        ) : null}
+                        <span>{principle}</span>
+                      </span>
+                    ))}
+                  </p>
+                ) : null}
               </div>
             </div>
-            {content.companies.principles ? (
-              <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {content.companies.principles.map((principle) => (
-                  <div
-                    key={principle}
-                    className="scroll-rise rounded-lg border border-[#2A2D33] bg-[#17191D]/55 p-5"
-                  >
-                    <p className="text-sm font-medium leading-6 text-[#F2EFE8]">
-                      {principle}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : null}
             <div className="mt-16 grid gap-5 lg:grid-cols-3">
               {content.companies.items.map((company, index) => (
                 <CompanyCard
@@ -271,6 +261,18 @@ export function HomePage({ locale }: HomePageProps) {
                   useCasesLabel={content.companies.useCasesLabel}
                 />
               ))}
+            </div>
+            <div className="mt-8 grid gap-3 border-t border-[#2A2D33] pt-5 md:grid-cols-[auto_1fr] md:items-start md:gap-8">
+              <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 text-[#8D97A5]">
+                <span>{content.portfolio.evidenceLabel}</span>
+                <span aria-hidden="true" className="text-[#B49459]">
+                  /
+                </span>
+                <span>{content.portfolio.evidenceVerifiedLabel}</span>
+              </p>
+              <p className="max-w-2xl text-xs leading-5 text-[#8D97A5] md:justify-self-end md:text-right">
+                {content.portfolio.evidenceNote}
+              </p>
             </div>
           </div>
         </section>

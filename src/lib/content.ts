@@ -255,18 +255,23 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     build: {
-      eyebrow: "What We Build",
-      title: "Operating companies, not standalone tools.",
+      eyebrow: "Operating Conviction",
+      title: "Ideas earn their value in the real world.",
       body: [
-        "Xentra enters a specific market, finds the recurring decisions that slow it down, and builds the company around the work required to deliver a better outcome.",
-        "The parent group provides shared systems. Each operator stays accountable to the customer, the context, and the final handoff.",
+        "Xentra starts with a recurring customer decision, not a technology demo. We choose markets where clarity matters more than more choice.",
+        "AI removes repetition. Operators remain responsible for context, trust, and delivery. Scale comes after the handoff works.",
       ],
     },
     companies: {
       eyebrow: "Operating Companies",
       title: "Three markets. One operating thesis.",
       body: [
-        "Each company owns its market. Xentra owns the operating thesis.",
+        "Different industries, the same operating pattern: fragmented choices, expensive judgment, and accountable delivery.",
+      ],
+      principles: [
+        "Problem before technology",
+        "Evidence before reach",
+        "Delivery before scale",
       ],
       chapterLabel: "View operating brief",
       visitLabel: "Visit site",
@@ -547,19 +552,20 @@ export const siteContent: Record<Locale, SiteContent> = {
       ],
     },
     build: {
-      eyebrow: "我们建立什么",
-      title: "我们建立垂直运营公司。",
+      eyebrow: "我们的取舍",
+      title: "想法，要在现实里证明价值。",
       body: [
-        "每家公司进入一个具体市场，处理一个反复发生、却始终难以判断和交付的问题。",
-        "Xentra 负责共用的方法、系统与技术；业务公司负责客户、语境和结果。",
+        "Xentra 不从技术演示开始，而从一个反复发生、长期没有解决好的真实问题开始。用户需要的不是更多选择，而是更早看清什么值得选。",
+        "AI 消除重复，人负责语境、信任和交付。最后一公里没有跑通之前，我们不急着谈规模。",
       ],
     },
     companies: {
       eyebrow: "业务布局",
       title: "不同市场，同一种底层问题。",
       body: [
-        "企业 AI、私人旅行和生命科学供应，看似不同，却都要求用户在碎片信息中做出高价值决定。",
+        "行业不同，底层结构相同：选择碎片化，判断代价高，结果必须有人负责。",
       ],
+      principles: ["问题先于技术", "证据先于声量", "交付先于规模"],
       chapterLabel: "查看业务证据",
       visitLabel: "访问网站",
       externalLinkLabel: "在新窗口打开",

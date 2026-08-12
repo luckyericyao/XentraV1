@@ -67,7 +67,7 @@ const companyEvidencePages = [
   },
   {
     url: `${companyBaseUrls.localhost}journeys`,
-    markers: ["A cultural atlas for the China you want to enter."],
+    markers: ["Choose a China that matches your attention."],
   },
   {
     url: `${companyBaseUrls.localhost}inquiry?type=traveler`,
@@ -284,14 +284,21 @@ function verifyPage(result, locale) {
     ? "Xentra | 把复杂市场，做成可信系统"
     : "Xentra | AI-native operating group";
   const buildTitle = isChinese
-    ? "我们建立垂直运营公司。"
-    : "Operating companies, not standalone tools.";
+    ? "想法，要在现实里证明价值。"
+    : "Ideas earn their value in the real world.";
   const directionsTitle = isChinese
     ? "从难服务的市场开始。"
     : "The next company starts with a hard-to-serve market.";
   const companiesTitle = isChinese
     ? "不同市场，同一种底层问题。"
     : "Three markets. One operating thesis.";
+  const companyPrinciples = isChinese
+    ? ["问题先于技术", "证据先于声量", "交付先于规模"]
+    : [
+        "Problem before technology",
+        "Evidence before reach",
+        "Delivery before scale",
+      ];
   const companyEntryLabel = isChinese ? "查看业务证据" : "View operating brief";
   const companyCopyMarkers = isChinese
     ? [
@@ -377,6 +384,9 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, buildTitle, `${label} build thesis`);
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
+  for (const principle of companyPrinciples) {
+    assertIncludes(result.body, principle, `${label} operating principle`);
+  }
   assertIncludes(result.body, companyEntryLabel, `${label} company entry`);
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
     const accessibleEntry = `aria-label="${companyEntryLabel}: ${company}"`;
