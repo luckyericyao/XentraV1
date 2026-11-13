@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
-import { siteReviewDate } from "@/lib/site-meta";
+import { sitePageDates } from "@/lib/site-meta";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const lastModified = new Date(`${siteReviewDate.iso}T00:00:00.000Z`);
+  const modified = (page: keyof typeof sitePageDates) =>
+    new Date(`${sitePageDates[page]}T00:00:00.000Z`);
   const languages = {
     en: `${siteUrl}/`,
     "zh-CN": `${siteUrl}/zh`,
@@ -24,42 +25,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${siteUrl}/`,
-      lastModified,
+      lastModified: modified("home"),
       changeFrequency: "monthly",
       priority: 1,
       alternates: { languages },
     },
     {
       url: `${siteUrl}/zh`,
-      lastModified,
+      lastModified: modified("home"),
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages },
     },
     {
       url: `${siteUrl}/letter`,
-      lastModified,
+      lastModified: modified("letter"),
       changeFrequency: "yearly",
       priority: 0.7,
       alternates: { languages: letterLanguages },
     },
     {
       url: `${siteUrl}/zh/letter`,
-      lastModified,
+      lastModified: modified("letter"),
       changeFrequency: "yearly",
       priority: 0.7,
       alternates: { languages: letterLanguages },
     },
     {
       url: `${siteUrl}/privacy`,
-      lastModified,
+      lastModified: modified("privacy"),
       changeFrequency: "yearly",
       priority: 0.3,
       alternates: { languages: privacyLanguages },
     },
     {
       url: `${siteUrl}/zh/privacy`,
-      lastModified,
+      lastModified: modified("privacy"),
       changeFrequency: "yearly",
       priority: 0.3,
       alternates: { languages: privacyLanguages },

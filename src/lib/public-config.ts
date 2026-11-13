@@ -1,4 +1,11 @@
-const verifiedCompanyDefaults = {
+import {
+  isPublicContactEmail,
+  normalizePublicHttpsUrl,
+  publicUrlLabel,
+} from "./public-address.mjs";
+
+// These are the sources of the dated screenshots and product paths.
+export const recordedCompanyLinks = {
   agentCoach: "https://agentcoach-three.vercel.app/",
   localhost: "https://localhostchinav1.vercel.app/",
   bioaxis: "https://bioaxisv3.vercel.app/",
@@ -6,24 +13,7 @@ const verifiedCompanyDefaults = {
 
 function readHttpsUrl(name: string, fallback: string) {
   const raw = process.env[name]?.trim();
-
-  if (!raw) {
-    return fallback;
-  }
-
-  let url: URL;
-
-  try {
-    url = new URL(raw);
-  } catch {
-    throw new Error(`${name} must be an absolute HTTPS URL.`);
-  }
-
-  if (url.protocol !== "https:" || url.search || url.hash) {
-    throw new Error(`${name} must be an HTTPS origin or path without a query.`);
-  }
-
-  return `${url.toString().replace(/\/+$/, "")}/`;
+  return raw ? normalizePublicHttpsUrl(raw, name) : fallback;
 }
 
 function readVerifiedEmail(name: string, verificationName: string) {
@@ -38,32 +28,25 @@ function readVerifiedEmail(name: string, verificationName: string) {
     throw new Error(`${name} is required when ${verificationName}=1.`);
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    throw new Error(`${name} must be a valid email address.`);
+  if (!isPublicContactEmail(email)) {
+    throw new Error(`${name} must be a single plain email address.`);
   }
 
   return email;
 }
 
-function displayHttpsUrl(value: string) {
-  const url = new URL(value);
-  const path = url.pathname.replace(/\/+$/, "");
-
-  return `${url.hostname.replace(/^www\./, "")}${path}`;
-}
-
 export const publicCompanyLinks = {
   agentCoach: readHttpsUrl(
     "XENTRA_AGENT_COACH_URL",
-    verifiedCompanyDefaults.agentCoach,
+    recordedCompanyLinks.agentCoach,
   ),
   localhost: readHttpsUrl(
     "XENTRA_LOCALHOST_URL",
-    verifiedCompanyDefaults.localhost,
+    recordedCompanyLinks.localhost,
   ),
   bioaxis: readHttpsUrl(
     "XENTRA_BIOAXIS_URL",
-    verifiedCompanyDefaults.bioaxis,
+    recordedCompanyLinks.bioaxis,
   ),
 } as const;
 
@@ -86,6 +69,6 @@ export const publicContact = verifiedContactEmail
   : {
       kind: "profile" as const,
       href: contactProfileUrl,
-      value: displayHttpsUrl(contactProfileUrl),
+      value: publicUrlLabel(contactProfileUrl),
       opensNewWindow: true,
     };

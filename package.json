@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test": "node --test scripts/*.test.mjs",
+    "check:local": "node scripts/check-local.mjs",
     "smoke": "node scripts/site-smoke.mjs"
   },
   "dependencies": {

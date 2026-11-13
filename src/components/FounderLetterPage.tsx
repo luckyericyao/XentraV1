@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 import { siteContent } from "@/lib/content";
 import type { Locale } from "@/lib/content";
-import { siteReviewDate } from "@/lib/site-meta";
+import { sitePageDates, siteReviewDate } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
 type LetterCopy = {
@@ -166,7 +166,7 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
     headline: copy.title,
     description: copy.deck,
     datePublished: publicationDate,
-    dateModified: publicationDate,
+    dateModified: sitePageDates.letter,
     inLanguage: copy.lang,
     mainEntityOfPage: pageUrl,
     author: {

@@ -1,3 +1,10 @@
+import { inspectLocalNavigation } from "./local-navigation.mjs";
+import {
+  isPublicContactEmail,
+  normalizePublicHttpsUrl,
+  publicUrlLabel,
+} from "../src/lib/public-address.mjs";
+
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3101").replace(
   /\/+$/,
   "",
@@ -15,14 +22,7 @@ const runId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let assertionCount = 0;
 
 function configuredSmokeUrl(name, fallback) {
-  const raw = process.env[name]?.trim() || fallback;
-  const url = new URL(raw);
-
-  if (url.protocol !== "https:" || url.search || url.hash) {
-    throw new Error(`${name} must be an HTTPS URL without a query or hash.`);
-  }
-
-  return `${url.toString().replace(/\/+$/, "")}/`;
+  return normalizePublicHttpsUrl(process.env[name]?.trim() || fallback, name);
 }
 
 const smokeContactEmailVerified =
@@ -35,36 +35,40 @@ if (smokeContactEmailVerified && !smokeContactEmail) {
   );
 }
 
-if (
-  smokeContactEmail &&
-  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(smokeContactEmail)
-) {
-  throw new Error("SMOKE_CONTACT_EMAIL must be a valid email address.");
+if (smokeContactEmailVerified && !isPublicContactEmail(smokeContactEmail)) {
+  throw new Error("SMOKE_CONTACT_EMAIL must be a single plain email address.");
 }
 
+const defaultContactProfileUrl = "https://github.com/luckyericyao/";
 const smokeContactProfileUrl = configuredSmokeUrl(
   "SMOKE_CONTACT_URL",
-  "https://github.com/luckyericyao/",
+  defaultContactProfileUrl,
 );
 const smokeContactHref = smokeContactEmailVerified
   ? `mailto:${smokeContactEmail}`
   : smokeContactProfileUrl;
 const smokeContactValue = smokeContactEmailVerified
   ? smokeContactEmail
-  : "github.com/luckyericyao";
+  : publicUrlLabel(smokeContactProfileUrl);
+
+const recordedCompanyUrls = {
+  agentCoach: "https://agentcoach-three.vercel.app/",
+  localhost: "https://localhostchinav1.vercel.app/",
+  bioaxis: "https://bioaxisv3.vercel.app/",
+};
 
 const companyBaseUrls = {
   agentCoach: configuredSmokeUrl(
     "SMOKE_AGENT_COACH_URL",
-    "https://agentcoach-three.vercel.app/",
+    recordedCompanyUrls.agentCoach,
   ),
   localhost: configuredSmokeUrl(
     "SMOKE_LOCALHOST_URL",
-    "https://localhostchinav1.vercel.app/",
+    recordedCompanyUrls.localhost,
   ),
   bioaxis: configuredSmokeUrl(
     "SMOKE_BIOAXIS_URL",
-    "https://bioaxisv3.vercel.app/",
+    recordedCompanyUrls.bioaxis,
   ),
 };
 
@@ -75,44 +79,44 @@ const companyUrls = [
 ];
 
 const companyEvidenceUrls = [
-  `${companyBaseUrls.agentCoach}#industries`,
-  `${companyBaseUrls.agentCoach}#waitlist`,
-  `${companyBaseUrls.agentCoach}#coaches`,
-  `${companyBaseUrls.localhost}journeys`,
-  `${companyBaseUrls.localhost}inquiry?type=traveler`,
-  `${companyBaseUrls.localhost}trust`,
-  `${companyBaseUrls.bioaxis}ready-supply`,
-  `${companyBaseUrls.bioaxis}equivalent-finder`,
-  `${companyBaseUrls.bioaxis}request-quote`,
+  `${recordedCompanyUrls.agentCoach}#industries`,
+  `${recordedCompanyUrls.agentCoach}#waitlist`,
+  `${recordedCompanyUrls.agentCoach}#coaches`,
+  `${recordedCompanyUrls.localhost}journeys`,
+  `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
+  `${recordedCompanyUrls.localhost}trust`,
+  `${recordedCompanyUrls.bioaxis}ready-supply`,
+  `${recordedCompanyUrls.bioaxis}equivalent-finder`,
+  `${recordedCompanyUrls.bioaxis}request-quote`,
 ];
 
 const companyEvidencePages = [
   {
-    url: companyBaseUrls.agentCoach,
+    url: recordedCompanyUrls.agentCoach,
     markers: ['id="industries"', 'id="waitlist"', 'id="coaches"'],
   },
   {
-    url: `${companyBaseUrls.localhost}journeys`,
+    url: `${recordedCompanyUrls.localhost}journeys`,
     markers: ["Four private ways into China."],
   },
   {
-    url: `${companyBaseUrls.localhost}inquiry?type=traveler`,
+    url: `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
     markers: ["Tell us how you want to enter China."],
   },
   {
-    url: `${companyBaseUrls.localhost}trust`,
+    url: `${recordedCompanyUrls.localhost}trust`,
     markers: ["A local-host network only works if it protects both sides."],
   },
   {
-    url: `${companyBaseUrls.bioaxis}ready-supply`,
+    url: `${recordedCompanyUrls.bioaxis}ready-supply`,
     markers: ["Warehouse-backed consumables for faster lab procurement."],
   },
   {
-    url: `${companyBaseUrls.bioaxis}equivalent-finder`,
+    url: `${recordedCompanyUrls.bioaxis}equivalent-finder`,
     markers: ["Find compatible alternatives for your current consumables"],
   },
   {
-    url: `${companyBaseUrls.bioaxis}request-quote`,
+    url: `${recordedCompanyUrls.bioaxis}request-quote`,
     markers: ["Start a sourcing request"],
   },
 ];
@@ -136,7 +140,7 @@ async function get(pathname, options = {}) {
   try {
     const response = await fetchWithRetry(url, {
       cache: "no-store",
-      headers: { "Cache-Control": "no-cache" },
+      headers: { "Cache-Control": "no-cache", ...options.headers },
       redirect: "follow",
       signal: AbortSignal.timeout(timeoutMs),
     });
@@ -165,6 +169,28 @@ function assertStatus(result, expected, label) {
 
 function assertIncludes(value, expected, label) {
   assert(value.includes(expected), `${label}: missing ${JSON.stringify(expected)}`);
+}
+
+function htmlEscape(value) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;",
+  })[character]);
+}
+
+function assertHref(html, href, label) {
+  assertIncludes(html, `href="${htmlEscape(href)}"`, label);
+}
+
+function assertContactSurface(html, label) {
+  assertIncludes(html, htmlEscape(smokeContactValue), `${label} contact value`);
+  assertHref(html, smokeContactHref, `${label} configured contact link`);
+  if (!smokeContactEmailVerified) {
+    assert(!html.includes("mailto:"), `${label}: unexpected email in public-profile mode`);
+    assert(!html.includes("contact@xentra.ai"), `${label}: unverified xentra.ai address was published`);
+    if (smokeContactEmail) {
+      assert(!html.includes(htmlEscape(smokeContactEmail)), `${label}: unverified configured address was published`);
+    }
+  }
 }
 
 function isRetryableStatus(status) {
@@ -287,7 +313,7 @@ function verifyPage(result, locale) {
   const canonicalPath = isChinese ? "/zh" : "/";
   const canonicalHref = isChinese ? `${canonicalUrl}/zh` : canonicalUrl;
   const portfolioTitle = isChinese
-    ? "集团复用能力，业务承担结果。"
+    ? "集团提供方法，业务承担结果。"
     : "Shared capabilities. Accountable operators.";
   const heroTitleMarkers = isChinese
     ? ["把复杂市场，", "做成可信系统。"]
@@ -301,14 +327,14 @@ function verifyPage(result, locale) {
   const buildEyebrow = isChinese ? "创始人手记" : "From the Founder";
   const buildSignature = isChinese ? "Xentra 创始人" : "Founder, Xentra";
   const buildVoice = isChinese
-    ? "同一种运营方法能否穿过不同市场"
-    : "one operating discipline can travel across very different markets";
+    ? "这份运营纪律能否在不同业务里长期成立"
+    : "whether that discipline can hold across very different businesses";
   const directionsTitle = isChinese
     ? "从难服务的市场开始。"
     : "The next company starts with a hard-to-serve market.";
   const companiesTitle = isChinese
-    ? "行业不同，难点都在决定那一刻。"
-    : "The categories change. The hard decision stays.";
+    ? "不同市场，同一套运营逻辑。"
+    : "Different markets. One operating discipline.";
   const companyPrinciples = isChinese
     ? ["问题先于技术", "证据先于声量", "交付先于规模"]
     : [
@@ -358,8 +384,8 @@ function verifyPage(result, locale) {
     ? "核验于 2026.08.13"
     : "Checked 13 Aug 2026";
   const evidenceNote = isChinese
-    ? "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。"
-    : "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.";
+    ? "核验日期仅适用于所列入口与截图，不代表当前可达、业绩承诺或第三方背书。"
+    : "The review date applies only to the recorded links and screenshots. It does not establish current availability, performance, or endorsement.";
   const contactLabel = isChinese ? "合作对象" : "Who we build with";
   const contactNote = isChinese
     ? "参与一家公司有三种方式：负责交付、提供判断，或支持长期建设。"
@@ -418,6 +444,14 @@ function verifyPage(result, locale) {
     assertIncludes(result.body, principle, `${label} operating principle`);
   }
   assertIncludes(result.body, companyEntryLabel, `${label} company entry`);
+  for (const id of ["thesis", "companies", "portfolio", "model", "contact"]) {
+    assertIncludes(
+      result.body,
+      `<section id="${id}" tabindex="-1"`,
+      `${label} keyboard navigation target: ${id}`,
+    );
+  }
+  assertIncludes(result.body, '<section id="build"', `${label} founder reading target`);
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
     const accessibleEntry = `aria-label="${companyEntryLabel}: ${company}"`;
     const entryCount = result.body.split(accessibleEntry).length - 1;
@@ -430,6 +464,11 @@ function verifyPage(result, locale) {
     assertIncludes(result.body, marker, `${label} native company copy`);
   }
   for (const slug of ["ai-agent-coach", "localhost", "bioaxis"]) {
+    assertIncludes(
+      result.body,
+      `<article id="${slug}-chapter" tabindex="-1"`,
+      `${label} keyboard chapter target for ${slug}`,
+    );
     assertIncludes(
       result.body,
       `data-company-decision="${slug}"`,
@@ -457,12 +496,7 @@ function verifyPage(result, locale) {
   assertIncludes(result.body, contactNote, `${label} contact note`);
   assertIncludes(result.body, contactTrustNote, `${label} contact trust note`);
   assertIncludes(result.body, contactCtaLabel, `${label} contact CTA`);
-  assertIncludes(result.body, smokeContactValue, `${label} contact value`);
-  assertIncludes(
-    result.body,
-    `href="${smokeContactHref}"`,
-    `${label} verified contact link`,
-  );
+  assertContactSurface(result.body, label);
   for (const marker of chapterNavMarkers) {
     assertIncludes(result.body, marker, `${label} chapter navigation`);
   }
@@ -481,6 +515,9 @@ function verifyPage(result, locale) {
     `<link rel="canonical" href="${canonicalHref}"`,
     `${label} canonical`,
   );
+  assertIncludes(result.body, `<meta property="og:url" content="${canonicalHref}"`, `${label} Open Graph identity`);
+  assertIncludes(result.body, `<meta property="og:image" content="${canonicalUrl}${isChinese ? "/zh" : ""}/opengraph-image"`, `${label} Open Graph image origin`);
+  assertIncludes(result.body, `<meta name="twitter:image" content="${canonicalUrl}${isChinese ? "/zh" : ""}/twitter-image"`, `${label} Twitter image origin`);
   assertIncludes(
     result.body,
     `hrefLang="zh-CN" href="${canonicalUrl}/zh"`,
@@ -493,22 +530,14 @@ function verifyPage(result, locale) {
   );
 
   for (const companyUrl of companyUrls) {
-    assertIncludes(result.body, companyUrl, `${label} company link`);
+    assertHref(result.body, companyUrl, `${label} current company link`);
   }
 
+  for (const source of Object.values(recordedCompanyUrls)) {
+    assertHref(result.body, source, `${label} recorded screenshot source`);
+  }
   for (const evidenceUrl of companyEvidenceUrls) {
-    assertIncludes(result.body, evidenceUrl, `${label} evidence link`);
-  }
-
-  if (!smokeContactEmailVerified) {
-    assert(
-      !result.body.includes("contact@xentra.ai"),
-      `${label}: unverified xentra.ai email is still published`,
-    );
-    assert(
-      !result.body.includes("mailto:"),
-      `${label}: unexpected email contact in public-profile mode`,
-    );
+    assertHref(result.body, evidenceUrl, `${label} recorded evidence link`);
   }
 
   const structuredData = extractStructuredData(result.body, label);
@@ -520,13 +549,18 @@ function verifyPage(result, locale) {
     organization?.subOrganization?.length === 3,
     `${label}: expected three sub-organizations`,
   );
-  for (const subOrganization of organization?.subOrganization || []) {
+  for (const [index, subOrganization] of organization.subOrganization.entries()) {
+    assert(subOrganization.url === companyUrls[index], `${label}: invalid current company URL`);
     assert(
       subOrganization.parentOrganization?.["@id"] ===
         `${canonicalUrl}/#organization`,
       `${label}: invalid parent organization link`,
     );
   }
+  assert(
+    !("sameAs" in organization),
+    `${label}: a public build record is not an official organization identity`,
+  );
   if (smokeContactEmailVerified) {
     assert(
       organization?.contactPoint?.url ===
@@ -542,15 +576,11 @@ function verifyPage(result, locale) {
       !("contactPoint" in (organization || {})),
       `${label}: structured data misrepresents a public profile as a contact point`,
     );
-    assert(
-      organization?.sameAs?.includes(smokeContactProfileUrl),
-      `${label}: missing verified owner profile`,
-    );
   }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-08-13",
-    `${label}: missing structured-data review date`,
+    webpage?.dateModified === "2026-11-07",
+    `${label}: missing page-modification date`,
   );
   assert(
     webpage?.mainEntity?.["@id"] === `${canonicalUrl}/#organization`,
@@ -594,7 +624,7 @@ function verifyPrivacyPage(result, locale) {
   assertIncludes(result.body, evidence, `${label} data note`);
   assertIncludes(result.body, reviewedLabel, `${label} review date`);
   assertIncludes(result.body, contactSection, `${label} contact disclosure`);
-  assertIncludes(result.body, smokeContactValue, `${label} contact value`);
+  assertContactSurface(result.body, label);
   assertIncludes(
     result.body,
     `<link rel="canonical" href="${canonicalHref}"`,
@@ -610,20 +640,8 @@ function verifyPrivacyPage(result, locale) {
     `hrefLang="en" href="${canonicalUrl}/privacy"`,
     `${label} English alternate`,
   );
-  assertIncludes(
-    result.body,
-    `href="${smokeContactHref}"`,
-    `${label} verified contact link`,
-  );
-  if (!smokeContactEmailVerified) {
-    assert(
-      !result.body.includes("contact@xentra.ai"),
-      `${label}: unverified xentra.ai email is still published`,
-    );
-    assert(
-      !result.body.includes("mailto:"),
-      `${label}: unexpected email contact in public-profile mode`,
-    );
+  for (const url of companyUrls) {
+    assertHref(result.body, url, `${label} operating company link`);
   }
   for (const company of ["AI Agent Coach", "Localhost", "BioAxis"]) {
     assertIncludes(result.body, company, `${label} operating company disclosure`);
@@ -721,7 +739,7 @@ function verifyFounderLetter(result, locale) {
     `${label} public product path count`,
   );
   for (const evidenceUrl of companyEvidenceUrls) {
-    assertIncludes(result.body, evidenceUrl, `${label} public evidence link`);
+    assertHref(result.body, evidenceUrl, `${label} recorded evidence link`);
   }
   assertIncludes(result.body, closing, `${label} closing conviction`);
   assertIncludes(result.body, `href="${companiesHref}"`, `${label} companies CTA`);
@@ -787,7 +805,11 @@ async function verifyExternalCompanies() {
     return;
   }
 
-  for (const { url, markers } of companyEvidencePages) {
+  const currentCompanyPages = companyUrls
+    .filter((url) => !companyEvidencePages.some((page) => page.url === url))
+    .map((url) => ({ url, markers: [] }));
+
+  for (const { url, markers } of [...companyEvidencePages, ...currentCompanyPages]) {
     try {
       const response = await fetchWithRetry(url, {
         cache: "no-store",
@@ -833,16 +855,99 @@ async function verifyExternalCompanies() {
         "text/html",
         `Public contact content type: ${smokeContactProfileUrl}`,
       );
-      assertIncludes(
-        body,
-        "luckyericyao",
-        `Public contact identity marker: ${smokeContactProfileUrl}`,
-      );
+      if (smokeContactProfileUrl === defaultContactProfileUrl) {
+        assertIncludes(body, "luckyericyao", `Default build record marker: ${smokeContactProfileUrl}`);
+      }
     } catch (error) {
       throw new Error(
         `Public contact URL failed: ${smokeContactProfileUrl} (${error instanceof Error ? error.message : String(error)})`,
       );
     }
+  }
+}
+
+function verifyNotFound(result, locale) {
+  const isChinese = locale === "zh";
+  const label = isChinese ? "Chinese 404" : "English 404";
+  const html = result.body;
+
+  assertStatus(result, 404, label);
+  assert(!result.response.redirected, `${label}: missing URL was redirected`);
+  assertIncludes(contentType(result), "text/html", `${label} content type`);
+  assert(!/<script\b/i.test(result.body), `${label}: recovery must not need JavaScript`);
+  assert(!html.includes("smoke-not-found-input"), `${label}: request data was echoed`);
+  assertIncludes(html, `<html lang="${isChinese ? "zh-CN" : "en"}"`, `${label} document language`);
+  assertIncludes(html, 'name="robots" content="noindex"', `${label} indexing policy`);
+  assertIncludes(html, 'href="/not-found.css"', `${label} recovery stylesheet`);
+  assertIncludes(html, isChinese ? "页面不存在" : "Page not found", `${label} rendered copy`);
+  assertIncludes(html, 'href="#not-found-main"', `${label} skip link`);
+  assertIncludes(html, '<main id="not-found-main" tabindex="-1"', `${label} main focus target`);
+  assertIncludes(html, `href="${isChinese ? "/zh" : "/"}"`, `${label} localized home link`);
+  assertIncludes(html, `href="${isChinese ? "/" : "/zh"}"`, `${label} alternate home link`);
+  assertIncludes(html, isChinese ? "AI 原生运营集团" : "AI-native operating group", `${label} positioning`);
+  assertSecurityHeaders(result, label);
+  if (isChinese) {
+    assert(result.headers.get("content-language") === "zh-CN", `${label}: missing Content-Language`);
+  }
+}
+
+async function verifyPageStyles(homepages) {
+  for (const [locale, page] of homepages) {
+    const paths = [...page.body.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="(\/_next\/static\/[^"]+\.css)"/g)]
+      .map((match) => match[1]);
+    assert(paths.length > 0, `${locale}: no application stylesheet in the HTML`);
+    const results = await Promise.all(paths.map((path) => get(path)));
+    for (const [index, result] of results.entries()) {
+      assertStatus(result, 200, paths[index]);
+      assertIncludes(contentType(result), "text/css", `${locale} application stylesheet type`);
+    }
+    const css = results.map((result) => result.body).join("\n");
+    assertIncludes(css, ".hero-title", `${locale} hero stylesheet`);
+    assertIncludes(css, ".md\\:hidden", `${locale} generated responsive utilities`);
+    assertIncludes(css, ".scroll-rise:focus-within", `${locale} animated link focus visibility`);
+  }
+}
+
+async function verifyImageAssets(homepages) {
+  const sharePaths = [
+    "/opengraph-image", "/zh/opengraph-image", "/twitter-image", "/zh/twitter-image",
+  ];
+  const shareImages = await Promise.all(sharePaths.map((path) => get(path, { binary: true })));
+  for (const [index, result] of shareImages.entries()) {
+    const label = sharePaths[index];
+    assertStatus(result, 200, label);
+    assertIncludes(contentType(result), "image/png", `${label} content type`);
+    assert(result.body.byteLength > 1_000, `${label}: image body is too small`);
+    const png = new DataView(result.body.buffer, result.body.byteOffset, result.body.byteLength);
+    assert(
+      png.getUint32(0) === 0x89504e47 && png.getUint32(4) === 0x0d0a1a0a,
+      `${label}: invalid PNG signature`,
+    );
+    assert(png.getUint32(16) === 1200 && png.getUint32(20) === 630, `${label}: incorrect share dimensions`);
+  }
+
+  for (const slug of ["ai-agent-coach", "localhost", "bioaxis"]) {
+    const path = `/images/portfolio/${slug}.jpg`;
+    const variant = `/_next/image?${new URLSearchParams({ url: path, w: "640", q: "75" })}`;
+    for (const [locale, page] of homepages) {
+      assertIncludes(page.body, htmlEscape(variant), `${locale} ${slug} responsive image candidate`);
+    }
+
+    const [source, optimized] = await Promise.all([
+      get(path, { binary: true }),
+      get(variant, { binary: true, headers: { Accept: "image/webp" } }),
+    ]);
+    assertStatus(source, 200, path);
+    assertIncludes(contentType(source), "image/jpeg", `${path} content type`);
+    assert(source.body.byteLength > 50_000, `${path}: source image is too small`);
+    assertStatus(optimized, 200, `${slug} optimized image`);
+    assertIncludes(contentType(optimized), "image/webp", `${slug} optimized content type`);
+    const header = Buffer.from(optimized.body.subarray(0, 12)).toString("ascii");
+    assert(header.startsWith("RIFF") && header.endsWith("WEBP"), `${slug}: invalid WebP signature`);
+    assert(
+      optimized.body.byteLength > 1_000 && optimized.body.byteLength < source.body.byteLength,
+      `${slug}: optimized image must be nonempty and smaller than the original`,
+    );
   }
 }
 
@@ -858,29 +963,23 @@ async function run() {
     chineseLetter,
     englishManifest,
     chineseManifest,
-    englishSocial,
-    chineseSocial,
     robots,
     sitemap,
-    ...portfolioImages
+    recoveryStyles,
   ] = await Promise.all([
     get("/"),
     get("/zh"),
-    get("/smoke-missing-route"),
-    get("/zh/smoke-missing-route"),
+    get("/smoke-missing-route/smoke-not-found-input"),
+    get("/zh/smoke-missing-route?probe=smoke-not-found-input"),
     get("/privacy"),
     get("/zh/privacy"),
     get("/letter"),
     get("/zh/letter"),
     get("/manifest.webmanifest"),
     get("/zh/manifest.webmanifest"),
-    get("/opengraph-image", { binary: true }),
-    get("/zh/opengraph-image", { binary: true }),
     get("/robots.txt"),
     get("/sitemap.xml"),
-    get("/images/portfolio/ai-agent-coach.jpg", { binary: true }),
-    get("/images/portfolio/localhost.jpg", { binary: true }),
-    get("/images/portfolio/bioaxis.jpg", { binary: true }),
+    get("/not-found.css"),
   ]);
 
   verifyPage(english, "en");
@@ -890,55 +989,23 @@ async function run() {
   verifyFounderLetter(englishLetter, "en");
   verifyFounderLetter(chineseLetter, "zh");
 
-  assertStatus(englishMissing, 404, "English 404");
-  assertIncludes(englishMissing.body, "Page not found", "English 404 copy");
-  assertIncludes(
-    englishMissing.body,
-    "#not-found-main",
-    "English 404 skip link",
-  );
-  assertIncludes(
-    englishMissing.body,
-    "not-found-main",
-    "English 404 main target",
-  );
-  assertIncludes(
-    englishMissing.body,
-    'tabIndex\\":-1',
-    "English 404 main focus target",
-  );
-  assertIncludes(
-    englishMissing.body,
-    "AI-native operating group",
-    "English 404 positioning",
-  );
-  assert(
-    !englishMissing.body.includes("AI-enabled operating group"),
-    "English 404: legacy positioning is still present",
-  );
-  assertSecurityHeaders(englishMissing, "English 404");
-  assertStatus(chineseMissing, 404, "Chinese 404");
-  assertIncludes(chineseMissing.body, "页面不存在", "Chinese 404 copy");
-  assertIncludes(
-    chineseMissing.body,
-    "#not-found-main",
-    "Chinese 404 skip link",
-  );
-  assertIncludes(
-    chineseMissing.body,
-    "not-found-main",
-    "Chinese 404 main target",
-  );
-  assertIncludes(
-    chineseMissing.body,
-    'tabIndex\\":-1',
-    "Chinese 404 main focus target",
-  );
-  assert(
-    chineseMissing.headers.get("content-language") === "zh-CN",
-    "Chinese 404: missing Content-Language",
-  );
-  assertSecurityHeaders(chineseMissing, "Chinese 404");
+  const localNavigation = inspectLocalNavigation([
+    { path: "/", html: english.body },
+    { path: "/zh", html: chinese.body },
+    { path: "/privacy", html: englishPrivacy.body },
+    { path: "/zh/privacy", html: chinesePrivacy.body },
+    { path: "/letter", html: englishLetter.body },
+    { path: "/zh/letter", html: chineseLetter.body },
+  ], baseUrl);
+  assert(localNavigation.length > 50, "Local navigation coverage is unexpectedly empty");
+  for (const { path, href, error } of localNavigation) {
+    assert(!error, `Local navigation ${path} -> ${href}: ${error}`);
+  }
+
+  verifyNotFound(englishMissing, "en");
+  verifyNotFound(chineseMissing, "zh");
+  assertStatus(recoveryStyles, 200, "Recovery stylesheet");
+  assertIncludes(contentType(recoveryStyles), "text/css", "Recovery stylesheet content type");
 
   for (const [result, label, startUrl, positioning] of [
     [englishManifest, "English manifest", "/", "AI-native operating group"],
@@ -956,21 +1023,9 @@ async function run() {
     assertIncludes(manifest.description, positioning, `${label} positioning`);
   }
 
-  for (const [result, label] of [
-    [englishSocial, "English social image"],
-    [chineseSocial, "Chinese social image"],
-  ]) {
-    assertStatus(result, 200, label);
-    assertIncludes(contentType(result), "image/png", `${label} content type`);
-    assert(result.body.byteLength > 1_000, `${label}: image body is too small`);
-  }
-
-  for (const [index, result] of portfolioImages.entries()) {
-    const label = `Portfolio image ${index + 1}`;
-    assertStatus(result, 200, label);
-    assertIncludes(contentType(result), "image/jpeg", `${label} content type`);
-    assert(result.body.byteLength > 50_000, `${label}: image body is too small`);
-  }
+  const homepages = [["en", english], ["zh", chinese]];
+  await verifyPageStyles(homepages);
+  await verifyImageAssets(homepages);
 
   assertStatus(robots, 200, "Robots");
   assertIncludes(robots.body, "User-Agent: *", "Robots rules");
@@ -999,11 +1054,14 @@ async function run() {
     `<loc>${canonicalUrl}/zh/letter</loc>`,
     "Chinese founder letter sitemap URL",
   );
-  assertIncludes(
-    sitemap.body,
-    "<lastmod>2026-08-13T00:00:00.000Z</lastmod>",
-    "Sitemap stable review date",
-  );
+  const sitemapEntries = [...sitemap.body.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+    .map((match) => match[1]);
+  for (const path of ["/", "/zh", "/letter", "/zh/letter", "/privacy", "/zh/privacy"]) {
+    const entry = sitemapEntries.find((value) => value.includes(`<loc>${canonicalUrl}${path}</loc>`));
+    const modified = path === "/" || path === "/zh" ? "2026-11-07" : "2026-08-13";
+    assert(entry, `Sitemap entry missing: ${path}`);
+    assertIncludes(entry, `<lastmod>${modified}T00:00:00.000Z</lastmod>`, `Sitemap page date: ${path}`);
+  }
 
   await verifyExternalCompanies();
   console.log(

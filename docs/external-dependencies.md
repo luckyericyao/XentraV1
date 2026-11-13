@@ -6,7 +6,7 @@ This file records launch items that cannot be completed safely from this reposit
 
 Status: pending domain ownership, DNS, and deployment access.
 
-The currently verified production addresses are:
+The production addresses last recorded on 13 Aug 2026 are:
 
 - Xentra: `https://xentra-v1.vercel.app/`
 - AI Agent Coach: `https://agentcoach-three.vercel.app/`
@@ -24,7 +24,9 @@ Build-time replacement variables:
 - `XENTRA_CONTACT_EMAIL`
 - `XENTRA_CONTACT_EMAIL_VERIFIED`
 
-URL variables must be absolute HTTPS URLs without query strings or hashes; invalid values fail the build. An email is published only when `XENTRA_CONTACT_EMAIL` is valid and `XENTRA_CONTACT_EMAIL_VERIFIED=1`. Run smoke with the matching `SMOKE_*` URL, email, and verification variables so public links, JSON-LD, canonical output, and contact actions are checked against the same targets.
+URL variables must be absolute HTTPS URLs without credentials, query strings, or hashes; invalid values fail the build. Company URL overrides change the current visit links, not the source URLs of the recorded screenshots and nine dated product paths. Updating those records requires a fresh review of the actual evidence.
+
+An email is published only when `XENTRA_CONTACT_EMAIL` is a single plain address and `XENTRA_CONTACT_EMAIL_VERIFIED=1`. The flag is an owner assertion, not a delivery check. Run smoke with the matching `SMOKE_*` URL, email, and verification variables so public links, JSON-LD, canonical output, and contact actions are checked against the same targets. A custom build-record URL passing smoke does not prove its ownership.
 
 ## Public contact and enterprise email
 
@@ -33,9 +35,9 @@ Published build record: `https://github.com/luckyericyao/`
 Status: repository-owner profile verified; no private contact channel or enterprise mailbox is published.
 
 The profile is presented only as a public record of the repositories behind the
-current portfolio. In this fallback mode the site does not emit a JSON-LD
-`ContactPoint`. Company-specific inquiries continue through the three verified
-operating-company sites.
+current portfolio. The site does not use that profile as the organization's
+`sameAs` identity or emit a JSON-LD `ContactPoint` in fallback mode.
+Company-specific inquiries continue through the operating-company sites.
 
 `contact@xentra.ai` was removed from the public site because the domain redirects to a sale page and no MX route was present during the 13 Aug 2026 check. An owner with registrar and mail-provider access must confirm domain ownership, mailbox delivery, MX, SPF, DKIM, and DMARC before enabling a branded address. Do not claim that an inbox is monitored until an end-to-end delivery test passes.
 

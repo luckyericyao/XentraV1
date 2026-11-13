@@ -7,6 +7,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { openMobileNavigation } from "@/lib/mobile-navigation";
+import { getReadingHash } from "@/lib/reading-position";
 
 type HeaderProps = {
   homeHref?: string;
@@ -17,9 +19,11 @@ type HeaderProps = {
 export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("");
+  const [readingHash, setReadingHash] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuNavigationRef = useRef<HTMLDivElement>(null);
+  const menuSessionRef = useRef<ReturnType<typeof openMobileNavigation> | null>(null);
   const isChinese = languageSwitch.label === "EN";
   const navigationLabel = isChinese ? "主导航" : "Primary navigation";
   const skipLabel = isChinese ? "跳到主要内容" : "Skip to content";
@@ -39,7 +43,12 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
     }
 
     main.focus({ preventScroll: true });
-    main.scrollIntoView({ behavior: "smooth", block: "start" });
+    main.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+      block: "start",
+    });
     window.history.replaceState(null, "", "#top");
   };
 
@@ -60,35 +69,34 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
   };
 
   useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-      }
-    };
+    const button = menuButtonRef.current;
+    const navigation = menuNavigationRef.current;
 
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
-
-  useEffect(() => {
-    if (!menuOpen) {
+    if (!menuOpen || !button || !navigation) {
       return;
     }
 
-    const previousOverflow = document.body.style.overflow;
-    const menuButton = menuButtonRef.current;
-    document.body.style.overflow = "hidden";
-    menuNavigationRef.current
-      ?.querySelector<HTMLAnchorElement>("a[href]")
-      ?.focus();
+    const session = openMobileNavigation({
+      document,
+      desktopViewport: window.matchMedia("(min-width: 48rem)"),
+      button,
+      navigation,
+      onClose: () => setMenuOpen(false),
+    });
+    menuSessionRef.current = session;
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      menuButton?.focus();
+      session.dispose();
+      menuSessionRef.current = null;
     };
   }, [menuOpen]);
 
   useEffect(() => {
+    const readingSections = homeHref === "#top"
+      ? Array.from(document.querySelectorAll<HTMLElement>(
+          "main > section[id], .portfolio-chapter[id]",
+        ))
+      : [];
     const sections = navItems
       .filter((item) => item.href.startsWith("#"))
       .map((item) => ({
@@ -101,7 +109,8 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       );
 
     const updateScrollState = () => {
-      const marker = window.scrollY + Math.min(window.innerHeight * 0.34, 260);
+      const readingMarker = Math.min(window.innerHeight * 0.34, 260);
+      const marker = window.scrollY + readingMarker;
       let nextActiveHref = "";
 
       for (const section of sections) {
@@ -115,6 +124,15 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
 
       setActiveHref((current) =>
         current === nextActiveHref ? current : nextActiveHref,
+      );
+      const nextReadingHash = readingSections.length
+        ? getReadingHash(readingSections.flatMap((section) => {
+            const bounds = section.getBoundingClientRect();
+            return bounds.height > 0 ? [{ id: section.id, top: bounds.top }] : [];
+          }), readingMarker)
+        : "";
+      setReadingHash((current) =>
+        current === nextReadingHash ? current : nextReadingHash,
       );
       setScrolled((current) => {
         const nextScrolled = window.scrollY > 12;
@@ -132,23 +150,15 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       window.removeEventListener("resize", updateScrollState);
       window.removeEventListener("hashchange", updateScrollState);
     };
-  }, [navItems]);
+  }, [homeHref, navItems]);
 
-  const handleLanguageSwitch = (event: MouseEvent<HTMLAnchorElement>) => {
-    const currentHash = window.location.hash || activeHref;
-
-    if (!currentHash) {
-      return;
-    }
-
-    event.preventDefault();
-    window.location.assign(`${languageSwitch.href}${currentHash}`);
-  };
+  const languageHref = `${languageSwitch.href}${readingHash}`;
 
   return (
     <>
       <a
         href="#top"
+        data-navigation-background
         onClick={focusMain}
         onKeyDown={focusMainFromKeyboard}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
@@ -168,6 +178,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       >
         <a
           href={homeHref}
+          data-navigation-background
           className="text-sm font-semibold uppercase tracking-[0.14em] text-[#F2EFE8]"
           onClick={(event) => {
             setMenuOpen(false);
@@ -201,10 +212,10 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             </a>
           ))}
           <a
-            href={languageSwitch.href}
+            href={languageHref}
+            data-navigation-background
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
-            onClick={handleLanguageSwitch}
             className="inline-flex min-h-9 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
@@ -212,10 +223,10 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
         </div>
         <div className="flex items-center gap-2 md:hidden">
           <a
-            href={languageSwitch.href}
+            href={languageHref}
+            data-navigation-background
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
-            onClick={handleLanguageSwitch}
             className="inline-flex min-h-11 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
@@ -227,7 +238,13 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             aria-controls="mobile-navigation"
             aria-label={menuLabel}
             title={menuLabel}
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={() => {
+              if (menuOpen) {
+                menuSessionRef.current?.close();
+              } else {
+                setMenuOpen(true);
+              }
+            }}
             className="flex size-11 items-center justify-center rounded-md border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
           >
             <span className="relative block h-3.5 w-4" aria-hidden="true">
@@ -254,33 +271,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
           ref={menuNavigationRef}
           aria-hidden={!menuOpen}
           inert={!menuOpen}
-          onKeyDown={(event) => {
-            if (!menuOpen || event.key !== "Tab") {
-              return;
-            }
-
-            const links = Array.from(
-              menuNavigationRef.current?.querySelectorAll<HTMLAnchorElement>(
-                "a[href]",
-              ) ?? [],
-            );
-
-            if (!links.length) {
-              return;
-            }
-
-            const firstLink = links[0];
-            const lastLink = links[links.length - 1];
-
-            if (event.shiftKey && document.activeElement === firstLink) {
-              event.preventDefault();
-              lastLink.focus();
-            } else if (!event.shiftKey && document.activeElement === lastLink) {
-              event.preventDefault();
-              firstLink.focus();
-            }
-          }}
-          className={`absolute left-4 right-4 top-[calc(100%+0.65rem)] z-50 overflow-hidden rounded-lg border border-[rgba(198,161,91,0.2)] bg-[#101214]/98 shadow-[0_26px_80px_rgba(0,0,0,0.48)] transition duration-300 md:hidden ${
+          className={`absolute left-4 right-4 top-[calc(100%+0.65rem)] z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-lg border border-[rgba(198,161,91,0.2)] bg-[#101214]/98 shadow-[0_26px_80px_rgba(0,0,0,0.48)] transition duration-300 md:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-2 opacity-0"
@@ -291,7 +282,12 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
               <a
                 key={`mobile-${item.href}`}
                 href={item.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  const destination = item.href.startsWith("#")
+                    ? document.getElementById(item.href.slice(1))
+                    : null;
+                  menuSessionRef.current?.close(destination);
+                }}
                 aria-current={activeHref === item.href ? "location" : undefined}
                 className={`flex min-h-12 items-center justify-between border-b border-[#2A2D33] px-4 text-sm transition last:border-b-0 hover:bg-[#17191D] hover:text-[#F2EFE8] ${
                   activeHref === item.href
@@ -324,7 +320,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
         <button
           type="button"
           aria-label={isChinese ? "关闭导航背景" : "Close navigation backdrop"}
-          onClick={() => setMenuOpen(false)}
+          onClick={() => menuSessionRef.current?.close()}
           className="fixed inset-x-0 bottom-0 top-16 z-40 bg-[#070809]/64 backdrop-blur-[2px] md:hidden"
         />
       ) : null}

@@ -124,8 +124,9 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="thesis"
+          tabIndex={-1}
           aria-labelledby="thesis-title"
-          className="relative border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          className="section-band relative border-y border-[#2A2D33] bg-[#101214] px-5 text-[#F2EFE8] sm:px-8"
         >
           <div className="pointer-events-none absolute inset-x-0 top-0 px-5 pt-4 sm:px-8">
             <p className="eyebrow mx-auto max-w-7xl text-[#C6A15B]">
@@ -137,7 +138,7 @@ export function HomePage({ locale }: HomePageProps) {
               <div>
                 <h2
                   id="thesis-title"
-                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                  className="section-title"
                 >
                   {content.thesis.title}
                 </h2>
@@ -247,8 +248,9 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="companies"
+          tabIndex={-1}
           aria-labelledby="companies-title"
-          className="border-y border-[#2A2D33] bg-[#101214] px-5 py-24 text-[#F2EFE8] sm:px-8 lg:py-32"
+          className="section-band border-y border-[#2A2D33] bg-[#101214] px-5 text-[#F2EFE8] sm:px-8"
         >
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)] lg:items-end lg:gap-16">
@@ -258,7 +260,7 @@ export function HomePage({ locale }: HomePageProps) {
                 </p>
                 <h2
                   id="companies-title"
-                  className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                  className="section-title"
                 >
                   {content.companies.title}
                 </h2>
@@ -335,8 +337,9 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="model"
+          tabIndex={-1}
           aria-labelledby="model-title"
-          className="bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28"
+          className="section-band bg-[#070809] px-5 text-[#F2EFE8] sm:px-8"
         >
           <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
@@ -345,7 +348,7 @@ export function HomePage({ locale }: HomePageProps) {
               </p>
               <h2
                 id="model-title"
-                className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                className="section-title"
               >
                 {content.model.title}
               </h2>
@@ -356,150 +359,116 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section
           id="contact"
+          tabIndex={-1}
           aria-labelledby="contact-title"
-          className="border-t border-[#2A2D33] bg-[#070809] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28"
+          className="section-band border-t border-[rgba(198,161,91,0.24)] bg-[#101214] px-5 text-[#F2EFE8] sm:px-8"
         >
           <div className="mx-auto max-w-7xl">
-            <div className="rounded-lg border border-[rgba(198,161,91,0.24)] bg-[#101214] p-8 shadow-[0_34px_120px_rgba(0,0,0,0.34)] sm:p-10 lg:p-14">
-              <div className="grid gap-14 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-                <div className="lg:sticky lg:top-28 lg:self-start">
-                  <p className="eyebrow mb-5 text-[#B49459]">
-                    {content.contact.eyebrow}
-                  </p>
-                  <h2
-                    id="contact-title"
-                    className="text-balance text-5xl font-semibold leading-[0.98] sm:text-6xl lg:text-7xl"
-                  >
-                    {content.contact.title}
-                  </h2>
-                  {content.contact.body ? (
-                    <div className="mt-7 max-w-lg space-y-4 text-base leading-7 text-[#A6A39A]">
-                      {content.contact.body.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
-                  ) : null}
+            <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+              <div>
+                <p className="eyebrow mb-5 text-[#B49459]">
+                  {content.contact.eyebrow}
+                </p>
+                <h2 id="contact-title" className="section-title">
+                  {content.contact.title}
+                </h2>
+              </div>
+              {content.contact.body ? (
+                <div className="max-w-xl space-y-4 text-base leading-7 text-[#A6A39A]">
+                  {content.contact.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
                 </div>
+              ) : null}
+            </div>
 
-                <div>
-                  {content.directions ? (
-                    <div
-                      id="directions"
-                      className="mb-10 border-b border-[#2A2D33] pb-8"
-                    >
-                      <div className="grid gap-5 sm:grid-cols-[0.9fr_1.1fr] sm:items-end">
-                        <div>
-                          <p className="eyebrow mb-4 text-[#B49459]">
-                            {content.directions.eyebrow}
-                          </p>
-                          <h3
-                            id="directions-title"
-                            className="text-balance text-2xl font-semibold leading-tight text-[#F2EFE8] sm:text-3xl"
-                          >
-                            {content.directions.title}
-                          </h3>
-                        </div>
-                        <div className="space-y-3 text-sm leading-6 text-[#A6A39A]">
-                          {content.directions.body.map((paragraph) => (
-                            <p key={paragraph}>{paragraph}</p>
-                          ))}
-                        </div>
-                      </div>
-                      <ol className="mt-7 grid border-t border-[#2A2D33] sm:grid-cols-5 sm:border-y">
-                        {content.directions.signals.map((signal, index) => (
-                          <li
-                            key={signal}
-                            className="scroll-rise grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#2A2D33] py-4 last:border-b-0 sm:grid-cols-1 sm:gap-5 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0"
-                          >
-                            <span className="eyebrow pt-1 text-[#B49459]">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <p className="text-sm font-medium leading-6 text-[#F2EFE8]">
-                              {signal}
-                            </p>
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  ) : null}
-                  <p
-                    id="contact-pathways-title"
-                    className="eyebrow text-[#B49459]"
-                  >
-                    {content.contact.pathwaysLabel}
-                  </p>
-                  <p
-                    id="contact-pathways-note"
-                    className="mt-3 max-w-xl text-sm leading-6 text-[#8D97A5]"
-                  >
-                    {content.contact.intakeNote}
-                  </p>
+            <div className="mt-12 border-t border-[#2A2D33] pt-6">
+              <p id="contact-pathways-title" className="eyebrow text-[#B49459]">
+                {content.contact.pathwaysLabel}
+              </p>
+              <p id="contact-pathways-note" className="mt-3 max-w-2xl text-sm leading-6 text-[#A6A39A]">
+                {content.contact.intakeNote}
+              </p>
+              <div
+                role="group"
+                aria-labelledby="contact-pathways-title"
+                aria-describedby="contact-pathways-note"
+                className="mt-6 grid border-y border-[#2A2D33] md:grid-cols-3"
+              >
+                {content.contact.pathways.map((pathway, index) => (
                   <div
-                    role="group"
-                    aria-labelledby="contact-pathways-title"
-                    aria-describedby="contact-pathways-note"
-                    className="mt-5 border-y border-[#2A2D33]"
+                    key={pathway.title}
+                    className="min-w-0 border-b border-[#2A2D33] py-7 last:border-b-0 md:border-b-0 md:border-r md:px-7 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
                   >
-                    {content.contact.pathways.map((pathway, index) => (
-                      <div
-                        key={pathway.title}
-                        className="grid min-h-28 items-center gap-x-5 gap-y-3 border-b border-[#2A2D33] py-5 last:border-b-0 sm:grid-cols-[8.5rem_1fr] sm:py-6"
-                      >
-                        <span className="eyebrow text-[#8D97A5]">
-                          {String(index + 1).padStart(2, "0")} / {pathway.audience}
-                        </span>
-                        <span className="min-w-0">
-                          <h3 className="text-lg font-semibold text-[#F2EFE8] sm:text-xl">
-                            {pathway.title}
-                          </h3>
-                          <span className="mt-2 block text-sm leading-6 text-[#A6A39A]">
-                            {pathway.body}
-                          </span>
-                        </span>
-                      </div>
-                    ))}
+                    <p className="eyebrow text-[#8D97A5]">
+                      {String(index + 1).padStart(2, "0")} / {pathway.audience}
+                    </p>
+                    <h3 className="mt-5 text-xl font-medium leading-7 text-[#F2EFE8]">
+                      {pathway.title}
+                    </h3>
+                    <p className="mt-3 max-w-sm text-sm leading-6 text-[#A6A39A]">
+                      {pathway.body}
+                    </p>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  <div className="mt-9 grid gap-8 border-t border-[#2A2D33] pt-8 sm:grid-cols-2">
-                    <div>
-                      <p className="eyebrow mb-4 text-[#B49459]">
-                        {content.contact.bodyPrefix}
-                      </p>
-                      <ContactActions
-                        href={content.contact.contactHref}
-                        label={content.contact.ctaLabel}
-                        value={content.contact.contactValue}
-                        note={content.contact.channelNote}
-                        external={content.contact.contactExternal}
-                        externalLinkLabel={content.contact.externalLinkLabel}
-                      />
-                    </div>
-                    <div>
-                      <p className="eyebrow mb-3 text-[#B49459]">
-                        {content.contact.companiesLabel}
-                      </p>
-                      <div className="grid">
-                        {content.companies.items.map((company) => (
-                          <a
-                            key={`${company.slug}-contact`}
-                            href={company.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${company.title} (${content.companies.externalLinkLabel})`}
-                            className="group inline-flex min-h-11 items-center justify-between border-b border-[#2A2D33] text-sm text-[#A6A39A] transition last:border-b-0 hover:text-[#F2EFE8]"
-                          >
-                            {company.title}
-                            <span
-                              aria-hidden="true"
-                              className="text-[#B49459] transition group-hover:translate-x-1"
-                            >
-                              &#8599;
-                            </span>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
+            {content.directions ? (
+              <details id="directions" className="mt-9 border-b border-[#2A2D33] pb-6">
+                <summary className="group flex cursor-pointer list-none items-center justify-between gap-6">
+                  <div>
+                    <p className="eyebrow text-[#B49459]">{content.directions.eyebrow}</p>
+                    <h3 id="directions-title" className="mt-3 text-pretty text-xl font-medium leading-7 text-[#F2EFE8] sm:text-2xl sm:leading-8">
+                      {content.directions.title}
+                    </h3>
                   </div>
+                  <span aria-hidden="true" className="disclosure-icon text-2xl font-light text-[#B49459] transition duration-300">+</span>
+                </summary>
+                <div className="mt-6 max-w-2xl space-y-3 text-sm leading-6 text-[#A6A39A]">
+                  {content.directions.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                <ol className="mt-6 grid border-t border-[#2A2D33] sm:grid-cols-2 lg:grid-cols-5">
+                  {content.directions.signals.map((signal, index) => (
+                    <li key={signal} className="grid grid-cols-[2rem_1fr] gap-3 py-4 sm:grid-cols-1 sm:gap-3 sm:pr-6">
+                      <span className="eyebrow pt-1 text-[#B49459]">{String(index + 1).padStart(2, "0")}</span>
+                      <p className="text-sm leading-6 text-[#A6A39A]">{signal}</p>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            ) : null}
+
+            <div className="mt-9 grid gap-9 md:grid-cols-[1.4fr_1fr] md:gap-20">
+              <div>
+                <p className="eyebrow mb-4 text-[#B49459]">{content.contact.bodyPrefix}</p>
+                <ContactActions
+                  href={content.contact.contactHref}
+                  label={content.contact.ctaLabel}
+                  value={content.contact.contactValue}
+                  note={content.contact.channelNote}
+                  external={content.contact.contactExternal}
+                  externalLinkLabel={content.contact.externalLinkLabel}
+                />
+              </div>
+              <div>
+                <p className="eyebrow mb-3 text-[#B49459]">{content.contact.companiesLabel}</p>
+                <div className="grid">
+                  {content.companies.items.map((company) => (
+                    <a
+                      key={`${company.slug}-contact`}
+                      href={company.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${company.title} (${content.companies.externalLinkLabel})`}
+                      className="group inline-flex min-h-11 items-center justify-between border-b border-[#2A2D33] text-sm text-[#A6A39A] transition last:border-b-0 hover:text-[#F2EFE8]"
+                    >
+                      {company.title}
+                      <span aria-hidden="true" className="text-[#B49459] transition group-hover:translate-x-1">&#8599;</span>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>

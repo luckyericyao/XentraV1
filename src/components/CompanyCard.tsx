@@ -1,3 +1,5 @@
+import { getCompanyTone } from "@/lib/company-tone";
+
 type CompanyCardProps = {
   index: number;
   slug: string;
@@ -23,18 +25,6 @@ type CompanyCardProps = {
   useCasesLabel: string;
 };
 
-const companyAccent = {
-  "ai-agent-coach": "text-[#8D97A5]",
-  localhost: "text-[#C6A15B]",
-  bioaxis: "text-[#939D90]",
-} as const;
-
-const companyRail = {
-  "ai-agent-coach": "border-t-[rgba(167,179,195,0.72)]",
-  localhost: "border-t-[rgba(198,161,91,0.72)]",
-  bioaxis: "border-t-[rgba(154,167,151,0.72)]",
-} as const;
-
 export function CompanyCard({
   index,
   slug,
@@ -59,20 +49,16 @@ export function CompanyCard({
   detailsLabel,
   useCasesLabel,
 }: CompanyCardProps) {
-  const labelTone =
-    companyAccent[slug as keyof typeof companyAccent] ?? "text-[#C6A15B]";
-  const railTone =
-    companyRail[slug as keyof typeof companyRail] ??
-    "border-t-[rgba(198,161,91,0.72)]";
+  const tone = getCompanyTone(slug);
 
   return (
     <article
       id={slug}
       aria-labelledby={`${slug}-title`}
-      className={`scroll-rise group flex flex-col rounded-lg border border-[#2A2D33] border-t-2 ${railTone} bg-[#17191D]/70 p-7 shadow-[0_18px_70px_rgba(0,0,0,0.18)] transition duration-500 hover:-translate-y-1 hover:border-[rgba(242,239,232,0.18)] hover:bg-[#17191D] hover:shadow-[0_24px_90px_rgba(0,0,0,0.26)] sm:min-h-[24rem]`}
+      className={`scroll-rise group flex min-w-0 flex-col rounded-lg border border-[#2A2D33] border-t-2 ${tone.rail} bg-[#17191D]/50 p-6 transition duration-500 hover:-translate-y-0.5 hover:border-[rgba(242,239,232,0.18)] hover:bg-[#17191D] sm:min-h-[24rem] sm:p-7`}
     >
       <div className="flex items-center justify-between gap-4">
-        <p className={`eyebrow ${labelTone}`}>{vertical}</p>
+        <p className={`eyebrow ${tone.label}`}>{vertical}</p>
         <span
           aria-hidden="true"
           className="text-xs tabular-nums text-[#8D97A5]"
@@ -80,20 +66,20 @@ export function CompanyCard({
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
-      <div className="mt-10 sm:mt-14">
-        <h3 id={`${slug}-title`} className="text-3xl font-semibold text-[#F2EFE8]">
+      <div className="mt-8">
+        <h3 id={`${slug}-title`} className="text-2xl font-medium leading-tight text-[#F2EFE8] sm:text-3xl">
           {title}
         </h3>
-        {layer ? (
-          <p className={`mt-4 text-sm font-medium ${labelTone}`}>{layer}</p>
+        {layer && !decision ? (
+          <p className={`mt-4 text-sm font-medium ${tone.label}`}>{layer}</p>
         ) : null}
       </div>
-      <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8">
+      <p className="mt-6 border-t border-[#2A2D33] pt-5 text-base leading-7 text-[#F2EFE8] sm:mt-8 lg:min-h-[6.5625rem] xl:min-h-[4.8125rem]">
         {headline}
       </p>
       {decision && decisionLabel ? (
         <div className="mt-5 border-t border-[#2A2D33] pt-4">
-          <p className={`eyebrow ${labelTone}`}>{decisionLabel}</p>
+          <p className={`eyebrow ${tone.label}`}>{decisionLabel}</p>
           <blockquote
             data-company-decision={slug}
             className="mt-3 text-pretty text-base leading-7 text-[#D9D5CC]"

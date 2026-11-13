@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getCompanyTone } from "@/lib/company-tone";
 import type { Company, SiteContent } from "@/lib/content";
 
 type PortfolioChaptersProps = {
@@ -8,32 +9,6 @@ type PortfolioChaptersProps = {
   visitLabel: string;
   externalLinkLabel: string;
 };
-
-const chapterTone = {
-  "ai-agent-coach": {
-    tone: "steel",
-    label: "text-[#A7B3C3]",
-    border: "border-[rgba(167,179,195,0.3)]",
-    dot: "bg-[#A7B3C3]",
-    hover: "hover:border-[#A7B3C3]",
-  },
-  localhost: {
-    tone: "brass",
-    label: "text-[#C6A15B]",
-    border: "border-[rgba(198,161,91,0.32)]",
-    dot: "bg-[#C6A15B]",
-    hover: "hover:border-[#C6A15B]",
-  },
-  bioaxis: {
-    tone: "sage",
-    label: "text-[#9AA797]",
-    border: "border-[rgba(154,167,151,0.3)]",
-    dot: "bg-[#9AA797]",
-    hover: "hover:border-[#9AA797]",
-  },
-} as const;
-
-const defaultTone = chapterTone.localhost;
 
 export function PortfolioChapters({
   companies,
@@ -45,17 +20,18 @@ export function PortfolioChapters({
   return (
     <section
       id="portfolio"
+      tabIndex={-1}
       aria-labelledby="portfolio-title"
       className="border-b border-[#2A2D33] bg-[#070809] text-[#F2EFE8]"
     >
-      <div className="px-5 py-20 sm:px-8 sm:py-24 lg:py-28">
+      <div className="section-band px-5 sm:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_0.7fr] lg:items-end">
             <div>
               <p className="eyebrow mb-5 text-[#C6A15B]">{copy.eyebrow}</p>
               <h2
                 id="portfolio-title"
-                className="max-w-4xl text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                className="section-title"
               >
                 {copy.title}
               </h2>
@@ -66,26 +42,26 @@ export function PortfolioChapters({
           </div>
 
           <div className="mt-12 sm:mt-14">
-            <div className="scroll-rise grid border-y border-[#2A2D33] lg:grid-cols-[0.78fr_1.22fr]">
-              <div className="flex min-h-48 flex-col justify-between border-b border-[#2A2D33] py-7 lg:border-b-0 lg:border-r lg:p-8">
-                <p className="eyebrow text-[#B49459]">{copy.systemLabel}</p>
-                <div className="mt-12">
-                  <p className="font-serif text-4xl font-normal leading-none text-[#F2EFE8] sm:text-5xl">
+            <div className="scroll-rise border-y border-[#2A2D33]">
+              <div className="grid gap-8 border-b border-[#2A2D33] py-8 sm:px-6 lg:grid-cols-[1fr_1fr] lg:items-end lg:py-10">
+                <div>
+                  <p className="eyebrow text-[#B49459]">{copy.systemLabel}</p>
+                  <p className="mt-6 font-serif text-5xl font-normal leading-none text-[#F2EFE8] sm:text-6xl">
                     Xentra
                   </p>
-                  <p className="mt-4 max-w-sm text-sm leading-6 text-[#A6A39A]">
-                    {copy.systemBody}
-                  </p>
                 </div>
+                <p className="max-w-lg text-base leading-7 text-[#A6A39A]">
+                  {copy.systemBody}
+                </p>
               </div>
-              <ol className="grid sm:grid-cols-2">
+              <ol className="grid sm:grid-cols-2 lg:grid-cols-4">
                 {copy.systemItems.map((item, index) => (
                   <li
                     key={item.title}
-                    className="group-capability min-h-40 border-b border-[#2A2D33] py-6 last:border-b-0 sm:p-7 sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0"
+                    className="group-capability border-b border-[#2A2D33] py-6 last:border-b-0 sm:p-6 sm:[&:nth-child(odd)]:border-r sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
                   >
                     <div className="flex items-center justify-between gap-4">
-                      <h3 className="text-base font-semibold text-[#F2EFE8]">
+                      <h3 className="text-base font-medium text-[#F2EFE8]">
                         {item.title}
                       </h3>
                       <span
@@ -95,7 +71,7 @@ export function PortfolioChapters({
                         {String(index + 1).padStart(2, "0")}
                       </span>
                     </div>
-                    <p className="mt-4 max-w-sm text-sm leading-6 text-[#A6A39A]">
+                    <p className="mt-3 max-w-sm text-sm leading-6 text-[#A6A39A]">
                       {item.body}
                     </p>
                   </li>
@@ -105,7 +81,7 @@ export function PortfolioChapters({
 
             <div
               aria-hidden="true"
-              className="group-architecture-lines scroll-rise relative mx-auto block h-12 w-full sm:h-16 sm:w-2/3"
+              className="group-architecture-lines scroll-rise relative block h-10 w-full sm:h-16"
             >
               <span className="absolute bottom-0 left-4 top-0 w-px bg-[#2A2D33] sm:hidden" />
               <span className="absolute left-1/2 top-0 hidden h-8 w-px bg-[#2A2D33] sm:block" />
@@ -121,16 +97,14 @@ export function PortfolioChapters({
                 className="absolute bottom-0 left-4 top-0 w-px bg-[#2A2D33] sm:hidden"
               />
               {companies.map((company) => {
-                const tone =
-                  chapterTone[company.slug as keyof typeof chapterTone] ??
-                  defaultTone;
+                const tone = getCompanyTone(company.slug);
 
                 return (
                   <a
                     key={`${company.slug}-architecture`}
                     href={`#${company.slug}-chapter`}
                     aria-label={`${chapterLabel}: ${company.title}`}
-                    className="group relative flex min-h-40 flex-col justify-between border-b border-[#2A2D33] py-6 pl-10 last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
+                    className="group relative flex min-w-0 flex-col justify-between border-b border-[#2A2D33] py-6 pl-10 transition hover:bg-[#101214] last:border-b-0 sm:border-b-0 sm:border-r sm:p-6 sm:last:border-r-0"
                   >
                     <span
                       aria-hidden="true"
@@ -138,15 +112,15 @@ export function PortfolioChapters({
                     />
                     <div className="flex items-center justify-between gap-4">
                       <span className={`eyebrow ${tone.label}`}>
-                        {copy.companyRoleLabel}
+                        {company.vertical}
                       </span>
                       <span
                         aria-hidden="true"
                         className={`size-1.5 rounded-full ${tone.dot}`}
                       />
                     </div>
-                    <div className="mt-9">
-                      <h3 className="text-xl font-semibold text-[#F2EFE8] transition group-hover:text-[#C6A15B]">
+                    <div className="mt-6">
+                      <h3 className="text-xl font-medium text-[#F2EFE8] transition group-hover:text-[#C6A15B]">
                         {company.title}
                       </h3>
                       <p className="mt-2 text-sm leading-6 text-[#A6A39A]">
@@ -163,8 +137,7 @@ export function PortfolioChapters({
 
       <div>
         {companies.map((company, index) => {
-          const tone =
-            chapterTone[company.slug as keyof typeof chapterTone] ?? defaultTone;
+          const tone = getCompanyTone(company.slug);
           const previousCompany = companies[index - 1];
           const nextCompany = companies[index + 1];
           const previousHref = previousCompany
@@ -176,12 +149,12 @@ export function PortfolioChapters({
             : copy.backLabel;
           const previousTitle = previousCompany?.title ?? "Xentra";
           const nextLabel = nextCompany ? copy.nextLabel : copy.modelLabel;
-          const nextTitle = nextCompany?.title ?? copy.modelLabel;
 
           return (
             <article
               key={`${company.slug}-chapter`}
               id={`${company.slug}-chapter`}
+              tabIndex={-1}
               data-portfolio-tone={tone.tone}
               aria-labelledby={`${company.slug}-chapter-title`}
               className="portfolio-chapter relative isolate overflow-hidden border-t border-[#2A2D33] px-5 py-16 sm:px-8 sm:py-20 lg:flex lg:min-h-[100svh] lg:flex-col lg:items-center lg:py-24"
@@ -265,10 +238,10 @@ export function PortfolioChapters({
                     </span>
                   </figcaption>
                   <a
-                    href={company.href}
+                    href={company.evidence.sourceHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${visitLabel}: ${company.title} (${externalLinkLabel})`}
+                    aria-label={`${copy.evidenceLabel}: ${company.title} (${externalLinkLabel})`}
                     className="group block overflow-hidden"
                   >
                     <Image
@@ -343,9 +316,11 @@ export function PortfolioChapters({
                       &#8594;
                     </span>
                   </span>
-                  <span className="mt-2 text-sm text-[#A6A39A] transition group-hover:text-[#F2EFE8]">
-                    {nextTitle}
-                  </span>
+                  {nextCompany ? (
+                    <span className="mt-2 text-sm text-[#A6A39A] transition group-hover:text-[#F2EFE8]">
+                      {nextCompany.title}
+                    </span>
+                  ) : null}
                 </a>
               </nav>
             </article>

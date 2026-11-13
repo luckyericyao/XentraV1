@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/content";
 import { siteContent } from "@/lib/content";
 import { publicContact } from "@/lib/public-config";
-import { siteReviewDate } from "@/lib/site-meta";
+import { sitePageDates } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
 type StructuredDataProps = {
@@ -25,9 +25,6 @@ export function StructuredData({ locale }: StructuredDataProps) {
         url: siteUrl,
         logo: `${siteUrl}/favicon.svg`,
         description: content.hero.body[0],
-        ...(publicContact.kind === "profile"
-          ? { sameAs: [publicContact.href] }
-          : {}),
         knowsAbout: Array.from(
           new Set([
             ...content.hero.tags,
@@ -74,7 +71,7 @@ export function StructuredData({ locale }: StructuredDataProps) {
         url: pageUrl,
         description: content.hero.body[0],
         inLanguage: content.lang,
-        dateModified: siteReviewDate.iso,
+        dateModified: sitePageDates.home,
         isPartOf: {
           "@id": websiteId,
         },

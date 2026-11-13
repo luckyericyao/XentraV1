@@ -1,6 +1,7 @@
 import {
   publicCompanyLinks,
   publicContact,
+  recordedCompanyLinks,
 } from "@/lib/public-config";
 import { siteReviewDate } from "@/lib/site-meta";
 
@@ -22,6 +23,7 @@ export type Company = {
   useCases?: string[];
   href: string;
   evidence: {
+    sourceHref: string;
     image: string;
     imageAlt: string;
     audience: string;
@@ -146,19 +148,19 @@ const companyLinks = publicCompanyLinks;
 
 const evidenceLinks = {
   agentCoach: {
-    industries: `${companyLinks.agentCoach}#industries`,
-    access: `${companyLinks.agentCoach}#waitlist`,
-    coaches: `${companyLinks.agentCoach}#coaches`,
+    industries: new URL("#industries", recordedCompanyLinks.agentCoach).href,
+    access: new URL("#waitlist", recordedCompanyLinks.agentCoach).href,
+    coaches: new URL("#coaches", recordedCompanyLinks.agentCoach).href,
   },
   localhost: {
-    routes: `${companyLinks.localhost}journeys`,
-    inquiry: `${companyLinks.localhost}inquiry?type=traveler`,
-    trust: `${companyLinks.localhost}trust`,
+    routes: new URL("journeys", recordedCompanyLinks.localhost).href,
+    inquiry: new URL("inquiry?type=traveler", recordedCompanyLinks.localhost).href,
+    trust: new URL("trust", recordedCompanyLinks.localhost).href,
   },
   bioaxis: {
-    readySupply: `${companyLinks.bioaxis}ready-supply`,
-    equivalents: `${companyLinks.bioaxis}equivalent-finder`,
-    quote: `${companyLinks.bioaxis}request-quote`,
+    readySupply: new URL("ready-supply", recordedCompanyLinks.bioaxis).href,
+    equivalents: new URL("equivalent-finder", recordedCompanyLinks.bioaxis).href,
+    quote: new URL("request-quote", recordedCompanyLinks.bioaxis).href,
   },
 } as const;
 
@@ -212,8 +214,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "From the Founder",
       title: "I want to build companies that become more trusted as they grow.",
       body: [
-        "The three companies look unrelated at the category level. At the moment of decision, each customer faces the same problem: enough information to hesitate, not enough trusted context to act.",
-        "Xentra is how I am testing whether one operating discipline can travel across very different markets: enter fewer, understand them deeply, and stay for the handoff.",
+        "I enter fewer markets, learn where judgment breaks down, and stay for delivery. Xentra is my test of whether that discipline can hold across very different businesses.",
       ],
       signature: "Founder, Xentra",
       letterLabel: "Read the founder letter",
@@ -221,9 +222,9 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     companies: {
       eyebrow: "Operating Companies",
-      title: "The categories change. The hard decision stays.",
+      title: "Different markets. One operating discipline.",
       body: [
-        "AI adoption, private travel, and laboratory sourcing look unrelated until someone has to decide. In each market, information is abundant, trusted context is scarce, and the outcome still needs an accountable operator.",
+        "Enterprise AI, private travel, and laboratory sourcing. Three distinct businesses, held to the same standard of judgment and delivery.",
       ],
       principles: [
         "Problem before technology",
@@ -245,6 +246,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           headline: "For teams adopting AI into real workflows.",
           href: companyLinks.agentCoach,
           evidence: {
+            sourceHref: recordedCompanyLinks.agentCoach,
             image: "/images/portfolio/ai-agent-coach.jpg",
             imageAlt:
               "AI Agent Coach homepage showing professional AI coaches organized by industry.",
@@ -274,6 +276,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           headline: "Private cultural travel through trusted local hosts.",
           href: companyLinks.localhost,
           evidence: {
+            sourceHref: recordedCompanyLinks.localhost,
             image: "/images/portfolio/localhost.jpg",
             imageAlt:
               "Localhost Global homepage showing a private China route shaped by local hosts.",
@@ -303,6 +306,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           headline: "One-stop sourcing intelligence for life science consumables.",
           href: companyLinks.bioaxis,
           evidence: {
+            sourceHref: recordedCompanyLinks.bioaxis,
             image: "/images/portfolio/bioaxis.jpg",
             imageAlt:
               "BioAxis homepage showing a structured sourcing request for life science consumables.",
@@ -331,7 +335,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       title: "Shared capabilities. Accountable operators.",
       body: "Xentra centralizes the work that compounds across markets. Each company stays close to its customer and owns delivery.",
       systemLabel: "Parent operating group",
-      systemBody: "The repeatable system behind each company.",
+      systemBody:
+        "The group owns market selection, technology, and verification standards. Each company owns its customer and delivery.",
       systemItems: [
         {
           title: "Market selection",
@@ -356,8 +361,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       evidenceCountLabel: "public product paths",
       evidenceVerifiedLabel: `Checked ${siteReviewDate.english}`,
       evidenceNote:
-        "Public paths and screenshots are checked on the date shown; they are not performance claims or endorsements.",
-      proofLabel: "Available on the public site",
+        "The review date applies only to the recorded links and screenshots. It does not establish current availability, performance, or endorsement.",
+      proofLabel: "Recorded product paths",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
       deliveryLabel: "Delivers",
@@ -514,8 +519,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       title: "我想建立的公司，规模越大，越值得信任。",
       titleLines: ["我想建立的公司，", "规模越大，", "越值得信任。"],
       body: [
-        "三家公司在行业分类上毫不相干。真正做决定时，用户面对的却是同一个困境：信息足够让人犹豫，可信语境不足以让人行动。",
-        "Xentra 是我对同一种运营方法能否穿过不同市场的长期验证：少进入几个市场，深理解真实问题，并留在最后的交付现场。",
+        "我选择少进入几个市场，把问题理解得更深，并留在交付现场。Xentra 要验证的，是这份运营纪律能否在不同业务里长期成立。",
       ],
       signature: "Xentra 创始人",
       letterLabel: "阅读创始人手记",
@@ -523,9 +527,9 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     companies: {
       eyebrow: "业务布局",
-      title: "行业不同，难点都在决定那一刻。",
+      title: "不同市场，同一套运营逻辑。",
       body: [
-        "企业 AI、私人旅行、生命科学采购，看起来毫不相关。真正做决定时，用户面对的是同一个缺口：信息很多，可信语境很少，结果仍要有人负责。",
+        "从企业 AI、私人旅行到生命科学采购，三家业务各自面对客户，共同遵循一套判断与交付标准。",
       ],
       principles: ["问题先于技术", "证据先于声量", "交付先于规模"],
       chapterLabel: "查看业务证据",
@@ -545,6 +549,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           ],
           href: companyLinks.agentCoach,
           evidence: {
+            sourceHref: recordedCompanyLinks.agentCoach,
             image: "/images/portfolio/ai-agent-coach.jpg",
             imageAlt: "AI Agent Coach 官网，展示按行业组织的专业 AI 教练。",
             audience: "面对复杂行业决策的专业人士与团队。",
@@ -567,6 +572,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           ],
           href: companyLinks.localhost,
           evidence: {
+            sourceHref: recordedCompanyLinks.localhost,
             image: "/images/portfolio/localhost.jpg",
             imageAlt: "Localhost Global 官网，展示由本地主理人设计的私人中国路线。",
             audience: "希望以私人方式进入中国的国际旅行者。",
@@ -589,6 +595,7 @@ export const siteContent: Record<Locale, SiteContent> = {
           ],
           href: companyLinks.bioaxis,
           evidence: {
+            sourceHref: recordedCompanyLinks.bioaxis,
             image: "/images/portfolio/bioaxis.jpg",
             imageAlt: "BioAxis 官网，展示生命科学耗材的结构化采购请求。",
             audience: "采购生命科学耗材的实验室与专业买方。",
@@ -605,10 +612,10 @@ export const siteContent: Record<Locale, SiteContent> = {
     },
     portfolio: {
       eyebrow: "集团架构",
-      title: "集团复用能力，业务承担结果。",
+      title: "集团提供方法，业务承担结果。",
       body: "集团建设可跨市场复用的能力；每家公司贴近客户，独立负责市场与交付。",
       systemLabel: "母公司运营系统",
-      systemBody: "每家公司背后的共用系统。",
+      systemBody: "集团负责市场选择、技术建设与验证标准。业务公司负责客户与交付。",
       systemItems: [
         {
           title: "选择市场",
@@ -632,8 +639,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       evidenceLabel: "公开业务证据",
       evidenceCountLabel: "公开产品入口",
       evidenceVerifiedLabel: `核验于 ${siteReviewDate.chinese}`,
-      evidenceNote: "公开入口与截图按所示日期核验，不代表业绩承诺或第三方背书。",
-      proofLabel: "公开网站当前提供",
+      evidenceNote: "核验日期仅适用于所列入口与截图，不代表当前可达、业绩承诺或第三方背书。",
+      proofLabel: "已登记产品入口",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",
       deliveryLabel: "实际交付",
