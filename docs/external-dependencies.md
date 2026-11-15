@@ -6,12 +6,16 @@ This file records launch items that cannot be completed safely from this reposit
 
 Status: pending domain ownership, DNS, and deployment access.
 
-The production addresses last recorded on 13 Aug 2026 are:
+The production addresses are:
 
 - Xentra: `https://xentra-v1.vercel.app/`
 - AI Agent Coach: `https://agentcoach-three.vercel.app/`
-- Localhost: `https://localhostchinav1.vercel.app/`
+- Localhost: `https://localhostglobal.vercel.app/` (confirmed 15 Nov 2026)
 - BioAxis: `https://bioaxisv3.vercel.app/`
+
+The other addresses were last recorded on 13 Aug 2026. The former Localhost
+host, `https://localhostchinav1.vercel.app/`, redirects to its production site.
+It remains attached to the historical screenshot and product-path record.
 
 No owned branded domain for Xentra or the three operating companies was confirmed in the available repositories or deployment configuration. On 13 Aug 2026, `xentra.ai` resolved to an Atom domain-sale page, so it must not be used for the website or email until ownership and DNS control are independently confirmed. The site keeps the verified defaults until an owner confirms replacement targets.
 

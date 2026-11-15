@@ -42,7 +42,7 @@ export const publicCompanyLinks = {
   ),
   localhost: readHttpsUrl(
     "XENTRA_LOCALHOST_URL",
-    recordedCompanyLinks.localhost,
+    "https://localhostglobal.vercel.app/",
   ),
   bioaxis: readHttpsUrl(
     "XENTRA_BIOAXIS_URL",

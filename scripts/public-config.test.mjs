@@ -32,6 +32,14 @@ test("valid HTTPS paths are normalized without losing their base path", () => {
   assert.equal(JSON.parse(result.stdout).publicCompanyLinks.agentCoach, "https://example.test/coach/");
 });
 
+test("Localhost visit links use its production address without changing recorded evidence", () => {
+  const result = loadConfig();
+  assert.equal(result.status, 0, result.stderr);
+  const { publicCompanyLinks, recordedCompanyLinks } = JSON.parse(result.stdout);
+  assert.equal(publicCompanyLinks.localhost, "https://localhostglobal.vercel.app/");
+  assert.equal(recordedCompanyLinks.localhost, "https://localhostchinav1.vercel.app/");
+});
+
 test("current company overrides do not change recorded evidence sources", () => {
   const result = loadConfig({
     XENTRA_AGENT_COACH_URL: "https://coach.example.test/product",

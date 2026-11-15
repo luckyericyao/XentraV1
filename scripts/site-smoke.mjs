@@ -64,7 +64,7 @@ const companyBaseUrls = {
   ),
   localhost: configuredSmokeUrl(
     "SMOKE_LOCALHOST_URL",
-    recordedCompanyUrls.localhost,
+    "https://localhostglobal.vercel.app/",
   ),
   bioaxis: configuredSmokeUrl(
     "SMOKE_BIOAXIS_URL",
@@ -97,11 +97,11 @@ const companyEvidencePages = [
   },
   {
     url: `${recordedCompanyUrls.localhost}journeys`,
-    markers: ["Four private ways into China."],
+    markers: ["Four routes into China.", 'href="/china/shanxi"', 'href="/china/shaolin"', 'href="/china/huizhou"', 'href="/china/shanghai"'],
   },
   {
     url: `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
-    markers: ["Tell us how you want to enter China."],
+    markers: ['data-inquiry-form="true"', 'id="inquiry-short-note"'],
   },
   {
     url: `${recordedCompanyUrls.localhost}trust`,

@@ -15,7 +15,7 @@ operating companies.
 
 - [AI Agent Coach](https://agentcoach-three.vercel.app/) — AI capability for
   teams adopting AI into real workflows.
-- [Localhost](https://localhostchinav1.vercel.app/) — private cultural travel
+- [Localhost](https://localhostglobal.vercel.app/) — private cultural travel
   through trusted local hosts.
 - [BioAxis](https://bioaxisv3.vercel.app/) — sourcing intelligence for life
   science consumables.
