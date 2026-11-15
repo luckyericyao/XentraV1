@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const socialImageSize = {
@@ -27,8 +29,11 @@ const socialImageCopy: Record<
   },
 };
 
-export function createSocialImage(locale: SocialImageLocale = "en") {
+export async function createSocialImage(locale: SocialImageLocale = "en") {
   const copy = socialImageCopy[locale];
+  const chineseFont = locale === "zh" ? await readFile(
+    join(process.cwd(), "src/app/fonts/noto-sans-sc-social.ttf"),
+  ) : undefined;
 
   return new ImageResponse(
     (
@@ -40,6 +45,7 @@ export function createSocialImage(locale: SocialImageLocale = "en") {
           color: "#F2EFE8",
           display: "flex",
           flexDirection: "column",
+          ...(chineseFont ? { fontFamily: "Noto Sans SC" } : {}),
           height: "100%",
           justifyContent: "space-between",
           padding: "64px 72px",
@@ -116,7 +122,7 @@ export function createSocialImage(locale: SocialImageLocale = "en") {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontFamily: "serif",
+              fontFamily: chineseFont ? "Noto Sans SC" : "serif",
               fontSize: 78,
               fontWeight: 400,
               letterSpacing: "-0.025em",
@@ -153,6 +159,9 @@ export function createSocialImage(locale: SocialImageLocale = "en") {
         />
       </div>
     ),
-    socialImageSize,
+    chineseFont ? {
+      ...socialImageSize,
+      fonts: [{ name: "Noto Sans SC", data: chineseFont, weight: 400 }],
+    } : socialImageSize,
   );
 }

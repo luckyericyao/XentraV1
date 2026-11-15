@@ -57,7 +57,9 @@ Run `pnpm check:local --fixtures` to also rehearse the custom build-record and
 email-rendering modes using reserved `.test` addresses. It neither visits these
 addresses nor sends mail. Both fixtures stay in the temporary workspace. Use
 `pnpm build` separately to refresh a production-mode preview of this checkout.
-The gate still uses Next's existing font build chain; it is not an offline build.
+After dependency installation, the build and local smoke do not need to fetch
+fonts. The web fonts and the Chinese share-image subset ship with their
+[sources and license files](src/app/fonts/README.md).
 
 The individual commands remain available:
 
@@ -72,8 +74,9 @@ Run `pnpm start --hostname 127.0.0.1 --port 3101` after building and before smok
 Unit tests use Node 24's built-in TypeScript support, with no additional test
 dependencies. They cover navigation state, local link validation, and public
 configuration. Smoke checks generated bilingual routes, script-free 404 recovery,
-local link targets, metadata, security headers, compiled stylesheets, and
-share and optimized image responses; it does not simulate a browser.
+local link targets, metadata, security headers, referenced CSS, scripts and
+preloaded fonts, and share and optimized image responses. It does not simulate
+a browser.
 
 Set `SMOKE_EXTERNAL=1` to include the three live operating-company URLs.
 

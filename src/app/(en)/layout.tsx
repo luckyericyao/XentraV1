@@ -1,20 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Newsreader } from "next/font/google";
 import { DocumentLanguage } from "@/components/DocumentLanguage";
 import { getSiteUrl } from "@/lib/site-url";
+import { instrumentSans, newsreader } from "../fonts";
 import "../globals.css";
-
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin"],
-  variable: "--font-instrument",
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
 
 const siteUrl = getSiteUrl();
 const languageBootstrap = `(() => {

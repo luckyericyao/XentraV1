@@ -128,14 +128,14 @@ function assert(condition, message) {
   }
 }
 
-function requestUrl(pathname) {
+function requestUrl(pathname, cacheBust) {
   const url = new URL(pathname, `${baseUrl}/`);
-  url.searchParams.set("_smoke", runId);
+  if (cacheBust) url.searchParams.set("_smoke", runId);
   return url;
 }
 
 async function get(pathname, options = {}) {
-  const url = requestUrl(pathname);
+  const url = requestUrl(pathname, options.cacheBust !== false);
 
   try {
     const response = await fetchWithRetry(url, {
@@ -891,20 +891,47 @@ function verifyNotFound(result, locale) {
   }
 }
 
-async function verifyPageStyles(homepages) {
-  for (const [locale, page] of homepages) {
-    const paths = [...page.body.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="(\/_next\/static\/[^"]+\.css)"/g)]
-      .map((match) => match[1]);
-    assert(paths.length > 0, `${locale}: no application stylesheet in the HTML`);
-    const results = await Promise.all(paths.map((path) => get(path)));
-    for (const [index, result] of results.entries()) {
-      assertStatus(result, 200, paths[index]);
-      assertIncludes(contentType(result), "text/css", `${locale} application stylesheet type`);
+async function verifyPageAssets(pages) {
+  const requests = new Map();
+  function checkAsset(path, kind) {
+    if (!requests.has(path)) {
+      requests.set(path, (async () => {
+        // Use the URL the browser loads, including the unmodified cache key.
+        const result = await get(path, { cacheBust: false, binary: kind === "font" });
+        assertStatus(result, 200, path);
+        assert(result.body.length > 0, `${path}: empty ${kind}`);
+        const types = { css: "text/css", js: "javascript", font: "font/woff2" };
+        assertIncludes(contentType(result), types[kind], `${path} content type`);
+        if (kind === "font") {
+          assert(Buffer.from(result.body.subarray(0, 4)).toString("ascii") === "wOF2", `${path}: invalid WOFF2 signature`);
+        }
+        return result.body;
+      })());
     }
-    const css = results.map((result) => result.body).join("\n");
-    assertIncludes(css, ".hero-title", `${locale} hero stylesheet`);
-    assertIncludes(css, ".md\\:hidden", `${locale} generated responsive utilities`);
-    assertIncludes(css, ".scroll-rise:focus-within", `${locale} animated link focus visibility`);
+    return requests.get(path);
+  }
+
+  for (const { path, html } of pages) {
+    const references = { css: new Set(), js: new Set(), font: new Set() };
+    for (const [tag] of html.matchAll(/<(?:link|script)\b[^>]*>/g)) {
+      const href = tag.match(/\s(?:href|src)="(\/_next\/static\/[^"]+)"/)?.[1];
+      if (!href) continue;
+      if (href.endsWith(".css") && /\srel="stylesheet"/.test(tag)) references.css.add(href);
+      if (href.endsWith(".js")) references.js.add(href);
+      if (href.endsWith(".woff2") && /\sas="font"/.test(tag)) references.font.add(href);
+    }
+    for (const [kind, paths] of Object.entries(references)) {
+      assert(paths.size > 0, `${path}: no ${kind} reference in the HTML`);
+    }
+    const [stylesheets] = await Promise.all(Object.entries(references).map(([kind, paths]) => (
+      Promise.all([...paths].map((asset) => checkAsset(asset, kind)))
+    )));
+    if (path === "/" || path === "/zh") {
+      const css = stylesheets.join("\n");
+      assertIncludes(css, ".hero-title", `${path} hero stylesheet`);
+      assertIncludes(css, ".md\\:hidden", `${path} generated responsive utilities`);
+      assertIncludes(css, ".scroll-rise:focus-within", `${path} animated link focus visibility`);
+    }
   }
 }
 
@@ -989,14 +1016,15 @@ async function run() {
   verifyFounderLetter(englishLetter, "en");
   verifyFounderLetter(chineseLetter, "zh");
 
-  const localNavigation = inspectLocalNavigation([
+  const applicationPages = [
     { path: "/", html: english.body },
     { path: "/zh", html: chinese.body },
     { path: "/privacy", html: englishPrivacy.body },
     { path: "/zh/privacy", html: chinesePrivacy.body },
     { path: "/letter", html: englishLetter.body },
     { path: "/zh/letter", html: chineseLetter.body },
-  ], baseUrl);
+  ];
+  const localNavigation = inspectLocalNavigation(applicationPages, baseUrl);
   assert(localNavigation.length > 50, "Local navigation coverage is unexpectedly empty");
   for (const { path, href, error } of localNavigation) {
     assert(!error, `Local navigation ${path} -> ${href}: ${error}`);
@@ -1024,7 +1052,7 @@ async function run() {
   }
 
   const homepages = [["en", english], ["zh", chinese]];
-  await verifyPageStyles(homepages);
+  await verifyPageAssets(applicationPages);
   await verifyImageAssets(homepages);
 
   assertStatus(robots, 200, "Robots");
