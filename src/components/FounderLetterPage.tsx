@@ -1,7 +1,7 @@
 import { Header } from "@/components/Header";
 import { siteContent } from "@/lib/content";
 import type { Locale } from "@/lib/content";
-import { sitePageDates, siteReviewDate } from "@/lib/site-meta";
+import { sitePageDates } from "@/lib/site-meta";
 import { getSiteUrl } from "@/lib/site-url";
 
 type LetterCopy = {
@@ -314,14 +314,6 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
                   </span>
                   <span>
                     {String(publicPathCount).padStart(2, "0")} {copy.proof.countLabel}
-                  </span>
-                  <span aria-hidden="true" className="text-[#B49459]">
-                    /
-                  </span>
-                  <span>
-                    {locale === "zh"
-                      ? siteReviewDate.chinese
-                      : siteReviewDate.english}
                   </span>
                 </p>
               </div>

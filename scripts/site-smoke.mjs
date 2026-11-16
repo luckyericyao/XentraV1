@@ -79,9 +79,9 @@ const companyUrls = [
 ];
 
 const companyEvidenceUrls = [
-  `${recordedCompanyUrls.agentCoach}#industries`,
-  `${recordedCompanyUrls.agentCoach}#waitlist`,
-  `${recordedCompanyUrls.agentCoach}#coaches`,
+  `${recordedCompanyUrls.agentCoach}recipes`,
+  `${recordedCompanyUrls.agentCoach}become-a-client`,
+  `${recordedCompanyUrls.agentCoach}become-a-coach`,
   `${recordedCompanyUrls.localhost}journeys`,
   `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
   `${recordedCompanyUrls.localhost}trust`,
@@ -92,8 +92,16 @@ const companyEvidenceUrls = [
 
 const companyEvidencePages = [
   {
-    url: recordedCompanyUrls.agentCoach,
-    markers: ['id="industries"', 'id="waitlist"', 'id="coaches"'],
+    url: `${recordedCompanyUrls.agentCoach}recipes`,
+    markers: ["Reusable expert workflows for building useful AI agents."],
+  },
+  {
+    url: `${recordedCompanyUrls.agentCoach}become-a-client`,
+    markers: ["Use expert-built Agent Recipes to improve high-value work."],
+  },
+  {
+    url: `${recordedCompanyUrls.agentCoach}become-a-coach`,
+    markers: ["Turn your expertise into reusable Agent Recipes."],
   },
   {
     url: `${recordedCompanyUrls.localhost}journeys`,
@@ -109,15 +117,15 @@ const companyEvidencePages = [
   },
   {
     url: `${recordedCompanyUrls.bioaxis}ready-supply`,
-    markers: ["Warehouse-backed consumables for faster lab procurement."],
+    markers: ["Check current supply evidence before procurement.", "<form"],
   },
   {
     url: `${recordedCompanyUrls.bioaxis}equivalent-finder`,
-    markers: ["Find compatible alternatives for your current consumables"],
+    markers: ["Review consumable alternatives", "<form"],
   },
   {
     url: `${recordedCompanyUrls.bioaxis}request-quote`,
-    markers: ["Start a sourcing request"],
+    markers: ["Request sourcing", "<form"],
   },
 ];
 
@@ -367,25 +375,29 @@ function verifyPage(result, locale) {
       ];
   const publicEvidence = isChinese
     ? [
-        "行业教练目录",
+        "工作流范例库",
+        "客户说明",
+        "教练说明",
         "公开路线样本",
         "信任机制说明",
         "替代品匹配入口",
         "询价工作流",
       ]
     : [
-        "Industry coach directory",
+        "Workflow recipe library",
+        "Client overview",
+        "Coach overview",
         "Route previews",
         "Published trust model",
         "Equivalent finder",
       "RFQ workflow",
     ];
   const evidenceVerifiedLabel = isChinese
-    ? "核验于 2026.08.13"
-    : "Checked 13 Aug 2026";
+    ? "截图于 2026.08.13"
+    : "Screenshots: 13 Aug 2026";
   const evidenceNote = isChinese
-    ? "核验日期仅适用于所列入口与截图，不代表当前可达、业绩承诺或第三方背书。"
-    : "The review date applies only to the recorded links and screenshots. It does not establish current availability, performance, or endorsement.";
+    ? "截图为历史记录。链接指向公开页面，不代表服务开放、业绩承诺或第三方背书。"
+    : "Screenshots are historical. Product links point to public pages, not a guarantee of access, performance, or endorsement.";
   const contactLabel = isChinese ? "合作对象" : "Who we build with";
   const contactNote = isChinese
     ? "参与一家公司有三种方式：负责交付、提供判断，或支持长期建设。"
@@ -579,7 +591,7 @@ function verifyPage(result, locale) {
   }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-11-07",
+    webpage?.dateModified === "2026-11-16",
     `${label}: missing page-modification date`,
   );
   assert(
@@ -774,7 +786,7 @@ function verifyFounderLetter(result, locale) {
     `${label}: invalid publication date`,
   );
   assert(
-    structuredData.dateModified === "2026-08-13",
+    structuredData.dateModified === "2026-11-16",
     `${label}: invalid modified date`,
   );
   assert(
@@ -1086,7 +1098,7 @@ async function run() {
     .map((match) => match[1]);
   for (const path of ["/", "/zh", "/letter", "/zh/letter", "/privacy", "/zh/privacy"]) {
     const entry = sitemapEntries.find((value) => value.includes(`<loc>${canonicalUrl}${path}</loc>`));
-    const modified = path === "/" || path === "/zh" ? "2026-11-07" : "2026-08-13";
+    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-16";
     assert(entry, `Sitemap entry missing: ${path}`);
     assertIncludes(entry, `<lastmod>${modified}T00:00:00.000Z</lastmod>`, `Sitemap page date: ${path}`);
   }

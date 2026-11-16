@@ -94,8 +94,9 @@ Page modification dates are maintained separately from public evidence dates.
 
 Verified company URLs can be replaced at build time with
 `XENTRA_AGENT_COACH_URL`, `XENTRA_LOCALHOST_URL`, and
-`XENTRA_BIOAXIS_URL`. These override the current visit links; dated screenshots
-and product paths remain attached to their recorded sources. The public
+`XENTRA_BIOAXIS_URL`. These override the current visit links. Screenshot
+provenance and the separately checked product paths stay on their original
+hosts. The public
 build-record profile can be replaced with
 `XENTRA_CONTACT_URL`; it is not presented as a private contact channel.
 

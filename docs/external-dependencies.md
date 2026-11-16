@@ -28,7 +28,13 @@ Build-time replacement variables:
 - `XENTRA_CONTACT_EMAIL`
 - `XENTRA_CONTACT_EMAIL_VERIFIED`
 
-URL variables must be absolute HTTPS URLs without credentials, query strings, or hashes; invalid values fail the build. Company URL overrides change the current visit links, not the source URLs of the recorded screenshots and nine dated product paths. Updating those records requires a fresh review of the actual evidence.
+URL variables must be absolute HTTPS URLs without credentials, query strings,
+or hashes; invalid values fail the build. Company URL overrides change the
+current visit links, not screenshot provenance or the separately checked
+product paths. On 16 Nov 2026, the AI Agent Coach public paths were refreshed
+to its workflow library and client and coach overview pages. The two overview
+pages were accessible but did not accept public applications. This did not
+change the screenshot dates or establish any delivery claims.
 
 An email is published only when `XENTRA_CONTACT_EMAIL` is a single plain address and `XENTRA_CONTACT_EMAIL_VERIFIED=1`. The flag is an owner assertion, not a delivery check. Run smoke with the matching `SMOKE_*` URL, email, and verification variables so public links, JSON-LD, canonical output, and contact actions are checked against the same targets. A custom build-record URL passing smoke does not prove its ownership.
 

@@ -3,7 +3,7 @@ import {
   publicContact,
   recordedCompanyLinks,
 } from "@/lib/public-config";
-import { siteReviewDate } from "@/lib/site-meta";
+import { portfolioCaptureDate } from "@/lib/site-meta";
 
 export type Locale = "en" | "zh";
 
@@ -148,9 +148,9 @@ const companyLinks = publicCompanyLinks;
 
 const evidenceLinks = {
   agentCoach: {
-    industries: new URL("#industries", recordedCompanyLinks.agentCoach).href,
-    access: new URL("#waitlist", recordedCompanyLinks.agentCoach).href,
-    coaches: new URL("#coaches", recordedCompanyLinks.agentCoach).href,
+    recipes: new URL("recipes", recordedCompanyLinks.agentCoach).href,
+    clients: new URL("become-a-client", recordedCompanyLinks.agentCoach).href,
+    coaches: new URL("become-a-coach", recordedCompanyLinks.agentCoach).href,
   },
   localhost: {
     routes: new URL("journeys", recordedCompanyLinks.localhost).href,
@@ -254,15 +254,15 @@ export const siteContent: Record<Locale, SiteContent> = {
             decision:
               "How does AI become part of the work, not another tool people stop using?",
             delivery:
-              "Industry-specific AI coaches, structured guidance, and professional review.",
+              "Expert-authored workflow recipes and structured guidance for teams.",
             proof: [
               {
-                label: "Industry coach directory",
-                href: evidenceLinks.agentCoach.industries,
+                label: "Workflow recipe library",
+                href: evidenceLinks.agentCoach.recipes,
               },
-              { label: "Access request", href: evidenceLinks.agentCoach.access },
+              { label: "Client overview", href: evidenceLinks.agentCoach.clients },
               {
-                label: "Coach application",
+                label: "Coach overview",
                 href: evidenceLinks.agentCoach.coaches,
               },
             ],
@@ -359,10 +359,10 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
       evidenceCountLabel: "public product paths",
-      evidenceVerifiedLabel: `Checked ${siteReviewDate.english}`,
+      evidenceVerifiedLabel: `Screenshots: ${portfolioCaptureDate.english}`,
       evidenceNote:
-        "The review date applies only to the recorded links and screenshots. It does not establish current availability, performance, or endorsement.",
-      proofLabel: "Recorded product paths",
+        "Screenshots are historical. Product links point to public pages, not a guarantee of access, performance, or endorsement.",
+      proofLabel: "Public product paths",
       audienceLabel: "Serves",
       decisionLabel: "Clarifies",
       deliveryLabel: "Delivers",
@@ -554,11 +554,11 @@ export const siteContent: Record<Locale, SiteContent> = {
             imageAlt: "AI Agent Coach 官网，展示按行业组织的专业 AI 教练。",
             audience: "面对复杂行业决策的专业人士与团队。",
             decision: "怎样让 AI 真正进入工作，而不是又一个很快被放弃的工具？",
-            delivery: "按行业组织的 AI 教练、结构化指导与专业复核。",
+            delivery: "由专业人士整理的工作流范例，以及面向团队的实施指导。",
             proof: [
-              { label: "行业教练目录", href: evidenceLinks.agentCoach.industries },
-              { label: "用户准入申请", href: evidenceLinks.agentCoach.access },
-              { label: "教练加入入口", href: evidenceLinks.agentCoach.coaches },
+              { label: "工作流范例库", href: evidenceLinks.agentCoach.recipes },
+              { label: "客户说明", href: evidenceLinks.agentCoach.clients },
+              { label: "教练说明", href: evidenceLinks.agentCoach.coaches },
             ],
           },
         },
@@ -638,9 +638,9 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
       evidenceCountLabel: "公开产品入口",
-      evidenceVerifiedLabel: `核验于 ${siteReviewDate.chinese}`,
-      evidenceNote: "核验日期仅适用于所列入口与截图，不代表当前可达、业绩承诺或第三方背书。",
-      proofLabel: "已登记产品入口",
+      evidenceVerifiedLabel: `截图于 ${portfolioCaptureDate.chinese}`,
+      evidenceNote: "截图为历史记录。链接指向公开页面，不代表服务开放、业绩承诺或第三方背书。",
+      proofLabel: "公开产品入口",
       audienceLabel: "服务对象",
       decisionLabel: "关键判断",
       deliveryLabel: "实际交付",
