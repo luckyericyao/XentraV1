@@ -949,6 +949,25 @@ async function verifyPageAssets(pages) {
   }
 }
 
+function verifyScriptFreeNavigation(pages) {
+  for (const { path, html } of pages) {
+    const fallback = html.match(
+      /<noscript><nav\b[^>]*\bmobile-navigation-fallback\b[^>]*>([\s\S]*?)<\/nav><\/noscript>/,
+    )?.[1];
+    assert(fallback, `${path}: missing native mobile links for script-free browsing`);
+
+    const home = path.startsWith("/zh") ? "/zh" : "/";
+    const destinations = path.endsWith("/privacy")
+      ? [home]
+      : path.endsWith("/letter")
+        ? [home, `${home}#companies`, `${home}#contact`]
+        : ["#thesis", "#companies", "#model", "#contact"];
+    for (const href of destinations) {
+      assertIncludes(fallback, `href="${href}"`, `${path} script-free navigation`);
+    }
+  }
+}
+
 async function verifyImageAssets(homepages) {
   const sharePaths = [
     "/opengraph-image", "/zh/opengraph-image", "/twitter-image", "/zh/twitter-image",
@@ -1066,6 +1085,7 @@ async function run() {
   }
 
   const homepages = [["en", english], ["zh", chinese]];
+  verifyScriptFreeNavigation(applicationPages);
   await verifyPageAssets(applicationPages);
   await verifyImageAssets(homepages);
 

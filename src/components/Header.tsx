@@ -249,7 +249,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
                 setMenuOpen(true);
               }
             }}
-            className="flex size-11 items-center justify-center rounded-md border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
+            className="mobile-navigation-trigger flex size-11 items-center justify-center rounded-md border border-[#2A2D33] text-[#F2EFE8] transition hover:border-[rgba(198,161,91,0.46)]"
           >
             <span className="relative block h-3.5 w-4" aria-hidden="true">
               <span
@@ -320,6 +320,22 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
         </div>
       </nav>
       </header>
+      <noscript>
+        <nav
+          aria-label={isChinese ? "页面导航" : "Page navigation"}
+          className="mobile-navigation-fallback flex flex-wrap justify-center gap-x-3 border-b border-[#2A2D33] bg-[#101214] px-4 md:hidden"
+        >
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="inline-flex min-h-11 items-center px-2 text-sm text-[#F2EFE8]"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </noscript>
       {menuOpen ? (
         <button
           type="button"

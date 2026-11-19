@@ -81,6 +81,10 @@ body > footer {
     backdrop-filter 500ms ease;
 }
 
+body:has(.mobile-navigation-fallback) .mobile-navigation-trigger {
+  display: none;
+}
+
 ::selection {
   background: rgba(198, 161, 91, 0.28);
 }
