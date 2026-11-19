@@ -1,6 +1,22 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getReadingHash } from "../src/lib/reading-position.ts";
+import { getReadingHash, getReadingMarker } from "../src/lib/reading-position.ts";
+
+test("ordinary scrolling keeps the reading marker near the top of the viewport", () => {
+  assert.equal(getReadingMarker(500, 120, 3000), 170);
+  assert.equal(getReadingMarker(1440, 2000, 4800), 260);
+  assert.equal(getReadingMarker(1440, 3358, 4800), 260);
+});
+
+test("the last visible section wins when the page cannot scroll any farther", () => {
+  const sections = [{ id: "model", top: -200 }, { id: "contact", top: 328 }];
+  assert.equal(getReadingHash(sections, getReadingMarker(1440, 3359.5, 4800)), "#contact");
+  assert.equal(getReadingMarker(1440, 3365, 4800), 1440);
+});
+
+test("a page that fits in the viewport does not count as scrolled to the bottom", () => {
+  assert.equal(getReadingMarker(1440, 0, 1440), 260);
+});
 
 test("the hero and an empty page resolve to the top", () => {
   assert.equal(getReadingHash([], 200), "#top");

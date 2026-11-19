@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { openMobileNavigation } from "@/lib/mobile-navigation";
-import { getReadingHash } from "@/lib/reading-position";
+import { getReadingHash, getReadingMarker } from "@/lib/reading-position";
 
 type HeaderProps = {
   homeHref?: string;
@@ -109,7 +109,11 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       );
 
     const updateScrollState = () => {
-      const readingMarker = Math.min(window.innerHeight * 0.34, 260);
+      const readingMarker = getReadingMarker(
+        window.innerHeight,
+        window.scrollY,
+        document.documentElement.scrollHeight,
+      );
       const marker = window.scrollY + readingMarker;
       let nextActiveHref = "";
 
