@@ -943,6 +943,8 @@ async function verifyPageAssets(pages) {
       assertIncludes(css, ".hero-title", `${path} hero stylesheet`);
       assertIncludes(css, ".md\\:hidden", `${path} generated responsive utilities`);
       assertIncludes(css, ".scroll-rise:focus-within", `${path} animated link focus visibility`);
+      assert(/\bhtml\s*\{[^}]*\bscroll-padding-top:\s*5rem\b/.test(css),
+        `${path}: the root scroller must clear the sticky header`);
     }
   }
 }

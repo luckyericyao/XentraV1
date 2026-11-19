@@ -34,10 +34,12 @@
 
 html {
   scroll-behavior: smooth;
+  /* Leave room for the sticky header on anchor jumps and keyboard focus. */
+  scroll-padding-top: 5rem;
 }
 
-[id] {
-  scroll-margin-top: 5rem;
+html:has(:is(main, footer) :focus-visible) {
+  scroll-behavior: auto;
 }
 
 body {
