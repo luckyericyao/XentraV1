@@ -117,15 +117,24 @@ const companyEvidencePages = [
   },
   {
     url: `${recordedCompanyUrls.bioaxis}ready-supply`,
-    markers: ["Check current supply evidence before procurement.", "<form"],
+    markers: [
+      "Check current supply evidence before procurement.",
+      "this is not a live inventory feed",
+      'href="/request-quote?',
+      "intent=availability-check",
+    ],
   },
   {
     url: `${recordedCompanyUrls.bioaxis}equivalent-finder`,
-    markers: ["Review consumable alternatives", "<form"],
+    markers: [
+      "Review consumable alternatives",
+      "does not automatically return verified alternatives",
+      'href="/request-quote?requestType=equivalent',
+    ],
   },
   {
     url: `${recordedCompanyUrls.bioaxis}request-quote`,
-    markers: ["Request sourcing", "<form"],
+    markers: ["Request sourcing", "Verification is required before submission.", "<form"],
   },
 ];
 
@@ -380,8 +389,9 @@ function verifyPage(result, locale) {
         "教练说明",
         "公开路线样本",
         "信任机制说明",
-        "替代品匹配入口",
-        "询价工作流",
+        "供货情况核查",
+        "替代品评估",
+        "采购需求入口",
       ]
     : [
         "Workflow recipe library",
@@ -389,9 +399,10 @@ function verifyPage(result, locale) {
         "Coach overview",
         "Route previews",
         "Published trust model",
-        "Equivalent finder",
-      "RFQ workflow",
-    ];
+        "Availability check",
+        "Equivalent review",
+        "Sourcing request",
+      ];
   const evidenceVerifiedLabel = isChinese
     ? "截图于 2026.08.13"
     : "Screenshots: 13 Aug 2026";
@@ -591,7 +602,7 @@ function verifyPage(result, locale) {
   }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-11-16",
+    webpage?.dateModified === "2026-11-19",
     `${label}: missing page-modification date`,
   );
   assert(
@@ -786,7 +797,7 @@ function verifyFounderLetter(result, locale) {
     `${label}: invalid publication date`,
   );
   assert(
-    structuredData.dateModified === "2026-11-16",
+    structuredData.dateModified === "2026-11-19",
     `${label}: invalid modified date`,
   );
   assert(
@@ -1120,7 +1131,7 @@ async function run() {
     .map((match) => match[1]);
   for (const path of ["/", "/zh", "/letter", "/zh/letter", "/privacy", "/zh/privacy"]) {
     const entry = sitemapEntries.find((value) => value.includes(`<loc>${canonicalUrl}${path}</loc>`));
-    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-16";
+    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-19";
     assert(entry, `Sitemap entry missing: ${path}`);
     assertIncludes(entry, `<lastmod>${modified}T00:00:00.000Z</lastmod>`, `Sitemap page date: ${path}`);
   }

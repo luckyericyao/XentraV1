@@ -36,6 +36,12 @@ to its workflow library and client and coach overview pages. The two overview
 pages were accessible but did not accept public applications. This did not
 change the screenshot dates or establish any delivery claims.
 
+On 19 Nov 2026, BioAxis's public link labels were updated to match its
+availability check, equivalent review, and sourcing request pages. The first
+two link to the shared sourcing request page; neither reports live inventory or
+automatically verifies alternatives. Only public page content and links were
+checked. No request was submitted.
+
 An email is published only when `XENTRA_CONTACT_EMAIL` is a single plain address and `XENTRA_CONTACT_EMAIL_VERIFIED=1`. The flag is an owner assertion, not a delivery check. Run smoke with the matching `SMOKE_*` URL, email, and verification variables so public links, JSON-LD, canonical output, and contact actions are checked against the same targets. A custom build-record URL passing smoke does not prove its ownership.
 
 ## Public contact and enterprise email

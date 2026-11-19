@@ -317,14 +317,14 @@ export const siteContent: Record<Locale, SiteContent> = {
               "Equivalent review, sample paths, supplier documents, and RFQ-ready briefs.",
             proof: [
               {
-                label: "Ready-supply paths",
+                label: "Availability check",
                 href: evidenceLinks.bioaxis.readySupply,
               },
               {
-                label: "Equivalent finder",
+                label: "Equivalent review",
                 href: evidenceLinks.bioaxis.equivalents,
               },
-              { label: "RFQ workflow", href: evidenceLinks.bioaxis.quote },
+              { label: "Sourcing request", href: evidenceLinks.bioaxis.quote },
             ],
           },
         },
@@ -602,9 +602,9 @@ export const siteContent: Record<Locale, SiteContent> = {
             decision: "哪个产品真正适合实验、可以交付，也经得起核对？",
             delivery: "替代评估、样品路径、供应文件与询价简报。",
             proof: [
-              { label: "现货供应路径", href: evidenceLinks.bioaxis.readySupply },
-              { label: "替代品匹配入口", href: evidenceLinks.bioaxis.equivalents },
-              { label: "询价工作流", href: evidenceLinks.bioaxis.quote },
+              { label: "供货情况核查", href: evidenceLinks.bioaxis.readySupply },
+              { label: "替代品评估", href: evidenceLinks.bioaxis.equivalents },
+              { label: "采购需求入口", href: evidenceLinks.bioaxis.quote },
             ],
           },
         },
