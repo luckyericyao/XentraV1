@@ -82,6 +82,11 @@ Set `SMOKE_EXTERNAL=1` to check live operating-company homepages, product
 paths, and the public build record when shown. The external pass is read-only
 and reports all destination differences together, without submitting forms.
 
+To verify a release, run smoke with `SMOKE_BASE_URL` set to the public URL and
+`SMOKE_RELEASE_SHA` set to the full accepted Git commit. The production build
+returns `X-Xentra-Revision` using Vercel's system-provided Git SHA when available;
+the check fails if the header is absent or a different revision is serving.
+
 The current local review and acceptance criteria are recorded in
 [the optimization report](docs/optimization-2026-11-09.md). Browser verification
 and external delivery are reported separately from successful local checks.

@@ -14,6 +14,10 @@ const canonicalUrl = (
   process.env.SMOKE_CANONICAL_URL || "https://xentra-v1.vercel.app"
 ).replace(/\/+$/, "");
 const checkExternal = process.env.SMOKE_EXTERNAL === "1";
+const expectedRevision = process.env.SMOKE_RELEASE_SHA;
+if (expectedRevision && !/^[0-9a-f]{40}$/.test(expectedRevision)) {
+  throw new Error("SMOKE_RELEASE_SHA must be a full lowercase Git SHA.");
+}
 const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 30_000);
 const requestAttempts = Math.max(
   1,
@@ -242,6 +246,11 @@ async function fetchWithRetry(url, options = {}) {
 }
 
 function assertSecurityHeaders(result, label) {
+  if (expectedRevision) {
+    assert(result.headers.get("x-xentra-revision") === expectedRevision,
+      `${label}: public response does not match release ${expectedRevision}`);
+  }
+
   const required = {
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-origin",

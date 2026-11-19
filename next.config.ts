@@ -40,6 +40,12 @@ const securityHeaders = [
 
 const chineseHeaders = [{ key: "Content-Language", value: "zh-CN" }];
 
+const gitRevision = process.env.VERCEL_GIT_COMMIT_SHA;
+const revisionHeaders =
+  process.env.VERCEL_ENV === "production" && gitRevision && /^[0-9a-f]{40}$/.test(gitRevision)
+    ? [{ key: "X-Xentra-Revision", value: gitRevision }]
+    : [];
+
 const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
@@ -48,7 +54,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/zh", headers: chineseHeaders },
       { source: "/zh/:path*", headers: chineseHeaders },
-      { source: "/(.*)", headers: securityHeaders },
+      { source: "/(.*)", headers: [...securityHeaders, ...revisionHeaders] },
     ];
   },
 };
