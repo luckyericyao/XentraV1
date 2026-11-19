@@ -1,4 +1,5 @@
 import { inspectLocalNavigation } from "./local-navigation.mjs";
+import { inspectPublicDestinations } from "./public-destinations.mjs";
 import {
   isPublicContactEmail,
   normalizePublicHttpsUrl,
@@ -830,63 +831,30 @@ async function verifyExternalCompanies() {
 
   const currentCompanyPages = companyUrls
     .filter((url) => !companyEvidencePages.some((page) => page.url === url))
-    .map((url) => ({ url, markers: [] }));
-
-  for (const { url, markers } of [...companyEvidencePages, ...currentCompanyPages]) {
-    try {
-      const response = await fetchWithRetry(url, {
-        cache: "no-store",
-        headers: { "Cache-Control": "no-cache" },
-        redirect: "follow",
-        signal: AbortSignal.timeout(timeoutMs),
-      });
-      const body = await response.text();
-      assert(response.ok, `Evidence URL failed: ${url} (${response.status})`);
-      assertIncludes(
-        response.headers.get("content-type") || "",
-        "text/html",
-        `Evidence URL content type: ${url}`,
-      );
-      for (const marker of markers) {
-        assertIncludes(body, marker, `Evidence URL marker: ${url}`);
-      }
-    } catch (error) {
-      throw new Error(
-        `Evidence URL failed: ${url} (${error instanceof Error ? error.message : String(error)})`,
-      );
-    }
-  }
-
+    .map((url) => ({ url }));
+  const destinations = [...companyEvidencePages, ...currentCompanyPages];
   if (!smokeContactEmailVerified) {
-    try {
-      const response = await fetchWithRetry(smokeContactProfileUrl, {
-        cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-          "User-Agent": "Xentra-site-smoke",
-        },
-        redirect: "follow",
-        signal: AbortSignal.timeout(timeoutMs),
-      });
-      const body = await response.text();
-      assert(
-        response.ok,
-        `Public contact URL failed: ${smokeContactProfileUrl} (${response.status})`,
-      );
-      assertIncludes(
-        response.headers.get("content-type") || "",
-        "text/html",
-        `Public contact content type: ${smokeContactProfileUrl}`,
-      );
-      if (smokeContactProfileUrl === defaultContactProfileUrl) {
-        assertIncludes(body, "luckyericyao", `Default build record marker: ${smokeContactProfileUrl}`);
-      }
-    } catch (error) {
-      throw new Error(
-        `Public contact URL failed: ${smokeContactProfileUrl} (${error instanceof Error ? error.message : String(error)})`,
-      );
-    }
+    destinations.push({
+      url: smokeContactProfileUrl,
+      headers: { "User-Agent": "Xentra-site-smoke" },
+      markers: smokeContactProfileUrl === defaultContactProfileUrl ? ["luckyericyao"] : [],
+    });
   }
+  const report = await inspectPublicDestinations(destinations, async ({ url, headers }) => {
+    const response = await fetchWithRetry(url, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache", ...headers },
+      redirect: "follow",
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    return { response, body: await response.text() };
+  });
+  assertionCount += report.assertions;
+  if (report.failures.length) {
+    const details = report.failures.map(({ url, problems }) => `- ${url}: ${problems.join("; ")}`);
+    throw new Error(`Public destination checks failed (${report.failures.length}/${report.checked}):\n${details.join("\n")}`);
+  }
+  console.log(`PASS ${report.checked} public destinations (read-only)`);
 }
 
 function verifyNotFound(result, locale) {

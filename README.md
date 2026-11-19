@@ -78,7 +78,9 @@ local link targets, metadata, security headers, referenced CSS, scripts and
 preloaded fonts, and share and optimized image responses. It does not simulate
 a browser.
 
-Set `SMOKE_EXTERNAL=1` to include the three live operating-company URLs.
+Set `SMOKE_EXTERNAL=1` to check live operating-company homepages, product
+paths, and the public build record when shown. The external pass is read-only
+and reports all destination differences together, without submitting forms.
 
 The current local review and acceptance criteria are recorded in
 [the optimization report](docs/optimization-2026-11-09.md). Browser verification
