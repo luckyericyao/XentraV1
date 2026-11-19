@@ -1,5 +1,6 @@
 import { inspectLocalNavigation } from "./local-navigation.mjs";
 import { inspectPublicDestinations } from "./public-destinations.mjs";
+import { readSmokeResponse } from "./smoke-response.mjs";
 import {
   isPublicContactEmail,
   normalizePublicHttpsUrl,
@@ -160,15 +161,14 @@ async function get(pathname, options = {}) {
   const url = requestUrl(pathname, options.cacheBust !== false);
 
   try {
-    const response = await fetchWithRetry(url, {
+    const { response, body } = await readSmokeResponse(url, {
+      attempts: requestAttempts,
+      timeoutMs,
+      binary: options.binary,
       cache: "no-store",
       headers: { "Cache-Control": "no-cache", ...options.headers },
       redirect: "follow",
-      signal: AbortSignal.timeout(timeoutMs),
     });
-    const body = options.binary
-      ? new Uint8Array(await response.arrayBuffer())
-      : await response.text();
 
     return { body, headers: response.headers, response, url: response.url };
   } catch (error) {
@@ -213,36 +213,6 @@ function assertContactSurface(html, label) {
       assert(!html.includes(htmlEscape(smokeContactEmail)), `${label}: unverified configured address was published`);
     }
   }
-}
-
-function isRetryableStatus(status) {
-  return status === 408 || status === 429 || status >= 500;
-}
-
-async function fetchWithRetry(url, options = {}) {
-  let lastError;
-
-  for (let attempt = 1; attempt <= requestAttempts; attempt += 1) {
-    try {
-      const response = await fetch(url, options);
-
-      if (!isRetryableStatus(response.status) || attempt === requestAttempts) {
-        return response;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, attempt * 500));
-    } catch (error) {
-      lastError = error;
-
-      if (attempt === requestAttempts) {
-        throw error;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, attempt * 500));
-    }
-  }
-
-  throw lastError || new Error(`Request failed: ${url}`);
 }
 
 function assertSecurityHeaders(result, label) {
@@ -849,15 +819,15 @@ async function verifyExternalCompanies() {
       markers: smokeContactProfileUrl === defaultContactProfileUrl ? ["luckyericyao"] : [],
     });
   }
-  const report = await inspectPublicDestinations(destinations, async ({ url, headers }) => {
-    const response = await fetchWithRetry(url, {
+  const report = await inspectPublicDestinations(destinations, ({ url, headers }) =>
+    readSmokeResponse(url, {
+      attempts: requestAttempts,
+      timeoutMs,
       cache: "no-store",
       headers: { "Cache-Control": "no-cache", ...headers },
       redirect: "follow",
-      signal: AbortSignal.timeout(timeoutMs),
-    });
-    return { response, body: await response.text() };
-  });
+    }),
+  );
   assertionCount += report.assertions;
   if (report.failures.length) {
     const details = report.failures.map(({ url, problems }) => `- ${url}: ${problems.join("; ")}`);
