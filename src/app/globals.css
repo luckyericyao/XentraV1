@@ -97,6 +97,10 @@ summary:focus-visible {
   outline-offset: 4px;
 }
 
+.portfolio-evidence > a:focus-visible {
+  outline-offset: -4px;
+}
+
 main[tabindex="-1"]:focus,
 section[tabindex="-1"]:focus,
 .portfolio-chapter[tabindex="-1"]:focus {

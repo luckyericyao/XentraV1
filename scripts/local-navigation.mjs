@@ -1,5 +1,5 @@
 // Inspect Next's generated markup, not client state or external destinations.
-export function inspectLocalNavigation(pages, origin) {
+export function inspectLocalNavigation(pages, origin, { assetPaths = new Set() } = {}) {
   const index = new Map(pages.map(({ path, html }) => [
     path,
     new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1])),
@@ -27,7 +27,9 @@ export function inspectLocalNavigation(pages, origin) {
       }
 
       const ids = index.get(target.pathname);
-      let error = ids ? null : "missing local page";
+      const isAsset = assetPaths.has(target.pathname);
+      let error = ids || isAsset ? null : "missing local page";
+      if (!ids && isAsset && target.hash) error = "unexpected asset fragment";
       if (ids && target.hash) {
         try {
           if (!ids.has(decodeURIComponent(target.hash.slice(1)))) {

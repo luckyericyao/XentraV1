@@ -229,10 +229,22 @@ export function PortfolioChapters({
                 </div>
 
                 <figure className="portfolio-evidence overflow-hidden rounded-lg border border-[rgba(242,239,232,0.12)] bg-[#0A0B0C] shadow-[0_32px_120px_rgba(0,0,0,0.36)]">
-                  <figcaption className="flex min-h-12 items-center justify-between gap-4 border-b border-[rgba(242,239,232,0.1)] px-4 sm:px-5">
-                    <span className="text-xs font-medium text-[#A6A39A]">
-                      {copy.evidenceLabel}
-                    </span>
+                  <figcaption className="flex min-h-12 items-center justify-between gap-4 border-b border-[rgba(242,239,232,0.1)] px-4 py-2 sm:px-5">
+                    <div className="min-w-0">
+                      <span className="block text-xs font-medium text-[#A6A39A]">
+                        {copy.evidenceLabel}
+                      </span>
+                      <a
+                        href={company.evidence.sourceHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${copy.evidenceSourceLabel}: ${company.title} (${externalLinkLabel})`}
+                        className="inline-flex min-h-8 items-center gap-1 text-xs text-[#A6A39A] underline decoration-[#6F7782] underline-offset-4 hover:text-[#F2EFE8]"
+                      >
+                        {copy.evidenceSourceLabel}
+                        <span aria-hidden="true">&#8599;</span>
+                      </a>
+                    </div>
                     <span className="flex flex-col items-end gap-1 text-[10px] font-medium leading-none text-[#A6A39A] sm:text-[11px]">
                       <span className="flex items-center gap-2">
                         <span
@@ -247,10 +259,10 @@ export function PortfolioChapters({
                     </span>
                   </figcaption>
                   <a
-                    href={company.evidence.sourceHref}
+                    href={company.evidence.image}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${copy.evidenceLabel}: ${company.title} (${externalLinkLabel})`}
+                    aria-label={`${copy.screenshotLabel}: ${company.title} (${externalLinkLabel})`}
                     className="group block overflow-hidden"
                   >
                     <Image
@@ -261,6 +273,10 @@ export function PortfolioChapters({
                       sizes={evidenceSizes}
                       className="aspect-[8/5] h-auto w-full object-cover transition duration-700 group-hover:scale-[1.012]"
                     />
+                    <span className="relative flex min-h-11 items-center justify-end gap-2 border-t border-[rgba(242,239,232,0.1)] bg-[#0A0B0C] px-4 text-xs text-[#A6A39A] group-hover:text-[#F2EFE8] sm:px-5">
+                      {copy.screenshotLabel}
+                      <span aria-hidden="true">&#8599;</span>
+                    </span>
                   </a>
                   <div className="border-t border-[rgba(242,239,232,0.1)]">
                     <ul

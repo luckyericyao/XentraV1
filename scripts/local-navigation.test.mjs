@@ -27,6 +27,16 @@ test("a missing route is distinguished from a missing section", () => {
   assert.equal(checks[0].error, "missing local page");
 });
 
+test("only explicitly verified local assets are allowed as link destinations", () => {
+  const asset = "/images/portfolio/bioaxis.jpg";
+  const checks = inspectLocalNavigation([{
+    path: "/",
+    html: `<a href="${asset}">Original</a><a href="${asset}#missing">Wrong fragment</a><a href="/images/portfolio/wrong.jpg">Missing asset</a>`,
+  }], origin, { assetPaths: new Set([asset]) });
+
+  assert.deepEqual(checks.map(({ error }) => error), [null, "unexpected asset fragment", "missing local page"]);
+});
+
 test("fragments are decoded and malformed encodings fail without throwing", () => {
   const checks = inspectLocalNavigation([
     { path: "/", html: '<section id="业务"></section><a href="#%E4%B8%9A%E5%8A%A1">Business</a><a href="#%E0%A4%A">Invalid</a>' },

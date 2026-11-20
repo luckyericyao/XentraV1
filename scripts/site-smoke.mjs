@@ -70,6 +70,7 @@ const recordedCompanyUrls = {
   localhost: "https://localhostchinav1.vercel.app/",
   bioaxis: "https://bioaxisv3.vercel.app/",
 };
+const portfolioSlugs = ["ai-agent-coach", "localhost", "bioaxis"];
 
 const companyBaseUrls = {
   agentCoach: configuredSmokeUrl(
@@ -474,7 +475,7 @@ function verifyPage(result, locale) {
   for (const marker of companyCopyMarkers) {
     assertIncludes(result.body, marker, `${label} native company copy`);
   }
-  for (const slug of ["ai-agent-coach", "localhost", "bioaxis"]) {
+  for (const slug of portfolioSlugs) {
     assertIncludes(
       result.body,
       `<article id="${slug}-chapter" tabindex="-1"`,
@@ -960,6 +961,7 @@ async function verifyImageAssets(homepages) {
     for (const [locale, page] of homepages) {
       const image = page.body.match(/<img\b[^>]*>/g)?.find((tag) => tag.includes(htmlEscape(variant)));
       const label = `${locale} ${slug}`;
+      assertHref(page.body, path, `${label} full-size screenshot link`);
       assert(image, `${label}: missing responsive image candidate`);
       assertIncludes(image, 'loading="lazy"', `${label} lazy chapter image`);
       assertIncludes(image, 'sizes="(min-width: 84rem) 48rem,', `${label} bounded desktop image size`);
@@ -1040,7 +1042,8 @@ async function run() {
     { path: "/letter", html: englishLetter.body },
     { path: "/zh/letter", html: chineseLetter.body },
   ];
-  const localNavigation = inspectLocalNavigation(applicationPages, baseUrl);
+  const assetPaths = new Set(portfolioSlugs.map((slug) => `/images/portfolio/${slug}.jpg`));
+  const localNavigation = inspectLocalNavigation(applicationPages, baseUrl, { assetPaths });
   assert(localNavigation.length > 50, "Local navigation coverage is unexpectedly empty");
   for (const { path, href, error } of localNavigation) {
     assert(!error, `Local navigation ${path} -> ${href}: ${error}`);

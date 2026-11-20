@@ -90,6 +90,8 @@ export type SiteContent = {
     companyRoleLabel: string;
     companyRole: string;
     evidenceLabel: string;
+    evidenceSourceLabel: string;
+    screenshotLabel: string;
     evidenceCountLabel: string;
     evidenceVerifiedLabel: string;
     evidenceNote: string;
@@ -358,6 +360,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "Operating company",
       companyRole: "Owns market, customer, and delivery",
       evidenceLabel: "Public product evidence",
+      evidenceSourceLabel: "Screenshot source",
+      screenshotLabel: "View full-size screenshot",
       evidenceCountLabel: "public product paths",
       evidenceVerifiedLabel: `Screenshots: ${portfolioCaptureDate.english}`,
       evidenceNote:
@@ -637,6 +641,8 @@ export const siteContent: Record<Locale, SiteContent> = {
       companyRoleLabel: "业务公司",
       companyRole: "负责市场、客户与交付",
       evidenceLabel: "公开业务证据",
+      evidenceSourceLabel: "截图来源",
+      screenshotLabel: "查看原图",
       evidenceCountLabel: "公开产品入口",
       evidenceVerifiedLabel: `截图于 ${portfolioCaptureDate.chinese}`,
       evidenceNote: "截图为历史记录。链接指向公开页面，不代表服务开放、业绩承诺或第三方背书。",
