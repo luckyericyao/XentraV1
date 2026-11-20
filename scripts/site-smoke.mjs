@@ -948,7 +948,11 @@ async function verifyImageAssets(homepages) {
     const path = `/images/portfolio/${slug}.jpg`;
     const variant = `/_next/image?${new URLSearchParams({ url: path, w: "640", q: "75" })}`;
     for (const [locale, page] of homepages) {
-      assertIncludes(page.body, htmlEscape(variant), `${locale} ${slug} responsive image candidate`);
+      const image = page.body.match(/<img\b[^>]*>/g)?.find((tag) => tag.includes(htmlEscape(variant)));
+      const label = `${locale} ${slug}`;
+      assert(image, `${label}: missing responsive image candidate`);
+      assertIncludes(image, 'loading="lazy"', `${label} lazy chapter image`);
+      assertIncludes(image, 'sizes="(min-width: 84rem) 48rem,', `${label} bounded desktop image size`);
     }
 
     const [source, optimized] = await Promise.all([

@@ -10,6 +10,15 @@ type PortfolioChaptersProps = {
   externalLinkLabel: string;
 };
 
+// Match the chapter gutters, grid gap, and capped 64% evidence column.
+const evidenceSizes = [
+  "(min-width: 84rem) 48rem",
+  "(min-width: 80rem) calc(64vw - 5.75rem)",
+  "(min-width: 64rem) calc(64vw - 4.75rem)",
+  "(min-width: 40rem) calc(100vw - 4rem)",
+  "calc(100vw - 2.5rem)",
+].join(", ");
+
 export function PortfolioChapters({
   companies,
   copy,
@@ -249,7 +258,7 @@ export function PortfolioChapters({
                       alt={company.evidence.imageAlt}
                       width={1440}
                       height={900}
-                      sizes="(max-width: 1023px) 100vw, 62vw"
+                      sizes={evidenceSizes}
                       className="aspect-[8/5] h-auto w-full object-cover transition duration-700 group-hover:scale-[1.012]"
                     />
                   </a>
