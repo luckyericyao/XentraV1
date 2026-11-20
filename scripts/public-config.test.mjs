@@ -35,8 +35,9 @@ test("valid HTTPS paths are normalized without losing their base path", () => {
 test("Localhost visit links use its production address without changing recorded evidence", () => {
   const result = loadConfig();
   assert.equal(result.status, 0, result.stderr);
-  const { publicCompanyLinks, recordedCompanyLinks } = JSON.parse(result.stdout);
-  assert.equal(publicCompanyLinks.localhost, "https://localhostglobal.vercel.app/");
+  const { localhostProductSite, publicCompanyLinks, recordedCompanyLinks } = JSON.parse(result.stdout);
+  assert.equal(localhostProductSite, "https://localhostglobal.vercel.app/");
+  assert.equal(publicCompanyLinks.localhost, localhostProductSite);
   assert.equal(recordedCompanyLinks.localhost, "https://localhostchinav1.vercel.app/");
 });
 
@@ -47,8 +48,9 @@ test("current company overrides do not change recorded evidence sources", () => 
     XENTRA_BIOAXIS_URL: "https://lab.example.test/sourcing",
   });
   assert.equal(result.status, 0, result.stderr);
-  const { publicCompanyLinks, recordedCompanyLinks } = JSON.parse(result.stdout);
+  const { localhostProductSite, publicCompanyLinks, recordedCompanyLinks } = JSON.parse(result.stdout);
   assert.notDeepEqual(publicCompanyLinks, recordedCompanyLinks);
+  assert.equal(localhostProductSite, "https://localhostglobal.vercel.app/");
   assert.deepEqual(recordedCompanyLinks, {
     agentCoach: "https://agentcoach-three.vercel.app/",
     localhost: "https://localhostchinav1.vercel.app/",

@@ -1,4 +1,5 @@
 import {
+  localhostProductSite,
   publicCompanyLinks,
   publicContact,
   recordedCompanyLinks,
@@ -155,9 +156,9 @@ const evidenceLinks = {
     coaches: new URL("become-a-coach", recordedCompanyLinks.agentCoach).href,
   },
   localhost: {
-    routes: new URL("journeys", recordedCompanyLinks.localhost).href,
-    inquiry: new URL("inquiry?type=traveler", recordedCompanyLinks.localhost).href,
-    trust: new URL("trust", recordedCompanyLinks.localhost).href,
+    routes: new URL("journeys", localhostProductSite).href,
+    inquiry: new URL("inquiry?type=traveler", localhostProductSite).href,
+    trust: new URL("trust", localhostProductSite).href,
   },
   bioaxis: {
     readySupply: new URL("ready-supply", recordedCompanyLinks.bioaxis).href,

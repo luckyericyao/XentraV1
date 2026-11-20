@@ -15,7 +15,10 @@ The production addresses are:
 
 The other addresses were last recorded on 13 Aug 2026. The former Localhost
 host, `https://localhostchinav1.vercel.app/`, redirects to its production site.
-It remains attached to the historical screenshot and product-path record.
+It remains attached to the historical screenshot. On 20 Nov 2026, the three
+public Localhost product links were updated to go directly to the production
+site: journeys, traveler inquiry, and trust. The pages were checked without
+submitting an inquiry or validating delivery.
 
 No owned branded domain for Xentra or the three operating companies was confirmed in the available repositories or deployment configuration. On 13 Aug 2026, `xentra.ai` resolved to an Atom domain-sale page, so it must not be used for the website or email until ownership and DNS control are independently confirmed. The site keeps the verified defaults until an owner confirms replacement targets.
 

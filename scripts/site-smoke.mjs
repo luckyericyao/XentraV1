@@ -71,6 +71,7 @@ const recordedCompanyUrls = {
   bioaxis: "https://bioaxisv3.vercel.app/",
 };
 const portfolioSlugs = ["ai-agent-coach", "localhost", "bioaxis"];
+const localhostProductSite = "https://localhostglobal.vercel.app/";
 
 const companyBaseUrls = {
   agentCoach: configuredSmokeUrl(
@@ -79,7 +80,7 @@ const companyBaseUrls = {
   ),
   localhost: configuredSmokeUrl(
     "SMOKE_LOCALHOST_URL",
-    "https://localhostglobal.vercel.app/",
+    localhostProductSite,
   ),
   bioaxis: configuredSmokeUrl(
     "SMOKE_BIOAXIS_URL",
@@ -97,9 +98,9 @@ const companyEvidenceUrls = [
   `${recordedCompanyUrls.agentCoach}recipes`,
   `${recordedCompanyUrls.agentCoach}become-a-client`,
   `${recordedCompanyUrls.agentCoach}become-a-coach`,
-  `${recordedCompanyUrls.localhost}journeys`,
-  `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
-  `${recordedCompanyUrls.localhost}trust`,
+  `${localhostProductSite}journeys`,
+  `${localhostProductSite}inquiry?type=traveler`,
+  `${localhostProductSite}trust`,
   `${recordedCompanyUrls.bioaxis}ready-supply`,
   `${recordedCompanyUrls.bioaxis}equivalent-finder`,
   `${recordedCompanyUrls.bioaxis}request-quote`,
@@ -119,15 +120,18 @@ const companyEvidencePages = [
     markers: ["Turn your expertise into reusable Agent Recipes."],
   },
   {
-    url: `${recordedCompanyUrls.localhost}journeys`,
+    url: `${localhostProductSite}journeys`,
+    redirect: "manual",
     markers: ["Four routes into China.", 'href="/china/shanxi"', 'href="/china/shaolin"', 'href="/china/huizhou"', 'href="/china/shanghai"'],
   },
   {
-    url: `${recordedCompanyUrls.localhost}inquiry?type=traveler`,
+    url: `${localhostProductSite}inquiry?type=traveler`,
+    redirect: "manual",
     markers: ['data-inquiry-form="true"', 'id="inquiry-short-note"'],
   },
   {
-    url: `${recordedCompanyUrls.localhost}trust`,
+    url: `${localhostProductSite}trust`,
+    redirect: "manual",
     markers: ["A local-host network only works if it protects both sides."],
   },
   {
@@ -591,7 +595,7 @@ function verifyPage(result, locale) {
   }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-11-19",
+    webpage?.dateModified === "2026-11-20",
     `${label}: missing page-modification date`,
   );
   assert(
@@ -786,7 +790,7 @@ function verifyFounderLetter(result, locale) {
     `${label}: invalid publication date`,
   );
   assert(
-    structuredData.dateModified === "2026-11-19",
+    structuredData.dateModified === "2026-11-20",
     `${label}: invalid modified date`,
   );
   assert(
@@ -828,13 +832,13 @@ async function verifyExternalCompanies() {
       markers: smokeContactProfileUrl === defaultContactProfileUrl ? ["luckyericyao"] : [],
     });
   }
-  const report = await inspectPublicDestinations(destinations, ({ url, headers }) =>
+  const report = await inspectPublicDestinations(destinations, ({ url, headers, redirect = "follow" }) =>
     readSmokeResponse(url, {
       attempts: requestAttempts,
       timeoutMs,
       cache: "no-store",
       headers: { "Cache-Control": "no-cache", ...headers },
-      redirect: "follow",
+      redirect,
     }),
   );
   assertionCount += report.assertions;
@@ -1106,7 +1110,7 @@ async function run() {
     .map((match) => match[1]);
   for (const path of ["/", "/zh", "/letter", "/zh/letter", "/privacy", "/zh/privacy"]) {
     const entry = sitemapEntries.find((value) => value.includes(`<loc>${canonicalUrl}${path}</loc>`));
-    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-19";
+    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-20";
     assert(entry, `Sitemap entry missing: ${path}`);
     assertIncludes(entry, `<lastmod>${modified}T00:00:00.000Z</lastmod>`, `Sitemap page date: ${path}`);
   }

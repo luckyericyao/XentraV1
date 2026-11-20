@@ -4,12 +4,14 @@ import {
   publicUrlLabel,
 } from "./public-address.mjs";
 
-// These are the sources of the dated screenshots and product paths.
+// These are the sources of the dated screenshots.
 export const recordedCompanyLinks = {
   agentCoach: "https://agentcoach-three.vercel.app/",
   localhost: "https://localhostchinav1.vercel.app/",
   bioaxis: "https://bioaxisv3.vercel.app/",
 } as const;
+
+export const localhostProductSite = "https://localhostglobal.vercel.app/";
 
 function readHttpsUrl(name: string, fallback: string) {
   const raw = process.env[name]?.trim();
@@ -42,7 +44,7 @@ export const publicCompanyLinks = {
   ),
   localhost: readHttpsUrl(
     "XENTRA_LOCALHOST_URL",
-    "https://localhostglobal.vercel.app/",
+    localhostProductSite,
   ),
   bioaxis: readHttpsUrl(
     "XENTRA_BIOAXIS_URL",
