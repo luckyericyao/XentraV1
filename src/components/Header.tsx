@@ -70,10 +70,13 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       );
 
     const updateScrollState = () => {
+      const root = document.documentElement;
+      const anchorInset = Number.parseFloat(window.getComputedStyle(root).scrollPaddingTop);
       const readingMarker = getReadingMarker(
         window.innerHeight,
         window.scrollY,
-        document.documentElement.scrollHeight,
+        root.scrollHeight,
+        anchorInset,
       );
       const marker = window.scrollY + readingMarker;
       let nextActiveHref = "";

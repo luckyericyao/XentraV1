@@ -8,6 +8,19 @@ test("ordinary scrolling keeps the reading marker near the top of the viewport",
   assert.equal(getReadingMarker(1440, 3358, 4800), 260);
 });
 
+test("short viewports include the section aligned below the sticky header", () => {
+  const sections = [{ id: "earlier", top: -1500 }, { id: "chapter", top: 80.4 }];
+  const marker = getReadingMarker(220, 1200, 4800, 80);
+  assert.equal(getReadingHash(sections, marker), "#chapter");
+});
+
+test("enlarged anchor padding is respected without extending the marker beyond the viewport", () => {
+  assert.equal(getReadingMarker(340, 1200, 4800, 160), 161);
+  assert.equal(getReadingMarker(120, 1200, 4800, 160), 120);
+  assert.equal(getReadingMarker(844, 1200, 4800, 80), 260);
+  assert.equal(getReadingMarker(220, 1200, 4800, NaN), 220 * 0.34);
+});
+
 test("the last visible section wins when the page cannot scroll any farther", () => {
   const sections = [{ id: "model", top: -200 }, { id: "contact", top: 328 }];
   assert.equal(getReadingHash(sections, getReadingMarker(1440, 3359.5, 4800)), "#contact");

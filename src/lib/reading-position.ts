@@ -7,6 +7,7 @@ export function getReadingMarker(
   viewportHeight: number,
   scrollTop: number,
   scrollHeight: number,
+  anchorInset = 0,
 ) {
   const scrollLimit = scrollHeight - viewportHeight;
 
@@ -15,7 +16,9 @@ export function getReadingMarker(
     return viewportHeight;
   }
 
-  return Math.min(viewportHeight * 0.34, 260);
+  // Include an anchor aligned below the sticky header, allowing fractional rounding.
+  const anchorMarker = anchorInset > 0 ? anchorInset + 1 : 0;
+  return Math.min(viewportHeight, Math.max(anchorMarker, Math.min(viewportHeight * 0.34, 260)));
 }
 
 export function getReadingHash(sections: ReadingSection[], marker: number) {
