@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  type KeyboardEvent as ReactKeyboardEvent,
-  type MouseEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { openMobileNavigation } from "@/lib/mobile-navigation";
 import { getReadingHash, getReadingMarker } from "@/lib/reading-position";
 
@@ -34,39 +28,6 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
     : isChinese
       ? "打开导航"
       : "Open navigation";
-
-  const moveToMain = () => {
-    const main = document.getElementById("top");
-
-    if (!main) {
-      return;
-    }
-
-    main.focus({ preventScroll: true });
-    main.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-      block: "start",
-    });
-    window.history.replaceState(null, "", "#top");
-  };
-
-  const focusMain = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    moveToMain();
-  };
-
-  const focusMainFromKeyboard = (
-    event: ReactKeyboardEvent<HTMLAnchorElement>,
-  ) => {
-    if (event.key !== "Enter" && event.key !== " ") {
-      return;
-    }
-
-    event.preventDefault();
-    moveToMain();
-  };
 
   useEffect(() => {
     const button = menuButtonRef.current;
@@ -163,8 +124,12 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       <a
         href="#top"
         data-navigation-background
-        onClick={focusMain}
-        onKeyDown={focusMainFromKeyboard}
+        onKeyDown={(event) => {
+          if (event.key === " " && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+            event.preventDefault();
+            event.currentTarget.click();
+          }
+        }}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border focus:border-[rgba(198,161,91,0.5)] focus:bg-[#101214] focus:px-4 focus:py-2.5 focus:text-sm focus:text-[#F2EFE8] focus:shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
       >
         {skipLabel}
@@ -184,15 +149,6 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
           href={homeHref}
           data-navigation-background
           className="text-sm font-semibold uppercase tracking-[0.14em] text-[#F2EFE8]"
-          onClick={(event) => {
-            setMenuOpen(false);
-
-            if (homeHref !== "#top") {
-              return;
-            }
-
-            focusMain(event);
-          }}
         >
           Xentra
         </a>
@@ -286,7 +242,10 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
               <a
                 key={`mobile-${item.href}`}
                 href={item.href}
-                onClick={() => {
+                onClick={(event) => {
+                  if (event.defaultPrevented || event.button !== 0 || event.altKey ||
+                      event.ctrlKey || event.metaKey || event.shiftKey) return;
+
                   const destination = item.href.startsWith("#")
                     ? document.getElementById(item.href.slice(1))
                     : null;
