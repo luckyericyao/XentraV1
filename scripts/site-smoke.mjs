@@ -1,5 +1,6 @@
 import { inspectLocalNavigation } from "./local-navigation.mjs";
 import { inspectPublicDestinations } from "./public-destinations.mjs";
+import { readReleaseSnapshot } from "./release-snapshot.mjs";
 import { readSmokeResponse } from "./smoke-response.mjs";
 import {
   isPublicContactEmail,
@@ -18,6 +19,13 @@ const checkExternal = process.env.SMOKE_EXTERNAL === "1";
 const expectedRevision = process.env.SMOKE_RELEASE_SHA;
 if (expectedRevision && !/^[0-9a-f]{40}$/.test(expectedRevision)) {
   throw new Error("SMOKE_RELEASE_SHA must be a full lowercase Git SHA.");
+}
+const releaseAttempts = Number(process.env.SMOKE_RELEASE_ATTEMPTS || 1);
+if (!Number.isInteger(releaseAttempts) || releaseAttempts < 1 || releaseAttempts > 10) {
+  throw new Error("SMOKE_RELEASE_ATTEMPTS must be an integer from 1 to 10.");
+}
+if (releaseAttempts > 1 && !expectedRevision) {
+  throw new Error("Set SMOKE_RELEASE_SHA to wait for a release.");
 }
 const timeoutMs = Number(process.env.SMOKE_TIMEOUT_MS || 30_000);
 const requestAttempts = Math.max(
@@ -151,14 +159,14 @@ function assert(condition, message) {
   }
 }
 
-function requestUrl(pathname, cacheBust) {
+function requestUrl(pathname, cacheBust, cacheKey = runId) {
   const url = new URL(pathname, `${baseUrl}/`);
-  if (cacheBust) url.searchParams.set("_smoke", runId);
+  if (cacheBust) url.searchParams.set("_smoke", cacheKey);
   return url;
 }
 
 async function get(pathname, options = {}) {
-  const url = requestUrl(pathname, options.cacheBust !== false);
+  const url = requestUrl(pathname, options.cacheBust !== false, options.cacheKey);
 
   try {
     const { response, body } = await readSmokeResponse(url, {
@@ -975,6 +983,23 @@ async function verifyImageAssets(homepages) {
   }
 }
 
+function readDocuments() {
+  const paths = [
+    "/", "/zh",
+    "/smoke-missing-route/smoke-not-found-input",
+    "/zh/smoke-missing-route?probe=smoke-not-found-input",
+    "/privacy", "/zh/privacy", "/letter", "/zh/letter",
+  ];
+  if (!expectedRevision) return Promise.all(paths.map((path) => get(path)));
+
+  return readReleaseSnapshot(
+    paths,
+    expectedRevision,
+    (path, attempt) => get(path, { cacheKey: `${runId}-release-${attempt}` }),
+    { attempts: releaseAttempts },
+  );
+}
+
 async function run() {
   const [
     english,
@@ -985,20 +1010,14 @@ async function run() {
     chinesePrivacy,
     englishLetter,
     chineseLetter,
+  ] = await readDocuments();
+  const [
     englishManifest,
     chineseManifest,
     robots,
     sitemap,
     recoveryStyles,
   ] = await Promise.all([
-    get("/"),
-    get("/zh"),
-    get("/smoke-missing-route/smoke-not-found-input"),
-    get("/zh/smoke-missing-route?probe=smoke-not-found-input"),
-    get("/privacy"),
-    get("/zh/privacy"),
-    get("/letter"),
-    get("/zh/letter"),
     get("/manifest.webmanifest"),
     get("/zh/manifest.webmanifest"),
     get("/robots.txt"),
