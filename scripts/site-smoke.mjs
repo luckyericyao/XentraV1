@@ -896,8 +896,10 @@ async function verifyPageAssets(pages) {
     const [stylesheets] = await Promise.all(Object.entries(references).map(([kind, paths]) => (
       Promise.all([...paths].map((asset) => checkAsset(asset, kind)))
     )));
+    const css = stylesheets.join("\n");
+    assert(/(?:^|})\s*body\s*\{[^}]*\boverflow-wrap:\s*anywhere\b/.test(css),
+      `${path}: long text must wrap at enlarged font sizes`);
     if (path === "/" || path === "/zh") {
-      const css = stylesheets.join("\n");
       assertIncludes(css, ".hero-title", `${path} hero stylesheet`);
       assertIncludes(css, ".md\\:hidden", `${path} generated responsive utilities`);
       assertIncludes(css, ".scroll-rise:focus-within", `${path} animated link focus visibility`);

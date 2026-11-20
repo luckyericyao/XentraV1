@@ -51,6 +51,7 @@ body {
     var(--background);
   color: var(--text-primary);
   font-family: var(--font-instrument), Arial, Helvetica, sans-serif;
+  overflow-wrap: anywhere;
   text-rendering: geometricPrecision;
 }
 
