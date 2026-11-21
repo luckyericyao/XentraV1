@@ -18,7 +18,7 @@ type LetterCopy = {
   deck: string;
   publishedLabel: string;
   indexLabel: string;
-  sections: { title: string; body: string }[];
+  sections: { id: string; title: string; body: string }[];
   proof: {
     eyebrow: string;
     title: string;
@@ -59,14 +59,17 @@ const letterCopy: Record<Locale, LetterCopy> = {
     indexLabel: "Operating convictions",
     sections: [
       {
+        id: "letter-judgment",
         title: "Judgment is not friction.",
         body: "In complex markets, the decision is part of the product. Search can be automated; accountability cannot. The goal is not to keep people in every step, but to reserve human judgment for the moments that change the outcome.",
       },
       {
+        id: "letter-delivery",
         title: "The last mile belongs inside the company.",
         body: "A recommendation without delivery transfers the hardest part back to the customer. Xentra's operating companies stay with the handoff: workflow adoption, local access, or laboratory supply.",
       },
       {
+        id: "letter-group",
         title: "The center must earn its place.",
         body: "A parent company is useful only if it improves what each business can do alone. Xentra shares methods for structure, reasoning, verification, and execution while every company remains answerable to its market.",
       },
@@ -112,14 +115,17 @@ const letterCopy: Record<Locale, LetterCopy> = {
     indexLabel: "经营判断",
     sections: [
       {
+        id: "letter-judgment",
         title: "判断不是多余成本。",
         body: "在复杂市场里，用户购买的往往不只是信息，而是有人愿意对选择负责。搜索可以自动化，责任不能。人的价值，不是留在每个步骤里，而是出现在真正改变结果的节点。",
       },
       {
+        id: "letter-delivery",
         title: "最后一公里，本来就是产品的一部分。",
         body: "只给建议、不管交付，是把最难的问题重新交还给用户。Xentra 旗下业务会留在最后的交接现场：工作流落地、本地进入，或实验室供应。",
       },
       {
+        id: "letter-group",
         title: "母公司必须证明自己值得存在。",
         body: "如果集团不能让每家公司做得更好，中心就只是管理成本。Xentra 共享结构化、推理、验证与执行的方法；每家公司仍然直接面对市场，并对结果负责。",
       },
@@ -264,14 +270,19 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
             <div className="border-t border-[#2A2D33]">
               {copy.sections.map((section, index) => (
                 <article
-                  key={section.title}
+                  key={section.id}
                   className="grid gap-5 border-b border-[#2A2D33] py-9 sm:grid-cols-[4rem_1fr] sm:gap-8 sm:py-12"
                 >
                   <p className="eyebrow pt-1 text-[#B49459]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <div>
-                    <h2 className="text-balance text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl">
+                    <h2
+                      id={section.id}
+                      data-reading-stop
+                      tabIndex={-1}
+                      className="text-balance text-2xl font-semibold leading-tight sm:text-3xl lg:text-4xl"
+                    >
                       {section.title}
                     </h2>
                     <p className="mt-5 max-w-3xl text-base leading-8 text-[#A6A39A] sm:text-lg sm:leading-8">
@@ -296,6 +307,8 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
                 </p>
                 <h2
                   id="letter-proof-title"
+                  data-reading-stop
+                  tabIndex={-1}
                   className="max-w-4xl text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
                 >
                   {copy.proof.title}
@@ -382,7 +395,12 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
         <section className="border-y border-[#2A2D33] bg-[#101214] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_0.38fr] lg:items-end lg:gap-20">
             <div>
-              <p className="max-w-4xl text-balance text-3xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+              <p
+                id="letter-closing"
+                data-reading-stop
+                tabIndex={-1}
+                className="max-w-4xl text-balance text-3xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+              >
                 {copy.closing}
               </p>
               <p className="eyebrow mt-9 flex items-center gap-3 text-[#B49459]">

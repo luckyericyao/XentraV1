@@ -739,6 +739,10 @@ function verifyFounderLetter(result, locale) {
   for (const sectionTitle of sectionTitles) {
     assertIncludes(result.body, sectionTitle, `${label} section thesis`);
   }
+  for (const id of ["letter-judgment", "letter-delivery", "letter-group", "letter-proof-title", "letter-closing"]) {
+    assertIncludes(result.body, `id="${id}" data-reading-stop="true" tabindex="-1"`,
+      `${label} focusable translation anchor`);
+  }
   assertIncludes(result.body, proofTitle, `${label} operating proof title`);
   assertIncludes(result.body, proofBody, `${label} operating proof body`);
   for (const question of decisionQuestions) {

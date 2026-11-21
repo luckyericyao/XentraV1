@@ -108,7 +108,8 @@ section[tabindex="-1"]:focus,
 }
 
 section[tabindex="-1"]:focus-visible .section-title,
-.portfolio-chapter[tabindex="-1"]:focus-visible h3 {
+.portfolio-chapter[tabindex="-1"]:focus-visible h3,
+[data-reading-stop]:focus-visible {
   outline: 2px solid rgba(198, 161, 91, 0.72);
   outline-offset: 8px;
 }

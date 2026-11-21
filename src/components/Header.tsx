@@ -53,11 +53,9 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
   }, [menuOpen]);
 
   useEffect(() => {
-    const readingSections = homeHref === "#top"
-      ? Array.from(document.querySelectorAll<HTMLElement>(
-          "main > section[id], .portfolio-chapter[id]",
-        ))
-      : [];
+    const readingSections = Array.from(document.querySelectorAll<HTMLElement>(
+      "main > section[id], main .portfolio-chapter[id], main [data-reading-stop][id]",
+    ));
     const sections = navItems
       .filter((item) => item.href.startsWith("#"))
       .map((item) => ({
@@ -93,12 +91,13 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       setActiveHref((current) =>
         current === nextActiveHref ? current : nextActiveHref,
       );
-      const nextReadingHash = readingSections.length
+      const selectedHash = readingSections.length
         ? getReadingHash(readingSections.flatMap((section) => {
             const bounds = section.getBoundingClientRect();
             return bounds.height > 0 ? [{ id: section.id, top: bounds.top }] : [];
           }), readingMarker)
         : "";
+      const nextReadingHash = selectedHash === "#top" && homeHref !== "#top" ? "" : selectedHash;
       setReadingHash((current) =>
         current === nextReadingHash ? current : nextReadingHash,
       );
