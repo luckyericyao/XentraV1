@@ -261,12 +261,25 @@ export function FounderLetterPage({ locale }: FounderLetterPageProps) {
           className="bg-[#101214] px-5 py-20 text-[#F2EFE8] sm:px-8 sm:py-24 lg:py-32"
         >
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.38fr_1fr] lg:gap-20">
-            <div className="lg:sticky lg:top-28 lg:self-start">
-              <p className="eyebrow text-[#B49459]">{copy.indexLabel}</p>
-              <p className="mt-5 max-w-xs text-sm leading-6 text-[#8D97A5]">
-                01 / 03
-              </p>
-            </div>
+            <nav aria-label={copy.indexLabel} className="letter-contents lg:self-start">
+              <p aria-hidden="true" className="eyebrow text-[#B49459]">{copy.indexLabel}</p>
+              <ol className="mt-5 divide-y divide-[#2A2D33] border-y border-[#2A2D33]">
+                {copy.sections.map((section, index) => (
+                  <li key={section.id}>
+                    <a
+                      href={`#${section.id}`}
+                      className="flex min-h-11 items-baseline gap-3 py-3 text-sm leading-6 text-[#A6A39A] transition hover:text-[#F2EFE8]"
+                    >
+                      <span aria-hidden="true" className="shrink-0 text-[11px] tabular-nums text-[#B49459]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="min-w-0 flex-1">{section.title}</span>
+                      <span aria-hidden="true" className="shrink-0 text-[#B49459]">&#8595;</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
             <div className="border-t border-[#2A2D33]">
               {copy.sections.map((section, index) => (
                 <article

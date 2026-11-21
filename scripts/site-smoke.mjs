@@ -743,6 +743,9 @@ function verifyFounderLetter(result, locale) {
     assertIncludes(result.body, `id="${id}" data-reading-stop="true" tabindex="-1"`,
       `${label} focusable translation anchor`);
   }
+  for (const id of ["letter-judgment", "letter-delivery", "letter-group"]) {
+    assertHref(result.body, `#${id}`, `${label} native contents link`);
+  }
   assertIncludes(result.body, proofTitle, `${label} operating proof title`);
   assertIncludes(result.body, proofBody, `${label} operating proof body`);
   for (const question of decisionQuestions) {

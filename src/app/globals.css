@@ -179,6 +179,13 @@ details[open] .disclosure-icon {
   font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
 }
 
+@media (min-width: 64rem) and (min-height: 32rem) {
+  .letter-contents {
+    position: sticky;
+    top: 7rem;
+  }
+}
+
 .cjk .section-title {
   max-width: 18em;
   line-height: 1.3;
