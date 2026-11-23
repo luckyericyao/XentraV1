@@ -39,6 +39,11 @@ to its workflow library and client and coach overview pages. The two overview
 pages were accessible but did not accept public applications. This did not
 change the screenshot dates or establish any delivery claims.
 
+On 24 Nov 2026, the AI Agent Coach recipe link remained public and exposed
+sample workflows as illustrative previews. Xentra labels them as previews
+without implying independent verification or tested delivery. The screenshot
+dates and source URLs did not change.
+
 On 19 Nov 2026, BioAxis's public link labels were updated to match its
 availability check, equivalent review, and sourcing request pages. The first
 two link to the shared sourcing request page; neither reports live inventory or

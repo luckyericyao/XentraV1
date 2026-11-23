@@ -109,7 +109,11 @@ const companyEvidenceUrls = [
 const companyEvidencePages = [
   {
     url: `${recordedCompanyUrls.agentCoach}recipes`,
-    markers: ["Reusable expert workflows for building useful AI agents."],
+    markers: [
+      "<title>Agent Recipes | AgentCoach</title>",
+      'href="/recipes/samples/',
+      "Illustrative previews.",
+    ],
   },
   {
     url: `${recordedCompanyUrls.agentCoach}become-a-client`,
@@ -377,7 +381,7 @@ function verifyPage(result, locale) {
       ];
   const publicEvidence = isChinese
     ? [
-        "工作流范例库",
+        "工作流示例",
         "客户说明",
         "教练说明",
         "公开路线样本",
@@ -387,7 +391,7 @@ function verifyPage(result, locale) {
         "采购需求入口",
       ]
     : [
-        "Workflow recipe library",
+        "Workflow previews",
         "Client overview",
         "Coach overview",
         "Route previews",
@@ -598,7 +602,7 @@ function verifyPage(result, locale) {
   }
   assert(webpage?.inLanguage === expectedLang, `${label}: invalid page language`);
   assert(
-    webpage?.dateModified === "2026-11-20",
+    webpage?.dateModified === "2026-11-24",
     `${label}: missing page-modification date`,
   );
   assert(
@@ -751,6 +755,7 @@ function verifyFounderLetter(result, locale) {
   }
   assertIncludes(result.body, proofTitle, `${label} operating proof title`);
   assertIncludes(result.body, proofBody, `${label} operating proof body`);
+  assertIncludes(result.body, isChinese ? "工作流示例" : "Workflow previews", `${label} recipe preview label`);
   for (const question of decisionQuestions) {
     assertIncludes(result.body, question, `${label} customer decision question`);
   }
@@ -800,7 +805,7 @@ function verifyFounderLetter(result, locale) {
     `${label}: invalid publication date`,
   );
   assert(
-    structuredData.dateModified === "2026-11-20",
+    structuredData.dateModified === "2026-11-24",
     `${label}: invalid modified date`,
   );
   assert(
@@ -1136,7 +1141,7 @@ async function run() {
     .map((match) => match[1]);
   for (const path of ["/", "/zh", "/letter", "/zh/letter", "/privacy", "/zh/privacy"]) {
     const entry = sitemapEntries.find((value) => value.includes(`<loc>${canonicalUrl}${path}</loc>`));
-    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-20";
+    const modified = path.endsWith("/privacy") ? "2026-08-13" : "2026-11-24";
     assert(entry, `Sitemap entry missing: ${path}`);
     assertIncludes(entry, `<lastmod>${modified}T00:00:00.000Z</lastmod>`, `Sitemap page date: ${path}`);
   }

@@ -11,7 +11,7 @@ export const privacyReviewDate = {
 
 // Page edits do not renew screenshot or privacy-review dates.
 export const sitePageDates = {
-  home: "2026-11-20",
-  letter: "2026-11-20",
+  home: "2026-11-24",
+  letter: "2026-11-24",
   privacy: "2026-08-13",
 } as const;

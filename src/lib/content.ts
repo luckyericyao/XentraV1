@@ -257,10 +257,10 @@ export const siteContent: Record<Locale, SiteContent> = {
             decision:
               "How does AI become part of the work, not another tool people stop using?",
             delivery:
-              "Expert-authored workflow recipes and structured guidance for teams.",
+              "Sample workflows with inputs, outputs, and review boundaries.",
             proof: [
               {
-                label: "Workflow recipe library",
+                label: "Workflow previews",
                 href: evidenceLinks.agentCoach.recipes,
               },
               { label: "Client overview", href: evidenceLinks.agentCoach.clients },
@@ -559,9 +559,9 @@ export const siteContent: Record<Locale, SiteContent> = {
             imageAlt: "AI Agent Coach 官网，展示按行业组织的专业 AI 教练。",
             audience: "面对复杂行业决策的专业人士与团队。",
             decision: "怎样让 AI 真正进入工作，而不是又一个很快被放弃的工具？",
-            delivery: "由专业人士整理的工作流范例，以及面向团队的实施指导。",
+            delivery: "展示输入、输出与复核边界的工作流示例。",
             proof: [
-              { label: "工作流范例库", href: evidenceLinks.agentCoach.recipes },
+              { label: "工作流示例", href: evidenceLinks.agentCoach.recipes },
               { label: "客户说明", href: evidenceLinks.agentCoach.clients },
               { label: "教练说明", href: evidenceLinks.agentCoach.coaches },
             ],
