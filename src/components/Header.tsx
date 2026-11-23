@@ -57,6 +57,13 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
     const readingSections = Array.from(document.querySelectorAll<HTMLElement>(
       "main > section[id], main .portfolio-chapter[id], main [data-reading-stop][id]",
     ));
+    const disclosures = readingSections.filter((section) => section instanceof HTMLDetailsElement);
+    const readId = (section: HTMLElement) => {
+      const expandedTarget = section instanceof HTMLDetailsElement && section.open
+        ? section.querySelector<HTMLElement>("[data-reading-content][id]")
+        : null;
+      return expandedTarget?.id ?? section.id;
+    };
     const sections = navItems
       .filter((item) => item.href.startsWith("#"))
       .map((item) => ({
@@ -92,10 +99,16 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
       setActiveHref((current) =>
         current === nextActiveHref ? current : nextActiveHref,
       );
-      const selectedHash = readingSections.length
-        ? getReadingHash(readingSections.flatMap((section) => {
+      const focusedDisclosure = disclosures.find((section) => {
+        if (!section.contains(document.activeElement)) return false;
+        const bounds = section.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > (anchorInset || 0);
+      });
+      const selectedHash = focusedDisclosure
+        ? `#${readId(focusedDisclosure)}`
+        : readingSections.length ? getReadingHash(readingSections.flatMap((section) => {
             const bounds = section.getBoundingClientRect();
-            return bounds.height > 0 ? [{ id: section.id, top: bounds.top }] : [];
+            return bounds.height > 0 ? [{ id: readId(section), top: bounds.top }] : [];
           }), readingMarker)
         : "";
       const nextReadingHash = selectedHash === "#top" && homeHref !== "#top" ? "" : selectedHash;
@@ -112,11 +125,13 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
     window.addEventListener("scroll", updateScrollState, { passive: true });
     window.addEventListener("resize", updateScrollState);
     window.addEventListener("hashchange", updateScrollState);
+    disclosures.forEach((section) => section.addEventListener("toggle", updateScrollState));
 
     return () => {
       window.removeEventListener("scroll", updateScrollState);
       window.removeEventListener("resize", updateScrollState);
       window.removeEventListener("hashchange", updateScrollState);
+      disclosures.forEach((section) => section.removeEventListener("toggle", updateScrollState));
     };
   }, [homeHref, navItems]);
 

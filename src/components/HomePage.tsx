@@ -415,7 +415,7 @@ export function HomePage({ locale }: HomePageProps) {
             </div>
 
             {content.directions ? (
-              <details id="directions" className="mt-9 border-b border-[#2A2D33] pb-6">
+              <details id="directions" data-reading-stop tabIndex={-1} className="mt-9 border-b border-[#2A2D33] pb-6">
                 <summary className="group flex cursor-pointer list-none items-center justify-between gap-6">
                   <div>
                     <p className="eyebrow text-[#B49459]">{content.directions.eyebrow}</p>
@@ -425,7 +425,12 @@ export function HomePage({ locale }: HomePageProps) {
                   </div>
                   <span aria-hidden="true" className="disclosure-icon text-2xl font-light text-[#B49459] transition duration-300">+</span>
                 </summary>
-                <div className="mt-6 max-w-2xl space-y-3 text-sm leading-6 text-[#A6A39A]">
+                <div
+                  id="directions-content"
+                  data-reading-content
+                  tabIndex={-1}
+                  className="mt-6 max-w-2xl space-y-3 text-sm leading-6 text-[#A6A39A]"
+                >
                   {content.directions.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}

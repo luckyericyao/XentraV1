@@ -455,6 +455,9 @@ function verifyPage(result, locale) {
     `${label} founder letter label`,
   );
   assertIncludes(result.body, directionsTitle, `${label} new directions`);
+  assertIncludes(result.body, '<details id="directions" data-reading-stop="true"', `${label} directions reading stop`);
+  assertIncludes(result.body, 'id="directions-content" data-reading-content="true" tabindex="-1"',
+    `${label} focusable native directions link`);
   assertIncludes(result.body, companiesTitle, `${label} company overview`);
   for (const principle of companyPrinciples) {
     assertIncludes(result.body, principle, `${label} operating principle`);
