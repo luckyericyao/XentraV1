@@ -929,6 +929,19 @@ async function verifyPageAssets(pages) {
   }
 }
 
+function verifyLanguageLink(html, path) {
+  const isChinese = path === "/zh" || path.startsWith("/zh/");
+  const language = isChinese ? "en" : "zh-CN";
+  const name = isChinese ? "English" : "中文";
+  const links = html.match(/<a\b[^>]*\shreflang="[^"]+"[^>]*>/gi) ?? [];
+  assert(links.length > 0, `${path}: missing language link`);
+  for (const link of links) {
+    assertIncludes(link.toLowerCase(), ` hreflang="${language.toLowerCase()}"`, `${path} alternate language`);
+    assertIncludes(link, ` lang="${language}"`, `${path} language pronunciation`);
+    assertIncludes(link, ` aria-label="${name}"`, `${path} accessible language name`);
+  }
+}
+
 function verifyScriptFreeNavigation(pages) {
   for (const { path, html } of pages) {
     const fallback = html.match(
@@ -1062,6 +1075,9 @@ async function run() {
 
   verifyNotFound(englishMissing, "en");
   verifyNotFound(chineseMissing, "zh");
+  for (const { path, html } of applicationPages) verifyLanguageLink(html, path);
+  verifyLanguageLink(englishMissing.body, "/404");
+  verifyLanguageLink(chineseMissing.body, "/zh/404");
   assertStatus(recoveryStyles, 200, "Recovery stylesheet");
   assertIncludes(contentType(recoveryStyles), "text/css", "Recovery stylesheet content type");
 

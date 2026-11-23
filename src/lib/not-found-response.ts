@@ -11,6 +11,7 @@ const copyByLocale = {
     homeLabel: "Return home",
     homeHref: "/",
     alternateLabel: "中文",
+    alternateName: "中文",
     alternateHref: "/zh",
     alternateLang: "zh-CN",
     footerLabel: "Xentra / AI-native operating group",
@@ -25,6 +26,7 @@ const copyByLocale = {
     homeLabel: "返回首页",
     homeHref: "/zh",
     alternateLabel: "EN",
+    alternateName: "English",
     alternateHref: "/",
     alternateLang: "en",
     footerLabel: "Xentra / AI 原生运营集团",
@@ -51,7 +53,7 @@ export function notFoundResponse(locale: Locale) {
     <a href="#not-found-main" class="recovery-skip">${copy.skipLabel}</a>
     <header class="recovery-header">
       <a href="${copy.homeHref}" class="recovery-brand">Xentra</a>
-      <a href="${copy.alternateHref}" hreflang="${copy.alternateLang}" lang="${copy.alternateLang}" class="recovery-link">${copy.alternateLabel}</a>
+      <a href="${copy.alternateHref}" hreflang="${copy.alternateLang}" lang="${copy.alternateLang}" aria-label="${copy.alternateName}" class="recovery-link">${copy.alternateLabel}</a>
     </header>
     <main id="not-found-main" tabindex="-1" class="recovery-main" aria-labelledby="not-found-title" aria-describedby="not-found-body">
       <p class="recovery-eyebrow">${copy.eyebrow}</p>

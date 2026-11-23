@@ -18,7 +18,8 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuNavigationRef = useRef<HTMLDivElement>(null);
   const menuSessionRef = useRef<ReturnType<typeof openMobileNavigation> | null>(null);
-  const isChinese = languageSwitch.label === "EN";
+  const isChinese = languageSwitch.lang === "en";
+  const languageName = isChinese ? "English" : "中文";
   const navigationLabel = isChinese ? "主导航" : "Primary navigation";
   const skipLabel = isChinese ? "跳到主要内容" : "Skip to content";
   const menuLabel = menuOpen
@@ -178,6 +179,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             data-navigation-background
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
+            aria-label={languageName}
             className="inline-flex min-h-9 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
@@ -189,6 +191,7 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
             data-navigation-background
             hrefLang={languageSwitch.lang}
             lang={languageSwitch.lang}
+            aria-label={languageName}
             className="inline-flex min-h-11 items-center rounded-md border border-[rgba(198,161,91,0.18)] px-3 text-xs font-medium text-[#F2EFE8] transition hover:border-[#C6A15B] hover:text-[#C6A15B]"
           >
             {languageSwitch.label}
