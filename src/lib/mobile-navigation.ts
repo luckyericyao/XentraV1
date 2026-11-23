@@ -26,8 +26,11 @@ export function openMobileNavigation({
   const focusOrder: HTMLElement[] = [button, ...links];
   let focusOnClose: HTMLElement | null = button;
   let disposed = false;
+  let closing = false;
 
   const close = (destination: HTMLElement | null = button) => {
+    if (closing || disposed) return;
+    closing = true;
     focusOnClose = destination;
     onClose();
   };
@@ -60,6 +63,12 @@ export function openMobileNavigation({
     }
   };
 
+  const view = document.defaultView;
+  const onHistoryChange = () => {
+    const target = document.getElementById(view?.location.hash.slice(1) ?? "");
+    close(target?.hasAttribute("tabindex") ? target : document.querySelector<HTMLElement>("main"));
+  };
+
   document.body.style.overflow = "hidden";
   for (const { element } of background) {
     element.inert = true;
@@ -67,6 +76,7 @@ export function openMobileNavigation({
   (links[0] ?? button).focus();
   document.addEventListener("keydown", onKeyDown);
   desktopViewport.addEventListener("change", onViewportChange);
+  view?.addEventListener("popstate", onHistoryChange);
   onViewportChange();
 
   return {
@@ -79,6 +89,7 @@ export function openMobileNavigation({
       disposed = true;
       document.removeEventListener("keydown", onKeyDown);
       desktopViewport.removeEventListener("change", onViewportChange);
+      view?.removeEventListener("popstate", onHistoryChange);
       document.body.style.overflow = previousOverflow;
       for (const { element, inert } of background) {
         element.inert = inert;

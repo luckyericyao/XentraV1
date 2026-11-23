@@ -4,6 +4,9 @@ import { openMobileNavigation } from "../src/lib/mobile-navigation.ts";
 
 function createFixture({ overflow = "", desktop = false, linkCount = 4, footerInert = false } = {}) {
   const document = new EventTarget();
+  const view = new EventTarget();
+  view.location = { hash: "" };
+  document.defaultView = view;
   const viewport = new EventTarget();
   viewport.matches = desktop;
   document.body = { style: { overflow } };
@@ -34,6 +37,8 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
   const button = element("menu");
   const links = Array.from({ length: linkCount }, (_, index) => element(`link-${index}`));
   const destination = element("companies", main);
+  destination.hasAttribute = (name) => name === "tabindex";
+  document.getElementById = (id) => id === destination.id ? destination : null;
   document.activeElement = button;
   document.querySelectorAll = (selector) => {
     assert.equal(selector, "main, footer, [data-navigation-background]");
@@ -71,6 +76,10 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
       viewport.matches = desktop;
       viewport.dispatchEvent(new Event("change"));
     },
+    traverse(hash) {
+      view.location.hash = hash;
+      view.dispatchEvent(new Event("popstate"));
+    },
   };
 }
 
@@ -104,9 +113,31 @@ test("a selected chapter receives focus after its inert state is restored", () =
   assert.deepEqual(fixture.destination.focusCalls, [{ preventScroll: true }]);
 });
 
+test("history traversal closes the menu and focuses the restored chapter or main", () => {
+  for (const [hash, name] of [["", "main"], ["#companies", "destination"], ["#unknown", "main"]]) {
+    const fixture = createFixture({ overflow: "auto" });
+    fixture.traverse(hash);
+    assert.equal(fixture.closeCount(), 1);
+    fixture.session.dispose();
+    assert.equal(fixture.document.body.style.overflow, "auto");
+    assert.equal(fixture.main.inert, false);
+    assert.equal(fixture.document.activeElement, fixture[name]);
+  }
+});
+
+test("history events do not override the focus destination of a link already closing the menu", () => {
+  const fixture = createFixture();
+  fixture.session.close(fixture.destination);
+  fixture.traverse("");
+  assert.equal(fixture.closeCount(), 1);
+  fixture.session.dispose();
+  assert.equal(fixture.document.activeElement, fixture.destination);
+});
+
 test("crossing to desktop releases the session without focusing a hidden button", () => {
   const fixture = createFixture();
   fixture.resize(true);
+  fixture.traverse("#companies");
   assert.equal(fixture.closeCount(), 1);
   fixture.session.dispose();
   assert.equal(fixture.document.body.style.overflow, "");
@@ -142,6 +173,7 @@ test("cleanup is idempotent and removes keyboard and viewport listeners", () => 
   fixture.session.dispose();
   fixture.key("Escape");
   fixture.resize(true);
+  fixture.traverse("#companies");
   assert.equal(fixture.closeCount(), 0);
   assert.equal(fixture.button.focusCalls.length, focusCount);
 });
