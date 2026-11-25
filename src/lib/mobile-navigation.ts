@@ -68,6 +68,9 @@ export function openMobileNavigation({
     const target = document.getElementById(view?.location.hash.slice(1) ?? "");
     close(target?.hasAttribute("tabindex") ? target : document.querySelector<HTMLElement>("main"));
   };
+  const onPageShow = (event: PageTransitionEvent) => {
+    if (event.persisted) onHistoryChange();
+  };
 
   document.body.style.overflow = "hidden";
   for (const { element } of background) {
@@ -77,6 +80,7 @@ export function openMobileNavigation({
   document.addEventListener("keydown", onKeyDown);
   desktopViewport.addEventListener("change", onViewportChange);
   view?.addEventListener("popstate", onHistoryChange);
+  view?.addEventListener("pageshow", onPageShow);
   onViewportChange();
 
   return {
@@ -90,6 +94,7 @@ export function openMobileNavigation({
       document.removeEventListener("keydown", onKeyDown);
       desktopViewport.removeEventListener("change", onViewportChange);
       view?.removeEventListener("popstate", onHistoryChange);
+      view?.removeEventListener("pageshow", onPageShow);
       document.body.style.overflow = previousOverflow;
       for (const { element, inert } of background) {
         element.inert = inert;

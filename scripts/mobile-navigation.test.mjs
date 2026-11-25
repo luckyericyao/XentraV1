@@ -80,6 +80,12 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
       view.location.hash = hash;
       view.dispatchEvent(new Event("popstate"));
     },
+    showPage(persisted, hash = "") {
+      view.location.hash = hash;
+      const event = new Event("pageshow");
+      Object.assign(event, { persisted });
+      view.dispatchEvent(event);
+    },
   };
 }
 
@@ -134,6 +140,20 @@ test("history events do not override the focus destination of a link already clo
   assert.equal(fixture.document.activeElement, fixture.destination);
 });
 
+test("a cached page closes the menu without reacting to the first pageshow", () => {
+  const fixture = createFixture({ overflow: "auto" });
+  fixture.showPage(false);
+  assert.equal(fixture.closeCount(), 0);
+  assert.equal(fixture.main.inert, true);
+  fixture.showPage(true, "#companies");
+  assert.equal(fixture.closeCount(), 1);
+  fixture.session.dispose();
+  assert.equal(fixture.main.inert, false);
+  assert.equal(fixture.document.body.style.overflow, "auto");
+  assert.equal(fixture.document.activeElement, fixture.destination);
+  assert.deepEqual(fixture.destination.focusCalls, [{ preventScroll: true }]);
+});
+
 test("crossing to desktop releases the session without focusing a hidden button", () => {
   const fixture = createFixture();
   fixture.resize(true);
@@ -174,6 +194,7 @@ test("cleanup is idempotent and removes keyboard and viewport listeners", () => 
   fixture.key("Escape");
   fixture.resize(true);
   fixture.traverse("#companies");
+  fixture.showPage(true, "#companies");
   assert.equal(fixture.closeCount(), 0);
   assert.equal(fixture.button.focusCalls.length, focusCount);
 });
