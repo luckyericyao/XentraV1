@@ -97,7 +97,8 @@ summary:focus-visible {
   outline-offset: 4px;
 }
 
-.portfolio-evidence > a:focus-visible {
+.portfolio-evidence > a:focus-visible,
+#mobile-navigation a:focus-visible {
   outline-offset: -4px;
 }
 
