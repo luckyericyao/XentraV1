@@ -50,8 +50,11 @@ test("available destinations retain status, content type, and marker assertions"
 test("public revision observations separate mixed, missing, and invalid metadata without hiding failures", async () => {
   const known = "https://product.example.test";
   const header = "x-product-revision";
-  const revisions = ["b".repeat(40), "a".repeat(40), null, "not printable as release evidence"];
-  const destinations = revisions.map((_, index) => ({ url: url(String(index)), markers: ["required"] }));
+  const revisions = ["b".repeat(40), "a".repeat(40), null, "not printable as release evidence", "a".repeat(40)];
+  const destinations = revisions.map((_, index) => ({
+    url: `${index === 0 ? url(String(index)) : `${known}/${index}`}?probe=discard#ignore`,
+    markers: ["required"],
+  }));
   const report = await inspectPublicDestinations(destinations, async ({ url }) => {
     const index = Number(new URL(url).pathname.slice(1));
     const result = page(index === 0 ? "changed" : "required");
@@ -62,10 +65,9 @@ test("public revision observations separate mixed, missing, and invalid metadata
 
   assert.deepEqual(report.revisionObservations, [{
     origin: known,
-    revisions: ["a".repeat(40), "b".repeat(40)],
-    published: 2,
-    missing: 1,
-    invalid: 1,
+    revisions: [["a".repeat(40), ["/1", "/4"]], ["b".repeat(40), [url("0")]]],
+    missing: ["/2"],
+    invalid: ["/3"],
   }]);
   assert.deepEqual(report.failures, [{ url: destinations[0].url, problems: ['missing "required"'] }]);
 });

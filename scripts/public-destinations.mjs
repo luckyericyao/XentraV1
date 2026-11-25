@@ -23,15 +23,20 @@ export async function inspectPublicDestinations(destinations, readPage, { revisi
           const origin = response.url ? new URL(response.url).origin : "";
           const revisionHeader = revisionHeaders.get(origin);
           if (revisionHeader) {
-            const row = observed.get(origin) ?? { revisions: new Set(), published: 0, missing: 0, invalid: 0 };
+            const row = observed.get(origin) ?? { revisions: new Map(), missing: [], invalid: [] };
+            const requested = new URL(url);
+            const path = requested.origin === origin
+              ? requested.pathname
+              : `${requested.origin}${requested.pathname}`;
             const revision = response.headers.get(revisionHeader);
             if (revision === null) {
-              row.missing += 1;
+              row.missing.push(path);
             } else if (/^[0-9a-f]{40}$/.test(revision)) {
-              row.revisions.add(revision);
-              row.published += 1;
+              const paths = row.revisions.get(revision) ?? [];
+              paths.push(path);
+              row.revisions.set(revision, paths);
             } else {
-              row.invalid += 1;
+              row.invalid.push(path);
             }
             observed.set(origin, row);
           }
@@ -51,8 +56,11 @@ export async function inspectPublicDestinations(destinations, readPage, { revisi
     if (problems.length) failures.push({ url, problems });
   }
 
-  const revisionObservations = [...observed].map(([origin, { revisions, ...counts }]) => ({
-    origin, revisions: [...revisions].sort(), ...counts,
+  const revisionObservations = [...observed].map(([origin, { revisions, missing, invalid }]) => ({
+    origin,
+    revisions: [...revisions].sort(([first], [second]) => first.localeCompare(second)),
+    missing,
+    invalid,
   }));
   return { checked: destinations.length, assertions, failures, revisionObservations };
 }

@@ -861,10 +861,13 @@ async function verifyExternalCompanies() {
     }), { revisionHeaders },
   );
   assertionCount += report.assertions;
-  for (const { origin, revisions, published, missing, invalid } of report.revisionObservations) {
-    const version = revisions.length ? revisions.join(", ") : "not verified";
-    const state = revisions.length > 1 ? "mixed: " : "";
-    console.log(`PUBLIC_REVISION ${origin} ${state}${version} (${published} observed, ${missing} missing, ${invalid} invalid)`);
+  for (const { origin, revisions, missing, invalid } of report.revisionObservations) {
+    const label = revisions.length > 1 ? "PUBLIC_REVISION_MIXED" : "PUBLIC_REVISION";
+    for (const [revision, paths] of revisions) {
+      console.log(`${label} ${origin} ${revision} [${paths.join(", ")}]`);
+    }
+    if (missing.length) console.log(`PUBLIC_REVISION_MISSING ${origin} [${missing.join(", ")}]`);
+    if (invalid.length) console.log(`PUBLIC_REVISION_INVALID ${origin} [${invalid.join(", ")}]`);
   }
   if (report.failures.length) {
     const details = report.failures.map(({ url, problems }) => `- ${url}: ${problems.join("; ")}`);
