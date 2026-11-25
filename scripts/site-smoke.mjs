@@ -840,6 +840,10 @@ async function verifyExternalCompanies() {
     .filter((url) => !companyEvidencePages.some((page) => page.url === url))
     .map((url) => ({ url }));
   const destinations = [...companyEvidencePages, ...currentCompanyPages];
+  const revisionHeaders = new Map([
+    [new URL(localhostProductSite).origin, "x-localhost-revision"],
+    [new URL(recordedCompanyUrls.agentCoach).origin, "x-agentcoach-revision"],
+  ]);
   if (!smokeContactEmailVerified) {
     destinations.push({
       url: smokeContactProfileUrl,
@@ -854,9 +858,14 @@ async function verifyExternalCompanies() {
       cache: "no-store",
       headers: { "Cache-Control": "no-cache", ...headers },
       redirect,
-    }),
+    }), { revisionHeaders },
   );
   assertionCount += report.assertions;
+  for (const { origin, revisions, published, missing, invalid } of report.revisionObservations) {
+    const version = revisions.length ? revisions.join(", ") : "not verified";
+    const state = revisions.length > 1 ? "mixed: " : "";
+    console.log(`PUBLIC_REVISION ${origin} ${state}${version} (${published} observed, ${missing} missing, ${invalid} invalid)`);
+  }
   if (report.failures.length) {
     const details = report.failures.map(({ url, problems }) => `- ${url}: ${problems.join("; ")}`);
     throw new Error(`Public destination checks failed (${report.failures.length}/${report.checked}):\n${details.join("\n")}`);

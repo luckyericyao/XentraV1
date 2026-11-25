@@ -44,5 +44,40 @@ test("available destinations retain status, content type, and marker assertions"
     { url: url("home") },
   ], async () => page("expected content", { type: "Text/HTML" }));
 
-  assert.deepEqual(report, { checked: 2, assertions: 5, failures: [] });
+  assert.deepEqual(report, { checked: 2, assertions: 5, failures: [], revisionObservations: [] });
+});
+
+test("public revision observations separate mixed, missing, and invalid metadata without hiding failures", async () => {
+  const known = "https://product.example.test";
+  const header = "x-product-revision";
+  const revisions = ["b".repeat(40), "a".repeat(40), null, "not printable as release evidence"];
+  const destinations = revisions.map((_, index) => ({ url: url(String(index)), markers: ["required"] }));
+  const report = await inspectPublicDestinations(destinations, async ({ url }) => {
+    const index = Number(new URL(url).pathname.slice(1));
+    const result = page(index === 0 ? "changed" : "required");
+    Object.defineProperty(result.response, "url", { value: `${known}/${index}` });
+    if (revisions[index] !== null) result.response.headers.set(header, revisions[index]);
+    return result;
+  }, { revisionHeaders: new Map([[known, header]]) });
+
+  assert.deepEqual(report.revisionObservations, [{
+    origin: known,
+    revisions: ["a".repeat(40), "b".repeat(40)],
+    published: 2,
+    missing: 1,
+    invalid: 1,
+  }]);
+  assert.deepEqual(report.failures, [{ url: destinations[0].url, problems: ['missing "required"'] }]);
+});
+
+test("a redirect away from a known origin cannot supply that site's revision", async () => {
+  const known = "https://product.example.test";
+  const result = page("available");
+  Object.defineProperty(result.response, "url", { value: url("offsite") });
+  result.response.headers.set("x-product-revision", "a".repeat(40));
+
+  const report = await inspectPublicDestinations([{ url: `${known}/home` }], async () => result, {
+    revisionHeaders: new Map([[known, "x-product-revision"]]),
+  });
+  assert.deepEqual(report.revisionObservations, []);
 });

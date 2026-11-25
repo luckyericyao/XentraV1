@@ -81,6 +81,9 @@ a browser.
 Set `SMOKE_EXTERNAL=1` to check live operating-company homepages, product
 paths, and the public build record when shown. The external pass is read-only
 and reports all destination differences together, without submitting forms.
+When Localhost or Agent Coach serves a public revision header, the report
+lists the revisions actually observed on its HTML responses. Missing, invalid,
+or mixed values are reported separately from the content checks.
 
 To verify a release, run smoke with `SMOKE_BASE_URL` set to the public URL and
 `SMOKE_RELEASE_SHA` set to the full accepted Git commit. The production build
