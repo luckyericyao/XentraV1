@@ -1,5 +1,5 @@
 import { inspectLocalNavigation } from "./local-navigation.mjs";
-import { inspectPublicDestinations } from "./public-destinations.mjs";
+import { inspectPublicDestinations, observePublicApiRevision } from "./public-destinations.mjs";
 import { readReleaseSnapshot } from "./release-snapshot.mjs";
 import { readSmokeResponse } from "./smoke-response.mjs";
 import {
@@ -868,6 +868,21 @@ async function verifyExternalCompanies() {
     }
     if (missing.length) console.log(`PUBLIC_REVISION_MISSING ${origin} [${missing.join(", ")}]`);
     if (invalid.length) console.log(`PUBLIC_REVISION_INVALID ${origin} [${invalid.join(", ")}]`);
+  }
+  const rfqStatusUrl = `${recordedCompanyUrls.bioaxis}api/rfq`;
+  const apiRevision = await observePublicApiRevision(rfqStatusUrl, (url) =>
+    readSmokeResponse(url, {
+      attempts: 1,
+      timeoutMs: Math.min(timeoutMs, 8_000),
+      cache: "no-store",
+      headers: { "Accept": "application/json", "Cache-Control": "no-cache" },
+      redirect: "manual",
+    }),
+  );
+  if (apiRevision.status === "observed") {
+    console.log(`PUBLIC_API_REVISION ${rfqStatusUrl} ${apiRevision.revision}`);
+  } else {
+    console.log(`PUBLIC_API_REVISION_${apiRevision.status.toUpperCase()} ${rfqStatusUrl}`);
   }
   if (report.failures.length) {
     const details = report.failures.map(({ url, problems }) => `- ${url}: ${problems.join("; ")}`);

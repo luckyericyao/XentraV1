@@ -86,6 +86,11 @@ lists the request paths for revisions actually observed on its HTML responses.
 Missing, invalid, or mixed values are reported separately from the content
 checks. Revision reports omit queries and fragments.
 
+The same pass records the BioAxis revision reported by its public `GET /api/rfq`
+status endpoint. It prints only a valid Git SHA or a missing, invalid, or
+unavailable diagnostic. This is optional metadata about that endpoint, not a
+version assertion for the BioAxis HTML pages or a test of RFQ submissions.
+
 To verify a release, run smoke with `SMOKE_BASE_URL` set to the public URL and
 `SMOKE_RELEASE_SHA` set to the full accepted Git commit. The production build
 returns `X-Xentra-Revision` using Vercel's system-provided Git SHA when available;

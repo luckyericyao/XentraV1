@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { inspectPublicDestinations } from "./public-destinations.mjs";
+import { inspectPublicDestinations, observePublicApiRevision } from "./public-destinations.mjs";
 
 const url = (path) => `https://portfolio.example.test/${path}`;
 const page = (body, { status = 200, type = "text/html; charset=utf-8" } = {}) => ({
@@ -82,4 +82,52 @@ test("a redirect away from a known origin cannot supply that site's revision", a
     revisionHeaders: new Map([[known, "x-product-revision"]]),
   });
   assert.deepEqual(report.revisionObservations, []);
+});
+
+const rfqUrl = url("api/rfq");
+const rfqPage = (body, options = {}, finalUrl = rfqUrl) => {
+  const result = page(body, { type: "Application/JSON; charset=utf-8", ...options });
+  Object.defineProperty(result.response, "url", { value: finalUrl });
+  return result;
+};
+
+test("the API revision observation contains only the validated release field", async () => {
+  const revision = "a".repeat(40);
+  const report = await observePublicApiRevision(rfqUrl, async (requestedUrl) => {
+    assert.equal(requestedUrl, rfqUrl);
+    return rfqPage(JSON.stringify({ release: revision, internalDetails: "do not report" }));
+  });
+  assert.deepEqual(report, { status: "observed", revision });
+});
+
+test("missing API metadata is distinct from malformed or wrongly typed responses", async () => {
+  for (const [result, status] of [
+    [rfqPage("{}"), "missing"],
+    [rfqPage("not JSON"), "invalid"],
+    [rfqPage("null"), "invalid"],
+    [rfqPage("[]"), "invalid"],
+    [rfqPage('{"release":null}'), "invalid"],
+    [rfqPage('{"release":"unverified"}'), "invalid"],
+    [rfqPage(JSON.stringify({ release: ["a".repeat(40)] })), "invalid"],
+    [rfqPage("{}", { type: "text/html" }), "invalid"],
+  ]) {
+    assert.deepEqual(await observePublicApiRevision(rfqUrl, async () => result), { status });
+  }
+});
+
+test("network failures, HTTP errors and redirects cannot be reported as revisions", async () => {
+  const body = JSON.stringify({ release: "a".repeat(40) });
+  for (const read of [
+    async () => { throw new Error("upstream diagnostics"); },
+    async () => rfqPage(body, { status: 503 }),
+    async () => rfqPage(body, { status: 302 }),
+    async () => rfqPage(body, {}, url("somewhere-else")),
+    async () => {
+      const result = rfqPage(body);
+      Object.defineProperty(result.response, "redirected", { value: true });
+      return result;
+    },
+  ]) {
+    assert.deepEqual(await observePublicApiRevision(rfqUrl, read), { status: "unavailable" });
+  }
 });

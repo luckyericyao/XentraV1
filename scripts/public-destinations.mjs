@@ -64,3 +64,24 @@ export async function inspectPublicDestinations(destinations, readPage, { revisi
   }));
   return { checked: destinations.length, assertions, failures, revisionObservations };
 }
+
+export async function observePublicApiRevision(url, readPage) {
+  try {
+    const { response, body } = await readPage(url);
+    if (!response.ok || response.redirected || response.url !== url) {
+      return { status: "unavailable" };
+    }
+    const mediaType = response.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+    if (mediaType !== "application/json") return { status: "invalid" };
+
+    const data = JSON.parse(body);
+    if (!data || typeof data !== "object" || Array.isArray(data)) return { status: "invalid" };
+    if (!Object.hasOwn(data, "release")) return { status: "missing" };
+    if (typeof data.release !== "string" || !/^[0-9a-f]{40}$/.test(data.release)) {
+      return { status: "invalid" };
+    }
+    return { status: "observed", revision: data.release };
+  } catch (error) {
+    return { status: error instanceof SyntaxError ? "invalid" : "unavailable" };
+  }
+}
