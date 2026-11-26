@@ -98,7 +98,9 @@ the check fails if the header is absent or a different revision is serving.
 Immediately after a rollout, optionally set `SMOKE_RELEASE_ATTEMPTS=6` to
 recheck the whole bilingual page and recovery-page set at four-second
 intervals. It proceeds only once every page returns the requested revision in
-the same check, and still validates the status, links, and content.
+the same check, and still validates the status, links, and content. A route
+that cannot be reached counts as a mismatch for that snapshot; the final
+diagnostic lists unavailable routes along with any stale or missing revisions.
 
 The current local review and acceptance criteria are recorded in
 [the optimization report](docs/optimization-2026-11-09.md). Browser verification

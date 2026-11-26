@@ -5,9 +5,10 @@ export async function readReleaseSnapshot(paths, expected, read, {
   wait = sleep,
 } = {}) {
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
-    const pages = await Promise.all(paths.map((path) => read(path, attempt)));
-    const mismatches = pages.flatMap(({ headers }, index) => {
-      const revision = headers.get("x-xentra-revision");
+    const results = await Promise.allSettled(paths.map(async (path) => read(path, attempt)));
+    const mismatches = results.flatMap((result, index) => {
+      if (result.status === "rejected") return [`${paths[index]}: unavailable`];
+      const revision = result.value.headers.get("x-xentra-revision");
       if (revision === expected) return [];
       const observed = /^[0-9a-f]{40}$/.test(revision || "")
         ? revision
@@ -16,10 +17,12 @@ export async function readReleaseSnapshot(paths, expected, read, {
     });
 
     // Return the exact responses that passed; smoke still validates their status and content.
-    if (!mismatches.length) return pages;
+    if (!mismatches.length) return results.map(({ value }) => value);
     if (attempt === attempts) {
+      const firstFailure = results.find(({ status }) => status === "rejected");
       throw new Error(
         `Release ${expected} not ready after ${attempts} snapshot(s): ${mismatches.join("; ")}`,
+        firstFailure ? { cause: firstFailure.reason } : undefined,
       );
     }
 

@@ -43,3 +43,40 @@ test("a bounded wait names every remaining old, missing, or invalid revision", a
   });
   assert.deepEqual(waits, [4000]);
 });
+
+test("a temporary route failure retries the whole release snapshot", async () => {
+  const paths = ["/", "/zh"];
+  const calls = [];
+  const waits = [];
+  const ready = [page(current), page(current)];
+  const result = await readReleaseSnapshot(paths, current, (path, attempt) => {
+    calls.push([path, attempt]);
+    if (path === "/zh" && attempt === 1) throw new Error("temporary request failure");
+    return attempt === 1 ? page(current) : ready[paths.indexOf(path)];
+  }, {
+    attempts: 2,
+    wait: async (milliseconds) => { waits.push(milliseconds); },
+  });
+
+  assert.deepEqual(calls, [1, 2].flatMap((attempt) => paths.map((path) => [path, attempt])));
+  assert.deepEqual(waits, [4000]);
+  assert.deepEqual(result, ready);
+  assert.equal(result[0], ready[0]);
+});
+
+test("an exhausted snapshot reports unavailable and stale routes together", async () => {
+  const failure = new Error("transport diagnostics");
+  const paths = ["/", "/zh", "/letter", "/zh/letter"];
+  const waits = [];
+  await assert.rejects(readReleaseSnapshot(paths, current, async (path) => {
+    if (path === "/zh" || path === "/zh/letter") throw failure;
+    return page(path === "/letter" ? older : current);
+  }, {
+    attempts: 2,
+    wait: async (milliseconds) => { waits.push(milliseconds); },
+  }), {
+    message: `Release ${current} not ready after 2 snapshot(s): /zh: unavailable; /letter: ${older}; /zh/letter: unavailable`,
+    cause: failure,
+  });
+  assert.deepEqual(waits, [4000]);
+});
