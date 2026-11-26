@@ -50,10 +50,11 @@ export function openMobileNavigation({
 
     if (index === -1 || (event.shiftKey && index === 0)) {
       event.preventDefault();
-      focusOrder[event.shiftKey ? focusOrder.length - 1 : 0].focus();
+      const target = focusOrder[event.shiftKey ? focusOrder.length - 1 : 0];
+      target.focus({ preventScroll: target === button });
     } else if (!event.shiftKey && index === focusOrder.length - 1) {
       event.preventDefault();
-      button.focus();
+      button.focus({ preventScroll: true });
     }
   };
 
@@ -76,7 +77,9 @@ export function openMobileNavigation({
   for (const { element } of background) {
     element.inert = true;
   }
-  (links[0] ?? button).focus();
+  // Reset only the menu scroller; focusing during its entrance can move the page.
+  navigation.scrollTop = 0;
+  (links[0] ?? button).focus({ preventScroll: true });
   document.addEventListener("keydown", onKeyDown);
   desktopViewport.addEventListener("change", onViewportChange);
   view?.addEventListener("popstate", onHistoryChange);

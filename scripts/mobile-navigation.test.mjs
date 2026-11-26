@@ -49,6 +49,7 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
     return main;
   };
   const navigation = {
+    scrollTop: 120,
     querySelectorAll(selector) {
       assert.equal(selector, "a[href]");
       return links;
@@ -64,7 +65,7 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
   });
 
   return {
-    document, viewport, main, footer, language, button, links, destination, session,
+    document, viewport, main, footer, language, button, links, navigation, destination, session,
     closeCount: () => closeCount,
     key(key, shiftKey = false) {
       const event = new Event("keydown", { cancelable: true });
@@ -92,6 +93,8 @@ function createFixture({ overflow = "", desktop = false, linkCount = 4, footerIn
 test("opens with focus in navigation and excludes the background", () => {
   const fixture = createFixture();
   assert.equal(fixture.document.activeElement, fixture.links[0]);
+  assert.deepEqual(fixture.links[0].focusCalls, [{ preventScroll: true }]);
+  assert.equal(fixture.navigation.scrollTop, 0);
   assert.equal(fixture.document.body.style.overflow, "hidden");
   for (const target of [fixture.main, fixture.footer, fixture.language]) {
     assert.equal(target.inert, true);
@@ -170,8 +173,10 @@ test("Tab and Shift+Tab include the close button in the focus loop", () => {
   fixture.links.at(-1).focus();
   assert.equal(fixture.key("Tab").defaultPrevented, true);
   assert.equal(fixture.document.activeElement, fixture.button);
+  assert.deepEqual(fixture.button.focusCalls.at(-1), { preventScroll: true });
   assert.equal(fixture.key("Tab", true).defaultPrevented, true);
   assert.equal(fixture.document.activeElement, fixture.links.at(-1));
+  assert.deepEqual(fixture.links.at(-1).focusCalls.at(-1), { preventScroll: false });
   fixture.links[0].focus();
   assert.equal(fixture.key("Tab").defaultPrevented, false);
   fixture.session.dispose();
