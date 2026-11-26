@@ -82,6 +82,13 @@ body > footer {
     backdrop-filter 500ms ease;
 }
 
+@media (forced-colors: active) {
+  .site-header a[aria-current="location"] {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+}
+
 body:has(.mobile-navigation-fallback) .mobile-navigation-trigger {
   display: none;
 }

@@ -229,17 +229,17 @@ export function Header({ homeHref = "#top", navItems, languageSwitch }: HeaderPr
           >
             <span className="relative block h-3.5 w-4" aria-hidden="true">
               <span
-                className={`absolute left-0 top-0 block h-px w-4 bg-current transition ${
+                className={`absolute left-0 top-0 block h-px w-4 border-t border-current transition ${
                   menuOpen ? "translate-y-[6px] rotate-45" : ""
                 }`}
               />
               <span
-                className={`absolute left-0 top-[6px] block h-px w-4 bg-current transition ${
+                className={`absolute left-0 top-[6px] block h-px w-4 border-t border-current transition ${
                   menuOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`absolute left-0 top-3 block h-px w-4 bg-current transition ${
+                className={`absolute left-0 top-3 block h-px w-4 border-t border-current transition ${
                   menuOpen ? "-translate-y-[6px] -rotate-45" : ""
                 }`}
               />
